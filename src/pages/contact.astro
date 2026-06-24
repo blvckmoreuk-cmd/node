@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <div class="max-w-xl w-full px-6 py-20">
+    <h1 class="text-4xl font-bold mb-4 tracking-tight">Initiate Project</h1>
+    <p class="text-neutral-400 mb-12 leading-relaxed">
+      Submit your track details, reference tracks, and turnaround requirements below. 
+    </p>
+
+    <form class="space-y-6">
+      <div>
+        <label for="name" class="block text-xs font-medium tracking-widest text-neutral-500 mb-2 uppercase">Name / Artist</label>
+        <input type="text" id="name" class="w-full bg-black border border-neutral-800 rounded-md px-4 py-3 text-white focus:outline-none focus:border-white transition" />
+      </div>
+
+      <div>
+        <label for="email" class="block text-xs font-medium tracking-widest text-neutral-500 mb-2 uppercase">Email Address</label>
+        <input type="email" id="email" class="w-full bg-black border border-neutral-800 rounded-md px-4 py-3 text-white focus:outline-none focus:border-white transition" />
+      </div>
+
+      <div>
+        <label for="message" class="block text-xs font-medium tracking-widest text-neutral-500 mb-2 uppercase">Project Details</label>
+        <textarea id="message" rows="5" class="w-full bg-black border border-neutral-800 rounded-md px-4 py-3 text-white focus:outline-none focus:border-white transition"></textarea>
+      </div>
+
+      <button type="button" class="w-full bg-white text-black font-bold tracking-wide uppercase py-4 rounded-md hover:bg-neutral-200 transition duration-200">
+        Send Inquiry
+      </button>
+    </form>
+  </div>
+</Layout>
