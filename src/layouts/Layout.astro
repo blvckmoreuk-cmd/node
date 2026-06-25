@@ -7,30 +7,28 @@ import '../styles/global.css';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Node Leeds | Audio Engineering</title>
+    <title>Node | Audio Engineering</title>
   </head>
-  <body class="text-wood-100 font-sans antialiased min-h-screen flex flex-col">
-    <div class="bg-texture-wrap"></div>
-
-    <header class="w-full border-b border-wood-800">
-      <nav class="max-w-5xl mx-auto px-6 py-6 flex justify-between items-center w-full">
-        <a href="/" class="text-xl font-bold tracking-[0.2em] uppercase hover:text-copper transition-colors">
-          Node
-        </a>
-        <div class="space-x-8 text-sm font-medium tracking-wide text-wood-400">
-          <a href="/services" class="hover:text-wood-100 transition-colors duration-200">Services</a>
-          <a href="/work" class="hover:text-wood-100 transition-colors duration-200">Work</a>
-          <a href="/contact" class="hover:text-wood-100 transition-colors duration-200">Contact</a>
+  <body class="bg-[#e6e1d9] min-h-screen flex flex-col font-sans text-[#5c554a]">
+    
+    <header class="w-full p-6">
+      <nav class="max-w-4xl mx-auto flex justify-between items-center">
+        <a href="/" class="text-xl font-bold tracking-[0.2em] uppercase text-[#4a453d]">Node</a>
+        <div class="space-x-8 text-sm uppercase tracking-widest">
+          <a href="/services" class="hover:text-copper transition-colors">Services</a>
+          <a href="/work" class="hover:text-copper transition-colors">Work</a>
+          <a href="/contact" class="hover:text-copper transition-colors">Contact</a>
         </div>
       </nav>
     </header>
 
-    <main class="grow flex flex-col items-center">
+    <main class="grow flex flex-col items-center justify-center">
       <slot />
     </main>
 
-    <footer class="w-full py-8 text-center border-t border-wood-800 text-wood-400 text-xs tracking-wider">
-      &copy; {new Date().getFullYear()} NODE LEEDS. ALL RIGHTS RESERVED.
+    <footer class="w-full py-8 text-center text-xs tracking-widest uppercase">
+      &copy; {new Date().getFullYear()} Node Leeds. All Rights Reserved.
     </footer>
+
   </body>
 </html>

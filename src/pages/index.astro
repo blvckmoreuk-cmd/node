@@ -3,57 +3,88 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
-  <main class="relative z-10 grow flex flex-col items-center justify-center p-8 w-full">
-    
-    <div class="max-w-3xl w-full text-center">
-      <h1 class="text-4xl md:text-5xl font-bold text-wood-100 mb-4 tracking-tight">
-        Specialist Dance Music Mastering House
+  <main class="w-full flex flex-col items-center p-8">
+    <div class="max-w-3xl w-full text-center neumo-card">
+      
+      <h1 class="text-4xl md:text-5xl font-bold text-[#4a453d] mb-4 tracking-tight">
+        Specialist Dance Music Processing
       </h1>
-      <p class="text-sm md:text-base font-medium uppercase tracking-[0.25em] text-copper mb-8">
+      <p class="text-sm md:text-base font-medium uppercase tracking-[0.25em] text-[#d7793b] mb-8">
         Refining audio from the north
       </p>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <div class="bg-black/80 backdrop-blur-md border border-white/10 p-6 rounded-lg">
-          <h3 class="text-white font-bold mb-2">Mastering</h3>
-        </div>
-        <div class="bg-black/80 backdrop-blur-md border border-white/10 p-6 rounded-lg">
-          <h3 class="text-white font-bold mb-2">Mixing</h3>
-        </div>
-        <div class="bg-black/80 backdrop-blur-md border border-white/10 p-6 rounded-lg">
-          <h3 class="text-white font-bold mb-2">Consultancy</h3>
-        </div>
-      </div>
-
-      <div 
-        id="canvas-container" 
-        class="w-full h-75 bg-black rounded-lg shadow-2xl mb-8 overflow-hidden border border-neutral-800 relative"
-      >
+      <div class="neumo-card flex flex-col md:flex-row gap-12 items-center justify-between mb-12 bg-[#f5f0e6] p-10 rounded-3xl shadow-[inset_5px_5px_10px_#d1cdc5,inset_-5px_-5px_10px_#ffffff]">
+        
+        <div id="canvas-container" class="relative w-full md:w-80 h-48 bg-[#e6e1d9] rounded-xl shadow-[inset_2px_2px_5px_#b3aea6] border border-[#d1cdc5] overflow-hidden shrink-0">
+          <div class="absolute top-2 left-2 bg-[#4a453d]/90 text-[#f5f0e6] px-2 py-0.5 rounded-sm text-[9px] font-bold uppercase tracking-widest backdrop-blur-md z-10 border border-[#3d372e]">
+            BLVCKMORE - ID
+          </div>
         </div>
 
-      <button 
-        id="play-btn" 
-        class="px-8 py-3 bg-white text-black font-semibold rounded-full hover:bg-neutral-200 transition-colors duration-200"
-      >
+        <div class="flex flex-col w-full gap-6">
+          <div class="flex flex-row justify-center md:justify-end gap-10">
+            
+            <div class="flex flex-col items-center">
+              <div class="rounded-full p-1.5 bg-[#e6e1d9] shadow-[inset_4px_4px_8px_#c9c5be,inset_-4px_-4px_8px_#ffffff]">
+                <div id="knob-volume" class="wood-dial w-16 h-16 rounded-full cursor-ns-resize relative shadow-lg">
+                  <div class="knob-rotation-wrapper w-full h-full absolute top-0 left-0">
+                    <div class="knob-indicator"></div>
+                  </div>
+                </div>
+              </div>
+              <span class="text-[10px] uppercase tracking-widest mt-4 font-bold text-[#4a453d]">Volume</span>
+            </div>
+
+            <div class="flex flex-col items-center">
+              <div class="rounded-full p-1.5 bg-[#e6e1d9] shadow-[inset_4px_4px_8px_#c9c5be,inset_-4px_-4px_8px_#ffffff]">
+                <div id="knob-mix" class="wood-dial w-16 h-16 rounded-full cursor-ns-resize relative shadow-lg">
+                  <div class="knob-rotation-wrapper w-full h-full absolute top-0 left-0">
+                    <div class="knob-indicator"></div>
+                  </div>
+                </div>
+              </div>
+              <span class="text-[10px] uppercase tracking-widest mt-4 font-bold text-[#4a453d]">Mix</span>
+            </div>
+          </div>
+
+          <div class="w-full h-4 bg-[#e6e1d9] rounded-full shadow-[inset_2px_2px_4px_#c9c5be] border border-[#d1cdc5] cursor-pointer relative overflow-hidden">
+            <div id="scrub-progress" class="h-full bg-[#d7793b] w-0 transition-all duration-100"></div>
+          </div>
+        </div>
+      </div> 
+
+      <button id="play-btn" class="px-8 py-3 bg-[#f5f0e6] text-[#d7793b] font-semibold rounded-full shadow-[5px_5px_10px_#d1cdc5,-5px_-5px_10px_#ffffff] hover:shadow-[inset_2px_2px_5px_#d1cdc5] transition-all duration-200">
         Play Test Audio
       </button>
+
     </div>
   </main>
 </Layout>
 
 <script>
-  import { Howl } from 'howler';
+  import { Howl, Howler } from 'howler';
   import * as THREE from 'three';
 
-  // --- AUDIO SETUP ---
+  let mixLevel: number = 1.0; 
+  let analyser: AnalyserNode | undefined;
+  let dataArray: Uint8Array;
+
   const sound = new Howl({
-    src: ['https://actions.google.com/sounds/v1/science_fiction/alien_beacon.ogg'],
-    html5: true,
+    src: ['/audio/BE OK.mp3'], // Ensure file is in public/audio/BE OK.mp3
+    html5: false, 
     volume: 0.5
   });
 
+  if (Howler.ctx) {
+    analyser = Howler.ctx.createAnalyser();
+    analyser.fftSize = 128; 
+    Howler.masterGain.connect(analyser);
+    dataArray = new Uint8Array(analyser.frequencyBinCount);
+  }
+
   const button = document.getElementById('play-btn');
   button?.addEventListener('click', () => {
+    if (Howler.ctx && Howler.ctx.state === 'suspended') Howler.ctx.resume();
     if (!sound.playing()) {
       sound.play();
       button.textContent = 'Pause Audio';
@@ -63,39 +94,69 @@ import Layout from '../layouts/Layout.astro';
     }
   });
 
-  // --- 3D SETUP ---
+  const scrubBar = document.querySelector('.cursor-pointer') as HTMLElement;
+  const progressBar = document.getElementById('scrub-progress');
+  scrubBar?.addEventListener('click', (e: Event) => {
+    const mouseEvent = e as MouseEvent;
+    const rect = scrubBar.getBoundingClientRect();
+    const pos = (mouseEvent.clientX - rect.left) / rect.width;
+    sound.seek(sound.duration() * pos);
+    if (progressBar) progressBar.style.width = (pos * 100) + '%';
+  });
+
+  setInterval(() => {
+    if (sound.playing() && progressBar && sound.duration() > 0) {
+      progressBar.style.width = (sound.seek() / sound.duration()) * 100 + '%';
+    }
+  }, 250);
+
   const container = document.getElementById('canvas-container');
   if (container) {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, container.clientWidth / container.clientHeight, 0.1, 1000);
-    camera.position.z = 5;
-
+    camera.position.z = 4;
+    camera.position.y = 1;
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setClearColor(0x000000, 0); 
     renderer.setSize(container.clientWidth, container.clientHeight);
     container.appendChild(renderer.domElement);
-
-    const geometry = new THREE.IcosahedronGeometry(2, 0);
-    const material = new THREE.MeshBasicMaterial({ 
-      color: 0xd97736, // Your Copper accent
-      wireframe: true,
-      transparent: true,
-      opacity: 0.5
-    });
-    const shape = new THREE.Mesh(geometry, material);
-    scene.add(shape);
-
+    const bars: THREE.Mesh[] = [];
+    for (let i = 0; i < 32; i++) {
+      const bar = new THREE.Mesh(new THREE.BoxGeometry(0.15, 1, 0.15), new THREE.MeshBasicMaterial({ color: 0xd7793b, transparent: true, opacity: 0.8 }));
+      bar.position.set((i - 16) * 0.2, -1, 0);
+      scene.add(bar);
+      bars.push(bar);
+    }
     function animate() {
       requestAnimationFrame(animate);
-      shape.rotation.x += 0.005;
-      shape.rotation.y += 0.005;
+      if (analyser && sound.playing()) {
+        analyser.getByteFrequencyData(dataArray as any);
+        bars.forEach((bar, i) => {
+          const targetHeight = 0.1 + (dataArray[i] / 255.0 * 5.0 * mixLevel);
+          bar.scale.y += (targetHeight - bar.scale.y) * 0.2;
+          bar.position.y = -1 + (bar.scale.y / 2);
+        });
+      }
       renderer.render(scene, camera);
     }
     animate();
-
-    window.addEventListener('resize', () => {
-      camera.aspect = container.clientWidth / container.clientHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(container.clientWidth, container.clientHeight);
-    });
   }
+
+  function setupKnob(knobId: string, initialValue: number, onChange: (v: number) => void) {
+    const knob = document.getElementById(knobId);
+    const wrapper = knob?.querySelector('.knob-rotation-wrapper') as HTMLElement;
+    let isDragging = false;
+    let currentValue = initialValue;
+    knob?.addEventListener('mousedown', () => isDragging = true);
+    window.addEventListener('mousemove', (e: MouseEvent) => {
+      if (!isDragging) return;
+      currentValue = Math.max(0, Math.min(100, currentValue - e.movementY * 0.5));
+      if (wrapper) wrapper.style.transform = `rotate(${-135 + (currentValue / 100) * 270}deg)`;
+      onChange(currentValue);
+    });
+    window.addEventListener('mouseup', () => isDragging = false);
+    if (wrapper) wrapper.style.transform = `rotate(${-135 + (initialValue / 100) * 270}deg)`;
+  }
+  setupKnob('knob-volume', 50, (v) => sound.volume(v / 100));
+  setupKnob('knob-mix', 100, (v) => mixLevel = v / 100);
 </script>
