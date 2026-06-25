@@ -11,18 +11,21 @@ import '../styles/global.css';
   </head>
   <body class="bg-[#e6e1d9] min-h-screen flex flex-col font-sans text-[#5c554a]">
     
-    <header class="w-full p-6">
-      <nav class="max-w-4xl mx-auto flex justify-between items-center">
-        <a href="/" class="text-xl font-bold tracking-[0.2em] uppercase text-[#4a453d]">Node</a>
-        <div class="space-x-8 text-sm uppercase tracking-widest">
-          <a href="/services" class="hover:text-copper transition-colors">Services</a>
-          <a href="/work" class="hover:text-copper transition-colors">Work</a>
-          <a href="/contact" class="hover:text-copper transition-colors">Contact</a>
-        </div>
-      </nav>
-    </header>
+    <header class="w-full flex items-center justify-between px-12 py-8 max-w-5xl mx-auto">
+  <nav class="flex gap-8 font-bold text-[#5c554a] uppercase tracking-widest text-sm">
+    <a href="/about" class="hover:text-[#d7793b] transition-colors">About</a>
+    <a href="/services" class="hover:text-[#d7793b] transition-colors">Services</a>
+  </nav>
 
-    <main class="grow flex flex-col items-center justify-center">
+  <a href="/" class="text-3xl font-black tracking-[0.2em] text-[#4a453d]">NODE</a>
+
+  <nav class="flex gap-8 font-bold text-[#5c554a] uppercase tracking-widest text-sm">
+    <a href="/portfolio" class="hover:text-[#d7793b] transition-colors">Portfolio</a>
+    <a href="/contact" class="hover:text-[#d7793b] transition-colors">Contact</a>
+  </nav>
+</header>
+
+    <main class="grow flex flex-col items-center">
       <slot />
     </main>
 

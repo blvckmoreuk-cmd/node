@@ -27,13 +27,13 @@
 /* The 3D Wooden Knob Base */
 .wood-dial {
   /* Rich wood gradient simulating a curved surface catching light */
-  background: linear-gradient(145deg, #6b5846, #3a2e24);
+  background: linear-gradient(145deg, #6b5846, #4a3625);
   /* 1. White inset for top-left edge highlight
     2. Black inset for bottom-right curve shadow
     3. Dark drop-shadow to lift it off the board 
   */
   box-shadow: 
-    inset 1px 1px 2px rgba(255, 255, 255, 0.2),
+    inset 1px 1px 2px rgba(255, 255, 255, 0.045),
     inset -2px -2px 4px rgba(0, 0, 0, 0.6),
     4px 4px 8px rgba(46, 36, 29, 0.4);
   border: 1px solid #2a2018;
@@ -47,7 +47,7 @@
   transform: translateX(-50%);
   width: 3px;
   height: 25%;
-  background: #d7793b; /* Your copper brand accent */
+  background: #bcbcbc; /* Your copper brand accent */
   border-radius: 2px;
   /* Dark inset shadow creates an "engraved" effect */
   box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.5);
