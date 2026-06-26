@@ -14,30 +14,48 @@
 
 /* Main Neumorphic Canvas */
 .neumo-card {
-  background: #f5f0e6;
-  border-radius: 40px;
-  box-shadow: 20px 20px 60px #c9c5be, -20px -20px 60px #ffffff;
-  padding: 40px;
+  /* Replace the soft white/grey shadows with a sharp, industrial steel look */
+  background: #252525; /* Dark matte chassis base */
+  border: 1px solid #444;
+  
+  /* Hard "milled" shadow effect */
+  box-shadow: 
+    0 10px 30px rgba(0, 0, 0, 0.5), /* Deep drop shadow */
+    inset 0 1px 1px rgba(255, 255, 255, 0.1); /* Sharp top-edge highlight */
+  
+  /* Slightly more angular, professional look */
+  border-radius: 20px;
 }
-
 /* =========================================
    3D HARDWARE CONTROLS
    ========================================= */
 
 /* The 3D Wooden Knob Base */
-.wood-dial {
-  /* Rich wood gradient simulating a curved surface catching light */
-  background: linear-gradient(145deg, #6b5846, #4a3625);
-  /* 1. White inset for top-left edge highlight
-    2. Black inset for bottom-right curve shadow
-    3. Dark drop-shadow to lift it off the board 
-  */
-  box-shadow: 
-    inset 1px 1px 2px rgba(255, 255, 255, 0.045),
-    inset -2px -2px 4px rgba(0, 0, 0, 0.6),
-    4px 4px 8px rgba(46, 36, 29, 0.4);
-  border: 1px solid #2a2018;
-}
+/* Layer 1: The Base (Static outer shadows lifting it off the page) */
+  /* The Base: Heavy drop shadow for physical weight */
+  .dial-base {
+    background: #222; /* Deep matte black base */
+    border: 1px solid #444;
+    box-shadow: 
+      0 20px 30px -10px rgba(0, 0, 0, 0.8),
+      inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+  }
+
+  /* The Texture: Simulated brushed aluminum/anodized finish */
+  .dial-texture {
+    background: radial-gradient(circle at 30% 30%, #444, #111);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* The Lighting: High-end specular highlights for a 3D bevel */
+  .dial-lighting {
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.3) 100%);
+    box-shadow: 
+      inset 0 2px 2px rgba(255, 255, 255, 0.2),
+      inset 0 -2px 2px rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+  }
 
 /* The Engraved Copper Indicator */
 .knob-indicator {
@@ -58,14 +76,10 @@
 
 /* Add this to your global.css */
 .glow-ring-base {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
+  /* 1. Make the mask "hole" larger (85% instead of 72%) to create a thinner arc */
+  -webkit-mask-image: radial-gradient(transparent 60%, black 90%);
+  mask-image: radial-gradient(transparent 60%, black 86%);
   
-  /* 1. Explicitly state the mask */
-  -webkit-mask: radial-gradient(circle, transparent 82%, black 83%);
-  mask: radial-gradient(circle, transparent 82%, black 83%);
-  
-  /* 2. Ensure it's not blocked by other background styles */
-  background-clip: padding-box;
+  /* 2. Remove the glow from the container itself to stop the "blob" look */
+  box-shadow: none; 
 }

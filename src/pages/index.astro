@@ -5,29 +5,40 @@ import Layout from '../layouts/Layout.astro';
 <Layout>
   <main class="w-full flex flex-col items-center p-8">
     <div class="max-w-5xl w-full text-center neumo-card bg-[#c3c3c3] p-10 rounded-3xl shadow-[5px_5px_10px_#d1cdc5,-5px_-5px_10px_#ffffff]">
+      
       <div class="flex flex-col md:flex-row gap-12 items-center justify-between mb-8">
         <div id="canvas-container" class="relative w-full md:w-175 h-80 bg-[#1a1a1a] rounded-xl shadow-[inset_2px_2px_5px_#000] border border-[#333] overflow-hidden shrink-0">
           <div class="absolute top-4 left-4 z-20">
             <select id="track-selector" class="bg-[#4a453d]/90 text-[#f5f0e6] px-3 py-1 rounded-sm text-[10px] font-bold uppercase tracking-widest border border-[#3d372e] cursor-pointer outline-none">
               <option value="/audio/BE OK.mp3">BE OK - BLVCKMORE</option>
-              <option value="/audio/track2.mp3">NEXT TRACK - BLVCKMORE</option>
+              <option value="/audio/Sure Thing.mp3">Sure Thing - Solow</option>
             </select>
           </div>
         </div>
 
         <div class="flex flex-col items-center">
-          <div class="relative flex items-center justify-center w-48 h-48">
+          <div class="relative flex items-center justify-center w-56 h-56">
             
             <div 
-              id="knob-glow" 
-              class="absolute w-full h-full rounded-full pointer-events-none"
-              style="z-index: 0; mask-image: radial-gradient(circle, transparent 84px, black 85px, black 87px, transparent 88px); -webkit-mask-image: radial-gradient(circle, transparent 84px, black 85px, black 87px, transparent 88px);"
-            ></div>
+  id="knob-glow-core" 
+  class="absolute w-full h-full rounded-full pointer-events-none"
+  style="z-index: 1; mask-image: radial-gradient(circle, transparent 78px, black 80px, black 86px, transparent 88px); -webkit-mask-image: radial-gradient(circle, transparent 78px, black 80px, black 86px, transparent 88px);"
+></div>
+
+            <div 
+  id="knob-glow-core" 
+  class="absolute w-full h-full rounded-full pointer-events-none"
+  style="z-index: 0; mask-image: radial-gradient(circle, transparent 79px, black 80px, black 81px, transparent 82px); -webkit-mask-image: radial-gradient(circle, transparent 79px, black 80px, black 81px, transparent 82px);"
+></div>
             
-            <div id="knob-volume" class="wood-dial w-40 h-40 rounded-full cursor-ns-resize relative z-10">
-              <div class="knob-rotation-wrapper w-full h-full absolute top-0 left-0 pointer-events-none">
-                <div class="knob-indicator w-3 h-10 bg-[#bcbcbc] rounded-full mx-auto mt-2 shadow-inner"></div>
+            <div id="knob-volume" class="dial-base w-40 h-40 rounded-full cursor-ns-resize relative z-10 overflow-hidden">
+              
+              <div class="knob-rotation-wrapper dial-texture w-full h-full absolute top-0 left-0 pointer-events-none rounded-full">
+                <div class="knob-indicator w-1 h-12 mx-auto mt-2 rounded-full bg-gradient-to-b from-[#f0f0f0] to-[#a0a0a0] shadow-[0_2px_4px_rgba(0,0,0,0.5)]"></div>
               </div>
+
+              <div class="dial-lighting absolute inset-0 rounded-full pointer-events-none"></div>
+              
             </div>
             
           </div>
@@ -46,85 +57,52 @@ import Layout from '../layouts/Layout.astro';
   </main>
 </Layout>
 
+<style is:global>
+  /* Included here to guarantee the 3D wood effect works flawlessly */
+  .wood-dial {
+    background-image: url('/dark-oak.jpg');
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #2a1f18;
+    box-shadow: 
+      0 15px 25px -5px rgba(0, 0, 0, 0.6),
+      0 8px 10px -2px rgba(0, 0, 0, 0.5),
+      inset 0 4px 6px rgba(255, 255, 255, 0.3),
+      inset 0 -10px 15px rgba(0, 0, 0, 0.8),
+      inset 0 0 20px rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+  }
+</style>
+
 <script>
   import { Howl, Howler } from 'howler';
   import * as THREE from 'three';
 
-  let sound = new Howl({ src: ['/audio/BE OK.mp3'], html5: false, volume: 0.5 });
-  let analyser: AnalyserNode | null = null;
-  let dataArray: Uint8Array | null = null;
-
   window.addEventListener('load', () => {
-    
-    const playBtn = document.getElementById('play-btn') as HTMLElement;
-    const progressBar = document.getElementById('scrub-progress') as HTMLElement;
-    const scrubContainer = document.getElementById('scrub-container') as HTMLElement;
-    const knob = document.getElementById('knob-volume') as HTMLElement;
-    const glowRing = document.getElementById('knob-glow') as HTMLElement;
-    const wrapper = knob.querySelector('.knob-rotation-wrapper') as HTMLElement;
+    // 1. Audio Setup
+    let sound = new Howl({ src: ['/audio/BE OK.mp3'], html5: false, volume: 0.5 });
+    let analyser: AnalyserNode | null = null;
+    let dataArray: Uint8Array<ArrayBuffer> | null = null;
 
-    // --- Knob Logic ---
-    let val = 50;
-    let isDragging = false;
-    let startY = 0; // Using startY for stable drag tracking
-    
-    const updateVisuals = (v: number) => {
-      const rotationAngle = (v / 100) * 270;
-      
-      // 1. Indicator rotation
-      wrapper.style.transform = `rotate(${-135 + rotationAngle}deg)`;
+    // 2. DOM Elements
+    const playBtn = document.getElementById('play-btn') as HTMLButtonElement;
+    const scrubContainer = document.getElementById('scrub-container') as HTMLDivElement;
+    const progressBar = document.getElementById('scrub-progress') as HTMLDivElement;
+    const trackSelector = document.getElementById('track-selector') as HTMLSelectElement;
 
-      // 2. Rotate container to anchor point
-      glowRing.style.transform = `rotate(-135deg)`;
+    const knob = document.getElementById('knob-volume') as HTMLDivElement;
+    const wrapper = knob?.querySelector('.knob-rotation-wrapper') as HTMLDivElement;
+    const glowBloom = document.getElementById('knob-glow-bloom') as HTMLDivElement;
+    const glowCore = document.getElementById('knob-glow-core') as HTMLDivElement;
 
-      // 3. Create the arc
-      glowRing.style.background = `conic-gradient(#d7793b ${rotationAngle}deg, transparent 0deg)`;
-
-      // 4. Glow filter
-      glowRing.style.filter = `drop-shadow(0 0 5px #d7793b) drop-shadow(0 0 10px #d7793b)`;
-      
-      // 5. ACTUALLY UPDATE THE VOLUME
-      sound.volume(v / 100);
-    };
-
-    // Initialize UI on page load
-    updateVisuals(val);
-
-    knob.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      startY = e.clientY;
-    });
-    
-    window.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      // Stable drag math to prevent jumping
-      const deltaY = startY - e.clientY;
-      startY = e.clientY;
-      
-      val = Math.max(0, Math.min(100, val + deltaY));
-      updateVisuals(val);
-    });
-    
-    window.addEventListener('mouseup', () => isDragging = false);
-
-    // --- Scrubber Logic ---
-    scrubContainer.addEventListener('click', (e: MouseEvent) => {
-      const rect = scrubContainer.getBoundingClientRect();
-      const pct = (e.clientX - rect.left) / rect.width;
-      sound.seek(pct * sound.duration());
-    });
-
-    setInterval(() => {
-      if (sound.playing()) {
-        progressBar.style.width = ((sound.seek() as number) / sound.duration() * 100) + '%';
-      }
-    }, 100);
-
-    // --- Visualizer Logic ---
+    // ==========================================
+    // 3. THREE.JS VISUALIZER LOGIC
+    // ==========================================
     const container = document.getElementById('canvas-container')!;
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, 700 / 320, 0.1, 1000);
     camera.position.z = 5;
+    
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(700, 320);
     container.appendChild(renderer.domElement);
@@ -135,24 +113,123 @@ import Layout from '../layouts/Layout.astro';
 
     function animate() {
       requestAnimationFrame(animate);
-      if (sound.playing() && analyser) {
-        analyser.getByteFrequencyData(dataArray! as Uint8Array<ArrayBuffer>);
-        const vol = (dataArray!.reduce((a, b) => a + b) / dataArray!.length) / 128;
-        points.rotation.y += 0.01 + vol;
+      if (sound.playing() && analyser && dataArray) {
+        analyser.getByteFrequencyData(dataArray);
+        const vol = (dataArray.reduce((a, b) => a + b) / dataArray.length) / 128;
+        points.rotation.y += 0.01 + vol; // Spins faster to the beat
+      } else {
+        points.rotation.y += 0.005; // Idle spin
       }
       renderer.render(scene, camera);
     }
     animate();
 
+    // ==========================================
+    // 4. VOLUME KNOB LOGIC
+    // ==========================================
+    let volume = 50; 
+    let isDragging = false;
+    let startY = 0;
+
+    function updateKnobVisuals(v: number) {
+  if (!wrapper || !glowCore) return; // Note: Remove glowBloom references if you delete that div
+  
+  const rotationAngle = (v / 100) * 270;
+  
+  wrapper.style.transform = `rotate(${-135 + rotationAngle}deg)`;
+  glowCore.style.transform = `rotate(-135deg)`;
+  
+  // The line itself (very thin)
+  const gradient = `conic-gradient(#ffffff 0deg, #ffd700 ${rotationAngle}deg, transparent ${rotationAngle}deg)`;
+  glowCore.style.background = gradient;
+  
+  // Remove the complex shadows, keep just one tight shadow to define the line
+  glowCore.style.filter = `drop-shadow(0 0 10px #d7793b)`;
+  
+  if (sound) sound.volume(v / 100);
+}
+
+    // Initialize UI on load
+    updateKnobVisuals(volume);
+
+    knob?.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startY = e.clientY;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const deltaY = startY - e.clientY;
+      startY = e.clientY;
+      
+      volume = Math.max(0, Math.min(100, volume + deltaY));
+      updateKnobVisuals(volume);
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    // ==========================================
+    // 5. AUDIO CONTROLS (Play, Scrub, Select)
+    // ==========================================
     playBtn.addEventListener('click', () => {
-      if (!analyser) {
-        analyser = Howler.ctx!.createAnalyser();
+      // Initialize Web Audio API on first user interaction
+      if (!analyser && Howler.ctx) {
+        analyser = Howler.ctx.createAnalyser();
         analyser.fftSize = 256;
         Howler.masterGain.connect(analyser);
-        dataArray = new Uint8Array(analyser.frequencyBinCount);
+        dataArray = new Uint8Array(new ArrayBuffer(analyser.frequencyBinCount));
       }
+      
       if (Howler.ctx?.state === 'suspended') Howler.ctx.resume();
-      sound.playing() ? sound.pause() : sound.play();
+
+      if (sound.playing()) {
+        sound.pause();
+        playBtn.textContent = 'Play Test Audio';
+      } else {
+        sound.play();
+        playBtn.textContent = 'Pause Audio';
+      }
     });
+
+    scrubContainer.addEventListener('click', (e: MouseEvent) => {
+      const rect = scrubContainer.getBoundingClientRect();
+      const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      sound.seek(pct * sound.duration());
+    });
+
+    setInterval(() => {
+      if (sound.playing() && sound.duration() > 0) {
+        const pct = (sound.seek() as number) / sound.duration();
+        progressBar.style.width = (pct * 100) + '%';
+      }
+    }, 100);
+
+    // This replaces your existing trackSelector listener
+trackSelector.addEventListener('change', () => {
+  const isPlaying = sound.playing();
+  const currentVolume = sound.volume(); // Capture volume before unloading
+  
+  sound.unload();
+  
+  // Create new track with the preserved volume
+  sound = new Howl({ 
+    src: [trackSelector.value], 
+    html5: false, 
+    volume: currentVolume 
+  });
+  
+  // Reset the scrub bar
+  progressBar.style.width = '0%';
+  
+  if (isPlaying) {
+    sound.play();
+    playBtn.textContent = 'Pause Audio';
+  } else {
+    playBtn.textContent = 'Play Test Audio';
+  }
+});
+
   });
 </script>
