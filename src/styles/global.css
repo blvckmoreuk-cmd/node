@@ -52,3 +52,20 @@
   /* Dark inset shadow creates an "engraved" effect */
   box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.5);
 }
+/* =========================================
+   NEON HALO EFFECT
+   ========================================= */
+
+/* Add this to your global.css */
+.glow-ring-base {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  
+  /* 1. Explicitly state the mask */
+  -webkit-mask: radial-gradient(circle, transparent 82%, black 83%);
+  mask: radial-gradient(circle, transparent 82%, black 83%);
+  
+  /* 2. Ensure it's not blocked by other background styles */
+  background-clip: padding-box;
+}
