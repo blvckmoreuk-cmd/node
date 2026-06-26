@@ -34,7 +34,7 @@ import Layout from '../layouts/Layout.astro';
             <div id="knob-volume" class="dial-base w-40 h-40 rounded-full cursor-ns-resize relative z-10 overflow-hidden">
               
               <div class="knob-rotation-wrapper dial-texture w-full h-full absolute top-0 left-0 pointer-events-none rounded-full">
-                <div class="knob-indicator w-1 h-12 mx-auto mt-2 rounded-full bg-gradient-to-b from-[#f0f0f0] to-[#a0a0a0] shadow-[0_2px_4px_rgba(0,0,0,0.5)]"></div>
+                <div class="knob-indicator w-1 h-12 mx-auto mt-2 rounded-full bg-linear-to-b from-[#f0f0f0] to-[#a0a0a0] shadow-[0_2px_4px_rgba(0,0,0,0.5)]"></div>
               </div>
 
               <div class="dial-lighting absolute inset-0 rounded-full pointer-events-none"></div>
@@ -47,11 +47,11 @@ import Layout from '../layouts/Layout.astro';
       </div>
 
       <div id="scrub-container" class="w-full h-4 bg-[#e6e1d9] rounded-full shadow-[inset_2px_2px_4px_#c9c5be] border border-[#d1cdc5] cursor-pointer relative overflow-hidden mb-8">
-        <div id="scrub-progress" class="h-full bg-[#d7793b] w-0 transition-all duration-100"></div>
+        <div id="scrub-progress" class="h-full bg-[#ffd700] w-0 transition-all duration-100"></div>
       </div>
 
-      <button id="play-btn" class="w-full max-w-xs px-8 py-3 bg-[#f5f0e6] text-[#d7793b] font-semibold rounded-full shadow-[5px_5px_10px_#d1cdc5] hover:shadow-[inset_2px_2px_5px_#d1cdc5]">
-        Play Test Audio
+      <button id="play-btn" class="w-full max-w-xs px-8 py-3 bg-[#585858] text-[#ffd700] font-semibold rounded-full shadow-[1px_2px_5px_#585858] hover:shadow-[inset_2px_2px_5px_#d1cdc5]">
+        Play
       </button>
     </div>
   </main>
@@ -107,21 +107,36 @@ import Layout from '../layouts/Layout.astro';
     renderer.setSize(700, 320);
     container.appendChild(renderer.domElement);
 
-    const geo = new THREE.IcosahedronGeometry(1.5, 3);
-    const points = new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xFFD700, size: 0.05 }));
-    scene.add(points);
+    // Use a more sophisticated geometry and material
+const geo = new THREE.IcosahedronGeometry(2, 6);
+const material = new THREE.PointsMaterial({
+  size: 0.08,
+  transparent: true,
+  opacity: 0.8,
+  blending: THREE.AdditiveBlending, // Makes particles "glow" where they overlap
+  color: 0xd7793b // Matches your volume ring color
+});
+const points = new THREE.Points(geo, material);
+
+scene.add(points);
 
     function animate() {
-      requestAnimationFrame(animate);
-      if (sound.playing() && analyser && dataArray) {
-        analyser.getByteFrequencyData(dataArray);
-        const vol = (dataArray.reduce((a, b) => a + b) / dataArray.length) / 128;
-        points.rotation.y += 0.01 + vol; // Spins faster to the beat
-      } else {
-        points.rotation.y += 0.005; // Idle spin
-      }
-      renderer.render(scene, camera);
-    }
+  requestAnimationFrame(animate);
+  if (sound.playing() && analyser && dataArray) {
+    analyser.getByteFrequencyData(dataArray);
+    // Get average volume
+    const vol = (dataArray.reduce((a, b) => a + b) / dataArray.length) / 128;
+    
+    // Make the shape pulse in size based on bass
+    const scale = 1 + vol * 0.5;
+    points.scale.set(scale, scale, scale);
+    
+    // Add erratic spin based on intensity
+    points.rotation.y += 0.005 + (vol * 0.1);
+    points.rotation.x += 0.002 + (vol * 0.05);
+  }
+  renderer.render(scene, camera);
+}
     animate();
 
     // ==========================================
@@ -186,10 +201,10 @@ import Layout from '../layouts/Layout.astro';
 
       if (sound.playing()) {
         sound.pause();
-        playBtn.textContent = 'Play Test Audio';
+        playBtn.textContent = 'Play';
       } else {
         sound.play();
-        playBtn.textContent = 'Pause Audio';
+        playBtn.textContent = 'Pause';
       }
     });
 
