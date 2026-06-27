@@ -3,248 +3,203 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
-  <main class="w-full flex flex-col items-center p-8">
-    <div class="max-w-5xl w-full text-center neumo-card bg-[#c3c3c3] p-10 rounded-3xl shadow-[5px_5px_10px_#d1cdc5,-5px_-5px_10px_#ffffff]">
+  <main class="w-full min-h-screen bg-[#f1f3f4] flex flex-col items-center px-4 py-8 md:py-16 font-mono">
+    
+    <div class="max-w-4xl w-full bg-[#ffffff] border border-[#e2e8f0] shadow-[0_20px_50px_rgba(0,0,0,0.08)] rounded-3xl relative p-8 md:p-12">
       
-      <div class="flex flex-col md:flex-row gap-12 items-center justify-between mb-8">
-        <div id="canvas-container" class="relative w-full md:w-175 h-80 bg-[#1a1a1a] rounded-xl shadow-[inset_2px_2px_5px_#000] border border-[#333] overflow-hidden shrink-0">
-          <div class="absolute top-4 left-4 z-20">
-            <select id="track-selector" class="bg-[#4a453d]/90 text-[#f5f0e6] px-3 py-1 rounded-sm text-[10px] font-bold uppercase tracking-widest border border-[#3d372e] cursor-pointer outline-none">
-              <option value="/audio/BE OK.mp3">BE OK - BLVCKMORE</option>
-              <option value="/audio/Sure Thing.mp3">Sure Thing - Solow</option>
+      <header class="w-full flex justify-between items-end mb-12">
+        <div class="flex flex-col">
+          <h1 class="text-3xl md:text-5xl font-black tracking-tighter text-[#475569] uppercase">Node<span class="text-[#a78bfa]">.</span></h1>
+          <span class="text-[9px] tracking-[0.4em] text-[#94a3b8] uppercase font-bold mt-1">Dance Music</span>
+        </div>
+      </header>
+
+      <section class="w-full mb-12">
+        <div class="flex flex-col md:flex-row gap-8 items-start justify-between">
+          <div class="flex-1 w-full">
+            <div id="canvas-container" class="w-full h-64 bg-[#cbd5e1] rounded-2xl shadow-[inset_0_4px_6px_rgba(0,0,0,0.1)] border-4 border-[#f1f5f9] overflow-hidden"></div>
+            <select id="track-selector" class="w-full mt-4 bg-white border border-[#e2e8f0] text-[#475569] px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest cursor-pointer outline-none">
+              <option value="/audio/BE OK.mp3">SRC 1: BE OK</option>
+              <option value="/audio/Sure Thing.mp3">SRC 2: SURE THING</option>
             </select>
           </div>
-        </div>
 
-        <div class="flex flex-col items-center">
-          <div class="relative flex items-center justify-center w-56 h-56">
-            
-            <div 
-  id="knob-glow-core" 
-  class="absolute w-full h-full rounded-full pointer-events-none"
-  style="z-index: 1; mask-image: radial-gradient(circle, transparent 78px, black 80px, black 86px, transparent 88px); -webkit-mask-image: radial-gradient(circle, transparent 78px, black 80px, black 86px, transparent 88px);"
-></div>
-
-            <div 
-  id="knob-glow-core" 
-  class="absolute w-full h-full rounded-full pointer-events-none"
-  style="z-index: 0; mask-image: radial-gradient(circle, transparent 79px, black 80px, black 81px, transparent 82px); -webkit-mask-image: radial-gradient(circle, transparent 79px, black 80px, black 81px, transparent 82px);"
-></div>
-            
-            <div id="knob-volume" class="dial-base w-40 h-40 rounded-full cursor-ns-resize relative z-10 overflow-hidden">
-              
-              <div class="knob-rotation-wrapper dial-texture w-full h-full absolute top-0 left-0 pointer-events-none rounded-full">
-                <div class="knob-indicator w-1 h-12 mx-auto mt-2 rounded-full bg-linear-to-b from-[#f0f0f0] to-[#a0a0a0] shadow-[0_2px_4px_rgba(0,0,0,0.5)]"></div>
+          <div class="flex flex-col items-center justify-center gap-6">
+            <div class="relative flex items-center justify-center w-40 h-40">
+              <div id="knob-glow-core" class="absolute w-full h-full rounded-full pointer-events-none" style="z-index: 1;"></div>
+              <div id="knob-volume" class="w-32 h-32 rounded-full cursor-ns-resize relative z-10 bg-[#f1f5f9] shadow-[6px_6px_12px_rgba(0,0,0,0.05),-6px_-6px_12px_rgba(255,255,255,0.8)] border border-[#e2e8f0]">
+                <div class="knob-rotation-wrapper w-full h-full absolute top-0 left-0 pointer-events-none rounded-full">
+                  <div class="knob-indicator w-1 h-10 mx-auto mt-2 rounded-full bg-[#a78bfa] shadow-sm"></div>
+                </div>
               </div>
-
-              <div class="dial-lighting absolute inset-0 rounded-full pointer-events-none"></div>
-              
             </div>
-            
+            <button id="play-btn" class="w-full px-8 py-3 bg-[#1e293b] text-white font-black text-[10px] uppercase tracking-[0.2em] rounded-xl hover:bg-[#334155] transition-all shadow-lg">Play</button>
           </div>
-          <span class="text-[10px] uppercase tracking-widest mt-4 font-bold text-[#4a453d]">Volume</span>
         </div>
-      </div>
 
-      <div id="scrub-container" class="w-full h-4 bg-[#e6e1d9] rounded-full shadow-[inset_2px_2px_4px_#c9c5be] border border-[#d1cdc5] cursor-pointer relative overflow-hidden mb-8">
-        <div id="scrub-progress" class="h-full bg-[#ffd700] w-0 transition-all duration-100"></div>
-      </div>
+        <div class="mt-8 p-3 bg-white border border-[#e2e8f0] rounded-xl">
+          <div id="scrub-container" class="w-full h-2 bg-[#e2e8f0] rounded-full cursor-pointer relative overflow-hidden">
+            <div id="scrub-progress" class="h-full bg-[#a78bfa] w-0"></div>
+          </div>
+        </div>
+      </section>
 
-      <button id="play-btn" class="w-full max-w-xs px-8 py-3 bg-[#585858] text-[#ffd700] font-semibold rounded-full shadow-[1px_2px_5px_#585858] hover:shadow-[inset_2px_2px_5px_#d1cdc5]">
-        Play
-      </button>
+      <section id="services" class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+        {[
+          { title: 'Production', detail: 'Composition & Arrangement', color: 'bg-[#fce7f3]' },
+          { title: 'Mixing', detail: 'Balance & Sonic Clarity', color: 'bg-[#dcfce7]' },
+          { title: 'Mastering', detail: 'Industry Standard Loudness', color: 'bg-[#fef9c3]' },
+          { title: 'Education', detail: '1-on-1 Ableton Mentoring', color: 'bg-[#dbeafe]' },
+          { title: 'Sound Design', detail: 'Custom Patch Creation', color: 'bg-[#f3e8ff]' },
+          { title: 'Consulting', detail: 'Career Strategy', color: 'bg-[#ffedd5]' }
+        ].map((service) => (
+          <div class="service-card group h-96 perspective-[1000px] cursor-pointer">
+            <div class={`relative w-full h-full transition-transform duration-500 transform-3d group-hover:transform-[rotateY(180deg)] border border-[#e2e8f0] ${service.color} rounded-xl shadow-sm`}>
+              <div class="absolute w-full h-full p-6 flex flex-col justify-center items-center backface-hidden">
+                <span class="text-[12px] font-black uppercase tracking-tighter text-[#475569]">{service.title}</span>
+              </div>
+              <div class="absolute w-full h-full p-6 flex flex-col justify-between backface-hidden transform-[rotateY(180deg)] bg-[#1e293b] text-white rounded-xl">
+                <span class="text-[10px] uppercase tracking-widest text-center leading-relaxed">{service.detail}</span>
+                <div class="text-[10px] uppercase opacity-50 text-center">View Pricing</div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      <section id="enquiry" class="mt-16 pt-12 border-t-2 border-[#e2e8f0]">
+        <h2 class="text-sm font-black uppercase tracking-[0.2em] mb-8 text-[#475569]">Start a Project</h2>
+        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="flex flex-col gap-2">
+            <label class="text-[9px] font-bold uppercase tracking-widest text-[#94a3b8]">Name</label>
+            <input type="text" name="name" required class="bg-[#f8fafc] border border-[#e2e8f0] p-3 rounded-lg outline-none focus:border-[#a78bfa]" />
+          </div>
+          <div class="flex flex-col gap-2">
+            <label class="text-[9px] font-bold uppercase tracking-widest text-[#94a3b8]">Email</label>
+            <input type="email" name="email" required class="bg-[#f8fafc] border border-[#e2e8f0] p-3 rounded-lg outline-none focus:border-[#a78bfa]" />
+          </div>
+          <div class="col-span-1 md:col-span-2 flex flex-col gap-2">
+            <label class="text-[9px] font-bold uppercase tracking-widest text-[#94a3b8]">Message</label>
+            <textarea name="message" rows="4" required class="bg-[#f8fafc] border border-[#e2e8f0] p-3 rounded-lg outline-none focus:border-[#a78bfa]"></textarea>
+          </div>
+          <button type="submit" class="col-span-1 md:col-span-2 w-full py-4 bg-[#1e293b] text-white font-black text-[10px] uppercase tracking-[0.2em] rounded-xl hover:bg-[#334155] transition-all">Send Enquiry</button>
+        </form>
+      </section>
+
+      <section class="mt-16 flex justify-center items-center gap-10 opacity-40 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+        <img src="/logos/3000.jpg" class="h-10 rounded-lg" alt="3000" />
+        <img src="/logos/awd.jpg" class="h-10 rounded-lg" alt="AWD" />
+        <img src="/logos/ukf.jpg" class="h-10 rounded-lg" alt="UKF" />
+        <img src="/logos/gs.jpg" class="h-10 rounded-lg" alt="GS" />
+        <img src="/logos/gd.jpg" class="h-10 rounded-lg" alt="GD" />
+        <img src="/logos/uv.jpg" class="h-10 rounded-lg" alt="UV" />
+        <img src="/logos/motive.jpg" class="h-10 rounded-lg" alt="Motive" />
+      </section>
+      
     </div>
   </main>
 </Layout>
-
-<style is:global>
-  /* Included here to guarantee the 3D wood effect works flawlessly */
-  .wood-dial {
-    background-image: url('/dark-oak.jpg');
-    background-size: cover;
-    background-position: center;
-    border: 2px solid #2a1f18;
-    box-shadow: 
-      0 15px 25px -5px rgba(0, 0, 0, 0.6),
-      0 8px 10px -2px rgba(0, 0, 0, 0.5),
-      inset 0 4px 6px rgba(255, 255, 255, 0.3),
-      inset 0 -10px 15px rgba(0, 0, 0, 0.8),
-      inset 0 0 20px rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-  }
-</style>
 
 <script>
   import { Howl, Howler } from 'howler';
   import * as THREE from 'three';
 
-  window.addEventListener('load', () => {
-    // 1. Audio Setup
+  document.addEventListener('DOMContentLoaded', () => {
     let sound = new Howl({ src: ['/audio/BE OK.mp3'], html5: false, volume: 0.5 });
     let analyser: AnalyserNode | null = null;
     let dataArray: Uint8Array<ArrayBuffer> | null = null;
 
-    // 2. DOM Elements
-    const playBtn = document.getElementById('play-btn') as HTMLButtonElement;
-    const scrubContainer = document.getElementById('scrub-container') as HTMLDivElement;
-    const progressBar = document.getElementById('scrub-progress') as HTMLDivElement;
+    const playBtn = document.getElementById('play-btn');
+    const scrubContainer = document.getElementById('scrub-container');
+    const progressBar = document.getElementById('scrub-progress');
     const trackSelector = document.getElementById('track-selector') as HTMLSelectElement;
+    const knob = document.getElementById('knob-volume');
+    const wrapper = knob?.querySelector('.knob-rotation-wrapper');
+    const glowCore = document.getElementById('knob-glow-core');
 
-    const knob = document.getElementById('knob-volume') as HTMLDivElement;
-    const wrapper = knob?.querySelector('.knob-rotation-wrapper') as HTMLDivElement;
-    const glowBloom = document.getElementById('knob-glow-bloom') as HTMLDivElement;
-    const glowCore = document.getElementById('knob-glow-core') as HTMLDivElement;
+    if (!playBtn || !scrubContainer || !knob) return;
 
-    // ==========================================
-    // 3. THREE.JS VISUALIZER LOGIC
-    // ==========================================
-    const container = document.getElementById('canvas-container')!;
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, 700 / 320, 0.1, 1000);
-    camera.position.z = 5;
-    
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(700, 320);
-    container.appendChild(renderer.domElement);
+    // --- THREE.JS ---
+    const container = document.getElementById('canvas-container');
+    if (container) {
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, container.clientWidth / 256, 0.1, 1000);
+      camera.position.z = 5;
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(container.clientWidth, 256);
+      container.appendChild(renderer.domElement);
 
-    // Use a more sophisticated geometry and material
-const geo = new THREE.IcosahedronGeometry(2, 6);
-const material = new THREE.PointsMaterial({
-  size: 0.08,
-  transparent: true,
-  opacity: 0.8,
-  blending: THREE.AdditiveBlending, // Makes particles "glow" where they overlap
-  color: 0xd7793b // Matches your volume ring color
-});
-const points = new THREE.Points(geo, material);
+      const geometry = new THREE.IcosahedronGeometry(2, 6);
+      const material = new THREE.PointsMaterial({ size: 0.05, color: 0xa78bfa, transparent: true, blending: THREE.AdditiveBlending });
+      const points = new THREE.Points(geometry, material);
+      scene.add(points);
+      const basePositions = geometry.attributes.position.array.slice();
 
-scene.add(points);
+      function renderLoop() {
+        requestAnimationFrame(renderLoop);
+        if (sound.playing() && analyser && dataArray) {
+          analyser.getByteFrequencyData(dataArray);
+          const vol = (dataArray.reduce((a: any, b: any) => a + b) / dataArray.length) / 128;
+          const time = Date.now() * 0.001;
+          const positions = geometry.attributes.position.array;
+          for (let i = 0; i < positions.length; i += 3) {
+            const x = basePositions[i], y = basePositions[i+1], z = basePositions[i+2];
+            const dist = Math.sqrt(x*x + y*y + z*z);
+            const pattern = Math.sin(x * 4 + time) * Math.cos(y * 4 + time);
+            positions[i] = x + (x / dist) * pattern * (vol * 2);
+            positions[i+1] = y + (y / dist) * pattern * (vol * 2);
+            positions[i+2] = z + (z / dist) * pattern * (vol * 2);
+          }
+          geometry.attributes.position.needsUpdate = true;
+          points.material.color.setHSL(0.6 - (vol * 0.5), 0.8, 0.5);
+        }
+        renderer.render(scene, camera);
+      }
+      renderLoop();
+    }
 
-    function animate() {
-  requestAnimationFrame(animate);
-  if (sound.playing() && analyser && dataArray) {
-    analyser.getByteFrequencyData(dataArray);
-    // Get average volume
-    const vol = (dataArray.reduce((a, b) => a + b) / dataArray.length) / 128;
-    
-    // Make the shape pulse in size based on bass
-    const scale = 1 + vol * 0.5;
-    points.scale.set(scale, scale, scale);
-    
-    // Add erratic spin based on intensity
-    points.rotation.y += 0.005 + (vol * 0.1);
-    points.rotation.x += 0.002 + (vol * 0.05);
-  }
-  renderer.render(scene, camera);
-}
-    animate();
-
-    // ==========================================
-    // 4. VOLUME KNOB LOGIC
-    // ==========================================
-    let volume = 50; 
-    let isDragging = false;
-    let startY = 0;
-
-    function updateKnobVisuals(v: number) {
-  if (!wrapper || !glowCore) return; // Note: Remove glowBloom references if you delete that div
-  
-  const rotationAngle = (v / 100) * 270;
-  
-  wrapper.style.transform = `rotate(${-135 + rotationAngle}deg)`;
-  glowCore.style.transform = `rotate(-135deg)`;
-  
-  // The line itself (very thin)
-  const gradient = `conic-gradient(#ffffff 0deg, #ffd700 ${rotationAngle}deg, transparent ${rotationAngle}deg)`;
-  glowCore.style.background = gradient;
-  
-  // Remove the complex shadows, keep just one tight shadow to define the line
-  glowCore.style.filter = `drop-shadow(0 0 10px #d7793b)`;
-  
-  if (sound) sound.volume(v / 100);
-}
-
-    // Initialize UI on load
-    updateKnobVisuals(volume);
-
-    knob?.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      startY = e.clientY;
-    });
-
-    window.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      const deltaY = startY - e.clientY;
-      startY = e.clientY;
-      
-      volume = Math.max(0, Math.min(100, volume + deltaY));
-      updateKnobVisuals(volume);
-    });
-
-    window.addEventListener('mouseup', () => {
-      isDragging = false;
-    });
-
-    // ==========================================
-    // 5. AUDIO CONTROLS (Play, Scrub, Select)
-    // ==========================================
     playBtn.addEventListener('click', () => {
-      // Initialize Web Audio API on first user interaction
       if (!analyser && Howler.ctx) {
         analyser = Howler.ctx.createAnalyser();
         analyser.fftSize = 256;
         Howler.masterGain.connect(analyser);
-        dataArray = new Uint8Array(new ArrayBuffer(analyser.frequencyBinCount));
+        dataArray = new Uint8Array(analyser.frequencyBinCount);
       }
-      
       if (Howler.ctx?.state === 'suspended') Howler.ctx.resume();
-
-      if (sound.playing()) {
-        sound.pause();
-        playBtn.textContent = 'Play';
-      } else {
-        sound.play();
-        playBtn.textContent = 'Pause';
-      }
+      if (sound.playing()) { sound.pause(); playBtn.textContent = 'Play'; }
+      else { sound.play(); playBtn.textContent = 'Pause'; }
     });
 
-    scrubContainer.addEventListener('click', (e: MouseEvent) => {
+    scrubContainer.addEventListener('click', (e: any) => {
       const rect = scrubContainer.getBoundingClientRect();
-      const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      const pct = (e.clientX - rect.left) / rect.width;
       sound.seek(pct * sound.duration());
     });
 
     setInterval(() => {
-      if (sound.playing() && sound.duration() > 0) {
-        const pct = (sound.seek() as number) / sound.duration();
-        progressBar.style.width = (pct * 100) + '%';
+      if (sound.playing() && sound.duration() > 0 && progressBar) {
+        progressBar.style.width = ((sound.seek() as number) / sound.duration() * 100) + '%';
       }
     }, 100);
 
-    // This replaces your existing trackSelector listener
-trackSelector.addEventListener('change', () => {
-  const isPlaying = sound.playing();
-  const currentVolume = sound.volume(); // Capture volume before unloading
-  
-  sound.unload();
-  
-  // Create new track with the preserved volume
-  sound = new Howl({ 
-    src: [trackSelector.value], 
-    html5: false, 
-    volume: currentVolume 
-  });
-  
-  // Reset the scrub bar
-  progressBar.style.width = '0%';
-  
-  if (isPlaying) {
-    sound.play();
-    playBtn.textContent = 'Pause Audio';
-  } else {
-    playBtn.textContent = 'Play Test Audio';
-  }
-});
+    let isKnobDragging = false;
+    let currentRotation = 135;
 
+    knob.addEventListener('mousedown', () => { isKnobDragging = true; });
+    window.addEventListener('mousemove', (e: any) => {
+      if (!isKnobDragging) return;
+      currentRotation = Math.max(0, Math.min(270, currentRotation - e.movementY * 1.5));
+      if(wrapper) (wrapper as HTMLElement).style.transform = `rotate(${-135 + currentRotation}deg)`;
+      if(glowCore) (glowCore as HTMLElement).style.background = `conic-gradient(from -135deg, #a78bfa 0deg ${currentRotation}deg, transparent 0deg)`;
+      sound.volume(currentRotation / 270);
+    });
+    window.addEventListener('mouseup', () => { isKnobDragging = false; });
+
+    trackSelector?.addEventListener('change', () => {
+      sound.unload();
+      sound = new Howl({ src: [trackSelector.value], html5: false, volume: sound.volume() });
+      sound.play();
+      playBtn.textContent = 'Pause';
+    });
   });
 </script>

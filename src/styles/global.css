@@ -2,7 +2,7 @@
 
 @layer base {
   body {
-    background-color: #cf8714;
+    background-color: #e6e1d9;
     color: #5c554a;
     font-family: sans-serif;
   }
@@ -32,29 +32,27 @@
 
 /* The 3D Wooden Knob Base */
 /* Layer 1: The Base (Static outer shadows lifting it off the page) */
-  /* The Base: Heavy drop shadow for physical weight */
   .dial-base {
-    background: #222; /* Deep matte black base */
-    border: 1px solid #444;
+    border: 2px solid #2a1f18;
+    background-color: #1a1a1a;
     box-shadow: 
-      0 20px 30px -10px rgba(0, 0, 0, 0.8),
-      inset 0 1px 1px rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
+      0 15px 25px -5px rgba(0, 0, 0, 0.6),
+      0 8px 10px -2px rgba(0, 0, 0, 0.5);
   }
 
-  /* The Texture: Simulated brushed aluminum/anodized finish */
+  /* Layer 2: The Texture (This is what will spin!) */
   .dial-texture {
-    background: radial-gradient(circle at 30% 30%, #444, #111);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-image: url('/wood2.jpg');
+    background-size: cover;
+    background-position: center;
   }
 
-  /* The Lighting: High-end specular highlights for a 3D bevel */
+  /* Layer 3: The Lighting (Static inner shadows that stay perfectly still) */
   .dial-lighting {
-    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0) 50%, rgba(0,0,0,0.3) 100%);
     box-shadow: 
-      inset 0 2px 2px rgba(255, 255, 255, 0.2),
-      inset 0 -2px 2px rgba(0, 0, 0, 0.4);
-    border-radius: 50%;
+      inset 0 4px 6px rgba(255, 255, 255, 0.3),
+      inset 0 -10px 15px rgba(0, 0, 0, 0.8),
+      inset 0 0 20px rgba(0, 0, 0, 0.5);
   }
 
 /* The Engraved Copper Indicator */

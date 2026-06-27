@@ -9,6 +9,16 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://example.com',
+  
+  // Enabled hosting for tunnel access
+  server: {
+    host: true,
+    allowedHosts: [
+      'localhost',
+      '.ngrok-free.dev' // The dot prefix acts as a wildcard for all ngrok subdomains
+    ],
+  },
+
   integrations: [mdx(), sitemap()],
 
   fonts: [
@@ -34,7 +44,7 @@ export default defineConfig({
               ],
           },
       },
-	],
+    ],
 
   vite: {
     plugins: [tailwindcss()],
