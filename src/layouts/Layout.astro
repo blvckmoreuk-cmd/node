@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Header from '../components/Header.astro';
 ---
 
 <!doctype html>
@@ -9,29 +10,23 @@ import '../styles/global.css';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Node | Audio Engineering</title>
   </head>
-  
-  <body class="bg-[#e4c0fb98] min-h-screen flex flex-col font-sans text-[#5c554a]"> 
-    //"header"
-    
-    <header class="w-full flex items-center justify-between px-12 py-8 max-w-5xl mx-auto">
-      <nav class="flex gap-8 font-bold text-[#5c554a] uppercase tracking-widest text-sm">
-        <a href="/about" class="hover:text-[#d7793b] transition-colors">About</a>
-        <a href="/services" class="hover:text-[#d7793b] transition-colors">Services</a>
-      </nav>
 
-      <a href="/" class="text-3xl font-black tracking-[0.2em] text-[#4a453d]">NODE</a>
+  <body class="min-h-screen flex flex-col relative">
 
-      <nav class="flex gap-8 font-bold text-[#5c554a] uppercase tracking-widest text-sm">
-        <a href="/portfolio" class="hover:text-[#d7793b] transition-colors">Portfolio</a>
-        <a href="/contact" class="hover:text-[#d7793b] transition-colors">Contact</a>
-      </nav>
-    </header>
+    <!-- Grain overlay: subtle texture across the whole page, sits behind everything.
+         Same noise recipe used inside the card on the homepage, so the grain matches
+         site-wide instead of using an external asset. -->
+    <div class="page-grain fixed inset-0 pointer-events-none z-0" aria-hidden="true"></div>
 
-    <main class="grow flex flex-col items-center">
+    <Header />
+
+    <!-- Main Content: z-10 keeps it above the grain overlay -->
+    <main class="w-full grow flex flex-col items-center z-10 relative">
       <slot />
     </main>
 
-    <footer class="w-full py-8 text-center text-xs tracking-widest uppercase">
+    <!-- Footer -->
+    <footer class="w-full py-8 mt-12 text-center text-[10px] tracking-[0.3em] uppercase text-[#64748b] border-t border-[#171c22] z-10 relative">
       &copy; {new Date().getFullYear()} Node Leeds. All Rights Reserved.
     </footer>
 
