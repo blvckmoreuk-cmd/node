@@ -1,0 +1,87 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout>
+  <main class="w-full min-h-screen bg-[#050608] flex flex-col items-center px-4 py-16 font-mono text-[#94a3b8]">
+    
+    <div class="w-full max-w-3xl">
+      <a href="/" class="text-[9px] uppercase tracking-[0.2em] text-[#52555c] hover:text-[#10b981] mb-12 block transition-colors">
+        &larr; Back to Home
+      </a>
+
+      <div class="mb-16 text-center">
+        <h1 class="text-xl font-black uppercase tracking-[0.3em] text-[#10b981] mb-2">Services & Rates</h1>
+        <p class="text-[10px] uppercase tracking-widest text-[#52555c]">Professional audio services for electronic music producers.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        
+        <!-- Mastering -->
+        <div class="bg-[#0a0c0f] border border-[#14171c] p-6 rounded-sm">
+          <h3 class="text-[11px] font-black uppercase tracking-widest text-[#10b981] mb-4 border-b border-[#14171c] pb-2">Mastering</h3>
+          <ul class="text-[10px] space-y-3 uppercase">
+            <li class="flex justify-between"><span>Per Track</span> <span>£30</span></li>
+            <li class="flex justify-between text-[#52555c]"><span>Add. Version</span> <span>£10</span></li>
+            <li class="flex justify-between"><span>EP (2+ Tracks)</span> <span>£20/tr</span></li>
+            <li class="flex justify-between text-[#52555c]"><span>Add. Version</span> <span>£5/tr</span></li>
+          </ul>
+        </div>
+
+        <!-- Mixing -->
+        <div class="bg-[#0a0c0f] border border-[#14171c] p-6 rounded-sm">
+          <h3 class="text-[11px] font-black uppercase tracking-widest text-[#10b981] mb-4 border-b border-[#14171c] pb-2">Mixing & Mastering</h3>
+          <ul class="text-[10px] space-y-3 uppercase">
+            <li class="flex justify-between"><span>10 Stems</span> <span>£50</span></li>
+            <li class="flex justify-between"><span>20 Stems</span> <span>£85</span></li>
+            <li class="flex justify-between"><span>30 Stems</span> <span>£120</span></li>
+            <li class="flex justify-between text-[#52555c]"><span>Extra Stems</span> <span>£2/ea</span></li>
+          </ul>
+        </div>
+
+        <!-- Production -->
+        <div class="bg-[#0a0c0f] border border-[#14171c] p-6 rounded-sm md:col-span-2">
+          <h3 class="text-[11px] font-black uppercase tracking-widest text-[#10b981] mb-4 border-b border-[#14171c] pb-2">Production & Finishing</h3>
+          <div class="space-y-4">
+            <div class="flex justify-between items-center">
+              <span class="text-[10px] uppercase font-bold">Ghost Production (Exclusive/Royalty Free)</span>
+              <span class="text-[11px] font-black text-[#10b981]">£250</span>
+            </div>
+            <div class="flex justify-between items-center pt-2 border-t border-[#14171c]">
+              <span class="text-[10px] uppercase font-bold">Finish Your Track (Analysis included)</span>
+              <span class="text-[11px] font-black text-[#10b981]">£120 - £200</span>
+            </div>
+            <p class="text-[9px] italic text-[#52555c] mt-2">Price varies based on complexity; please enquire for a custom quote.</p>
+          </div>
+        </div>
+
+        <!-- Education & Tools -->
+        <div class="bg-[#0a0c0f] border border-[#14171c] p-6 rounded-sm">
+          <h3 class="text-[11px] font-black uppercase tracking-widest text-[#10b981] mb-4 border-b border-[#14171c] pb-2">Consultation & Education</h3>
+          <ul class="text-[10px] space-y-3 uppercase">
+            <li class="flex justify-between"><span>1:1 Tech Analysis/Call</span> <span>£40</span></li>
+            <li class="flex justify-between"><span>Ableton Tutoring (p/h)</span> <span>£25</span></li>
+          </ul>
+          <p class="text-[9px] text-[#52555c] mt-4 uppercase">Hosted on Muse or Discord</p>
+        </div>
+
+        <div class="bg-[#0a0c0f] border border-[#14171c] p-6 rounded-sm">
+          <h3 class="text-[11px] font-black uppercase tracking-widest text-[#10b981] mb-4 border-b border-[#14171c] pb-2">Digital Tools</h3>
+          <ul class="text-[10px] space-y-3 uppercase">
+            <li class="flex justify-between"><span>Clutter-free VSTs</span> <span>£5</span></li>
+            <li class="flex justify-between"><span>Sample Packs</span> <span>£15</span></li>
+            <li class="flex justify-between"><span>Stock FX Racks</span> <span>£5</span></li>
+            <li class="flex justify-between"><span>Visualiser</span> <span>£5</span></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="mt-16 text-center border-t border-[#14171c] pt-12">
+        <a href="/contact" class="px-8 py-3 bg-[#10b981] text-[#050608] font-black text-[10px] uppercase tracking-[0.25em] rounded-sm hover:bg-[#059669] transition-all">
+          Enquire Now
+        </a>
+      </div>
+    </div>
+  </main>
+</Layout>

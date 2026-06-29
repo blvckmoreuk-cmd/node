@@ -12,10 +12,22 @@ import Layout from '../layouts/Layout.astro';
           <span class="w-1.5 h-1.5 rounded-full bg-[#10b981] shadow-[0_0_6px_rgba(16,185,129,0.8)]"></span>
           <span class="text-[9px] font-bold tracking-[0.3em] uppercase text-[#52555c]">About</span>
         </div>
+        <div class="flex items-center gap-4 mb-12">
+  <a href="/prices" 
+     class="px-8 py-3 bg-[#171c22] border border-[#252c36] text-[#64748b] font-black text-[10px] uppercase tracking-[0.25em] rounded-sm hover:border-[#10b981] hover:text-[#10b981] transition-all">
+     Price List
+  </a>
+  
+  <a href="/contact" 
+     class="px-8 py-3 bg-[#10b981] text-[#050608] font-black text-[10px] uppercase tracking-[0.25em] rounded-sm border border-[#064e3b] shadow-[0_4px_12px_rgba(16,185,129,0.3)] hover:bg-[#059669] transition-all">
+     Get Started
+  </a>
+</div>
         <p class="text-sm md:text-base text-[#94a3b8] leading-relaxed max-w-2xl">
-          Node is an audio engineering practice based in Leeds — production, mixing, mastering, and sound design.<br/>
-          Every session is built around one thing: getting the track sounding exactly how you heard it in your head.
-        </p>
+  Node Production are Dance Music Specialists based in Leeds<br/>
+  <br/>
+  Check out our work on the visualiser below or click <a href="/about" class="text-[#10b981] underline hover:text-[#34d399] transition-colors">here</a> to learn more.
+</p>
       </section>
 
       <section class="w-full bg-[#0a0c0f] border border-[#14171c] rounded-lg p-6 md:p-8 relative">
@@ -43,8 +55,12 @@ import Layout from '../layouts/Layout.astro';
 
             <div class="relative w-full shadow-[0_4px_10px_rgba(0,0,0,0.5)] rounded">
               <select id="track-selector" class="w-full bg-[#0a0c0f] border-t border-l border-t-black border-l-black border-b border-r border-b-[#252c36] border-r-[#252c36] text-[#10b981] px-5 py-4 rounded text-[11px] font-bold uppercase tracking-widest cursor-pointer outline-none shadow-[inset_0_5px_15px_rgba(0,0,0,1)] appearance-none">
-                <option value="/audio/BE OK.mp3">SRC 1: BE OK // CONNECTED</option>
-                <option value="/audio/Sure Thing.mp3">SRC 2: SURE THING // CONNECTED</option>
+                <option value="/audio/Wanna Feel.mp3">Track 01: Wanna Feel // Mix/Master</option>
+                <option value="/audio/BE OK.mp3">Track 02: BE OK // FULL PRODUCTION</option>
+                <option value="/audio/Sure Thing.mp3">Track 03: SURE THING // MASTER</option>
+                <option value="/audio/2HOT.mp3">Track 04: 2HOT // MASTER</option>
+                <option value="/audio/wet-morry.mp3">Track 05: WET // MASTER</option>
+                <option value="/audio/tellmehowtorave-casmalia.mp3">Track 06: TELL ME HOW TO RAVE // Mix/Master</option>
               </select>
               <div class="absolute right-5 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-[#10b981] shadow-[0_0_8px_rgba(16,185,129,0.9),inset_0_1px_1px_rgba(255,255,255,0.6)] pointer-events-none border border-[#022c22]"></div>
             </div>
@@ -100,15 +116,15 @@ import Layout from '../layouts/Layout.astro';
         <div id="services" class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
         <svg id="cable-layer" class="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none" aria-hidden="true"></svg>
         {[
-          { title: 'Production', slug: 'production', detail: 'Composition & Arrangement', color: 'from-[#e0c590] to-[#967a3f]', wire: 'bg-red-500', glow: 'shadow-[0_0_10px_rgba(239,68,68,0.9)]' },
-          { title: 'Mixing', slug: 'mixing', detail: 'Balance & Sonic Clarity', color: 'from-[#e0c590] to-[#967a3f]', wire: 'bg-blue-500', glow: 'shadow-[0_0_10px_rgba(59,130,246,0.9)]' },
-          { title: 'Mastering', slug: 'mastering', detail: 'Industry Standard Loudness', color: 'from-[#e0c590] to-[#967a3f]', wire: 'bg-yellow-400', glow: 'shadow-[0_0_10px_rgba(250,204,21,0.9)]' },
+          { title: 'Production', slug: 'production', detail: 'Ghost Production // Finish your track', color: 'from-[#e0c590] to-[#967a3f]', wire: 'bg-red-500', glow: 'shadow-[0_0_10px_rgba(239,68,68,0.9)]' },
+          { title: 'Mixing', slug: 'mixing', detail: 'Balance, Width, Depth and a Pro Master - Full lows and crispy highs', color: 'from-[#e0c590] to-[#967a3f]', wire: 'bg-blue-500', glow: 'shadow-[0_0_10px_rgba(59,130,246,0.9)]' },
+          { title: 'Mastering', slug: 'mastering', detail: 'Industry Standard Loudness and depth - Analogue Preamps', color: 'from-[#e0c590] to-[#967a3f]', wire: 'bg-yellow-400', glow: 'shadow-[0_0_10px_rgba(250,204,21,0.9)]' },
           { title: 'Education', slug: 'education', detail: '1-on-1 Ableton Mentoring', color: 'from-[#e0c590] to-[#967a3f]', wire: 'bg-green-500', glow: 'shadow-[0_0_10px_rgba(34,197,94,0.9)]' },
           { title: 'Sound Design', slug: 'sounddesign', detail: 'Custom Patch Creation', color: 'from-[#e0c590] to-[#967a3f]', wire: 'bg-purple-500', glow: 'shadow-[0_0_10px_rgba(168,85,247,0.9)]' },
-          { title: 'Consulting', slug: 'consulting', detail: 'Career Strategy', color: 'from-[#e0c590] to-[#967a3f]', wire: 'bg-orange-500', glow: 'shadow-[0_0_10px_rgba(249,115,22,0.9)]' }
+          { title: 'Consulting', slug: 'consulting', detail: 'Send us your track. We will write a professional analysis and hold a 1-1 video call to discuss', color: 'from-[#e0c590] to-[#967a3f]', wire: 'bg-orange-500', glow: 'shadow-[0_0_10px_rgba(249,115,22,0.9)]' }
         ].map((service) => (
           <div class="service-card group h-72 perspective-distant cursor-pointer isolate">
-            <div class={`relative w-full h-full transition-transform duration-700 transform-3d group-hover:transform-[rotateY(180deg)]`}>
+            <div class="service-card-inner relative w-full h-full transition-transform duration-700 transform-3d">
 
               <div class={`brushed-metal absolute w-full h-full p-6 flex flex-col justify-center items-center backface-hidden bg-linear-to-b ${service.color} border-t border-l border-t-[#fae8bf] border-l-[#fae8bf] border-b-[3px] border-r-[3px] border-b-[#423216] border-r-[#423216] shadow-[0_10px_18px_rgba(0,0,0,0.5)] rounded-sm overflow-hidden`}>
 
@@ -151,27 +167,27 @@ import Layout from '../layouts/Layout.astro';
       <section class="w-full bg-[#0a0c0f] border border-[#14171c] rounded-lg p-6 md:p-8 relative">
         <div class="flex items-center gap-4 mb-8 bg-[#0d1014] w-fit p-3 border border-[#050608] shadow-[inset_0_1px_3px_rgba(0,0,0,0.9)]">
           <div class="w-2.5 h-2.5 rounded-full bg-[#10b981] shadow-[0_0_10px_rgba(16,185,129,0.9),inset_0_1px_1px_rgba(255,255,255,0.5)] border border-[#022c22]"></div>
-          <h2 class="text-sm font-black uppercase tracking-[0.3em] text-[#64748b]">Routing Matrix // Start Project</h2>
+          <h2 class="text-sm font-black uppercase tracking-[0.3em] text-[#64748b]">Enquire // There is no such thing as a stupid question</h2>
         </div>
 
         <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="grid grid-cols-1 md:grid-cols-2 gap-6 p-8 bg-[#0d1014] border-t border-l border-t-black border-l-black border-b border-r border-b-[#252c36] border-r-[#252c36] rounded shadow-[inset_0_15px_30px_rgba(0,0,0,0.7)] relative isolate overflow-hidden">
            <div class="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,1)_1px,transparent_1px)] bg-size-[12px_12px] pointer-events-none"></div>
 
           <div class="flex flex-col gap-3 relative z-10">
-            <label class="text-[9px] font-bold uppercase tracking-widest text-[#64748b] bg-[#050608] w-fit px-2 py-1 border border-[#171c22]">Client ID [Name]</label>
+            <label class="text-[9px] font-bold uppercase tracking-widest text-[#64748b] bg-[#050608] w-fit px-2 py-1 border border-[#171c22]">[Name]</label>
             <input type="text" name="name" required class="bg-[#050608] border border-[#171c22] p-4 text-[#10b981] text-xs font-bold tracking-wider rounded-sm outline-none focus:border-[#10b981] focus:shadow-[0_0_12px_rgba(16,185,129,0.2)] shadow-[inset_0_2px_6px_rgba(0,0,0,0.9)]" />
           </div>
           <div class="flex flex-col gap-3 relative z-10">
-            <label class="text-[9px] font-bold uppercase tracking-widest text-[#64748b] bg-[#050608] w-fit px-2 py-1 border border-[#171c22]">Comms Link [Email]</label>
+            <label class="text-[9px] font-bold uppercase tracking-widest text-[#64748b] bg-[#050608] w-fit px-2 py-1 border border-[#171c22]">[Email]</label>
             <input type="email" name="email" required class="bg-[#050608] border border-[#171c22] p-4 text-[#10b981] text-xs font-bold tracking-wider rounded-sm outline-none focus:border-[#10b981] focus:shadow-[0_0_12px_rgba(16,185,129,0.2)] shadow-[inset_0_2px_6px_rgba(0,0,0,0.9)]" />
           </div>
           <div class="col-span-1 md:col-span-2 flex flex-col gap-3 relative z-10">
-            <label class="text-[9px] font-bold uppercase tracking-widest text-[#64748b] bg-[#050608] w-fit px-2 py-1 border border-[#171c22]">Transmission Data [Message]</label>
+            <label class="text-[9px] font-bold uppercase tracking-widest text-[#64748b] bg-[#050608] w-fit px-2 py-1 border border-[#171c22]">[Message]</label>
             <textarea name="message" rows="5" required class="bg-[#050608] border border-[#171c22] p-4 text-[#10b981] text-xs font-bold tracking-wider rounded-sm outline-none focus:border-[#10b981] focus:shadow-[0_0_12px_rgba(16,185,129,0.2)] shadow-[inset_0_2px_6px_rgba(0,0,0,0.9)]"></textarea>
           </div>
 
           <button type="submit" class="col-span-1 md:col-span-2 w-full py-4 mt-4 bg-linear-to-r from-[#2d3642] to-[#1e252e] text-[#10b981] font-black text-[13px] uppercase tracking-[0.3em] rounded-sm border-t border-l border-t-[#475569] border-l-[#475569] border-b-[3px] border-r-[3px] border-b-[#0f172a] border-r-[#0f172a] hover:from-[#3a4454] hover:to-[#252c36] transition-all shadow-[0_4px_8px_rgba(0,0,0,0.4)] active:translate-y-0.5 active:translate-x-0.5 active:shadow-[0_2px_4px_rgba(0,0,0,0.8),inset_0_4px_8px_rgba(0,0,0,0.8)] relative z-10">
-            Initialize Sequence
+            Send
           </button>
         </form>
       </section>
@@ -200,7 +216,17 @@ import Layout from '../layouts/Layout.astro';
   gsap.registerPlugin(Draggable);
 
   document.addEventListener('DOMContentLoaded', () => {
-    let sound = new Howl({ src: ['/audio/BE OK.mp3'], html5: false, volume: 0.5 });
+    document.querySelectorAll('.service-card').forEach((card) => {
+  if (window.matchMedia('(hover: hover)').matches) {
+    // Has a real mouse — flip on hover, just like before
+    card.addEventListener('mouseenter', () => card.classList.add('is-flipped'));
+    card.addEventListener('mouseleave', () => card.classList.remove('is-flipped'));
+  } else {
+    // Touch device — flip on tap
+    card.addEventListener('click', () => card.classList.toggle('is-flipped'));
+  }
+});
+    let sound = new Howl({ src: ['/audio/Wanna Feel.mp3'], html5: false, volume: 0.5 });
     let analyser: AnalyserNode | null = null;
     let dataArray: Uint8Array<ArrayBuffer> | null = null;
     let bassEnvelope = 0; // smoothed low-end energy: fast attack, slow decay — see renderLoop
@@ -552,3 +578,33 @@ import Layout from '../layouts/Layout.astro';
     });
   });
 </script>
+<style>
+  .service-card {
+    -webkit-perspective: 1000px;
+    perspective: 1000px;
+  }
+
+  .service-card-inner {
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+  }
+
+  .service-card.is-flipped .service-card-inner {
+    -webkit-transform: rotateY(180deg) translateZ(0);
+    transform: rotateY(180deg) translateZ(0);
+  }
+
+  .brushed-metal {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  .grain-overlay-dark {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: rotateY(180deg) translateZ(0);
+    transform: rotateY(180deg) translateZ(0);
+  }
+</style>
