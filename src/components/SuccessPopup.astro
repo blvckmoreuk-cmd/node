@@ -1,0 +1,59 @@
+---
+// Shows a "Message Sent" popup after a Netlify Forms submission redirects back
+// with ?success=true. Drop <SuccessPopup /> on any page whose form action ends
+// in ?success=true. The script strips the param so a refresh won't re-open it.
+---
+
+<div id="success-popup" class="fixed inset-0 z-[60] hidden items-center justify-center px-4 py-8 font-mono" role="dialog" aria-modal="true" aria-labelledby="success-title">
+  <div id="success-backdrop" class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+
+  <div class="relative z-10 w-full max-w-sm bg-base border border-line-strong shadow-[0_20px_60px_rgba(0,0,0,0.7)]">
+    <div class="flex items-center justify-between px-5 py-3 border-b border-line-strong bg-panel">
+      <span class="text-fg-faint font-mono text-[10px] uppercase tracking-[0.35em]">Node // Enquiry</span>
+      <button id="success-close" type="button" aria-label="Close" class="w-7 h-7 flex items-center justify-center border border-line-strong text-fg-faint hover:text-accent hover:border-accent transition-colors text-sm leading-none">&times;</button>
+    </div>
+
+    <div class="p-6 md:p-8 flex flex-col items-center text-center gap-4">
+      <div class="w-14 h-14 flex items-center justify-center rounded-full border border-accent text-accent text-2xl shadow-[0_0_18px_rgba(47,111,237,0.5)]">&check;</div>
+      <div>
+        <h2 id="success-title" class="font-display text-2xl font-bold uppercase tracking-tight text-fg leading-none">Message Sent</h2>
+        <p class="mt-2.5 font-body text-sm leading-relaxed text-fg-muted">Thanks for reaching out. I'll reply same-day &mdash; check your inbox (and spam) for a response.</p>
+      </div>
+      <button id="success-ok" type="button" class="w-full py-3.5 bg-accent-dim text-white font-mono font-black text-[12px] uppercase tracking-[0.3em] hover:bg-accent active:translate-y-px transition-all">
+        Done
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const popup = document.getElementById('success-popup');
+    if (!popup) return;
+    const url = new URL(window.location.href);
+    if (url.searchParams.get('success') !== 'true') return;
+
+    // Strip the flag so a refresh or back-nav won't re-open the popup.
+    url.searchParams.delete('success');
+    history.replaceState(null, '', url.pathname + url.search + url.hash);
+
+    const open = () => {
+      popup.classList.remove('hidden');
+      popup.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      document.getElementById('success-ok')?.focus();
+    };
+    const close = () => {
+      popup.classList.add('hidden');
+      popup.classList.remove('flex');
+      document.body.style.overflow = '';
+    };
+
+    document.getElementById('success-close')?.addEventListener('click', close);
+    document.getElementById('success-ok')?.addEventListener('click', close);
+    document.getElementById('success-backdrop')?.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+
+    open();
+  });
+</script>

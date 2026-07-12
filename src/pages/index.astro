@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import ServiceModal from '../components/ServiceModal.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import ReviewsCarousel from '../components/ReviewsCarousel.astro';
+import SuccessPopup from '../components/SuccessPopup.astro';
 import { services } from '../data/services';
 
 // Clients scroll continuously under the masthead. Shuffled at build time so the
@@ -171,9 +172,9 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
             <textarea id="message" name="message" rows="5" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors"></textarea>
           </div>
           <div class="bg-panel p-5 md:col-span-2">
-            <label for="attachment" class="block font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint mb-2">Attachments / Audio</label>
-            <input type="file" id="attachment" name="attachment" multiple accept="audio/*,.wav,.mp3,.aiff,.aif,.flac,.zip" class="w-full bg-base border border-line-strong px-4 py-3 text-fg-muted font-mono text-[11px] tracking-wider outline-none focus:border-accent transition-colors cursor-pointer file:mr-4 file:py-1.5 file:px-3 file:border-0 file:bg-accent-dim file:text-white file:font-mono file:font-bold file:text-[10px] file:uppercase file:tracking-widest file:cursor-pointer" />
-            <p class="mt-2 font-mono text-[8px] uppercase tracking-[0.2em] text-fg-faint">WAV / MP3 / FLAC / ZIP. For large sessions, paste a download link in the details.</p>
+            <p class="font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint leading-relaxed">
+              Please attach files using a WeTransfer, Google Drive, Dropbox or SwissTransfer link.
+            </p>
           </div>
           <button type="submit" class="md:col-span-2 w-full py-4 bg-accent-dim text-white font-mono font-black text-[13px] uppercase tracking-[0.3em] hover:bg-accent active:translate-y-px transition-all">
             Send Enquiry
@@ -204,6 +205,7 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
   </main>
 
   <ServiceModal />
+  <SuccessPopup />
 </Layout>
 
 
