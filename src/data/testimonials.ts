@@ -13,8 +13,6 @@ export interface Testimonial {
 }
 
 export const testimonials: Testimonial[] = [
-  { quote: 'Fast turnaround and the master translated perfectly on every system. Booking again.', author: 'SAMPLE — replace', source: 'Fiverr', rating: 5 },
-  { quote: 'Took my rough mix and made it sound like a proper release. Exactly the reference I sent.', author: 'SAMPLE — replace', source: 'Fiverr', rating: 5 },
-  { quote: 'Really clear feedback on the arrangement, not just the mix. Helped me finish the track.', author: 'SAMPLE — replace', source: 'Direct', rating: 5 },
-  { quote: 'Loudness and low end are exactly where I wanted them. Two revisions, no fuss.', author: 'SAMPLE — replace', source: 'Instagram', rating: 5 },
+  { quote: 'Super professional, attentive to detail and clearly understands UKG/bass music. The track came back punchy, clean and club-ready. Really appreciated the communication and flexibility throughout. Looking forward to working together again.', author: 'brg_mzk (Italy)', source: 'Fiverr', rating: 5 },
+  { quote: 'James was a pleasure to work with and delivered the perfect extended version for my track. Would recommend everyone to use him.', author: 'A-Niche (UK)', source: 'Direct', rating: 5 },
 ];

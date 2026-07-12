@@ -1,0 +1,169 @@
+---
+// Shared product detail panel. Drop <ProductModal /> on any page whose cards
+// carry the data-* attributes below and a `.product-card` class; the script
+// wires every matching button to open this dialog. The Buy button is inert for
+// now — Stripe Checkout gets wired to `#modal-buy` later.
+---
+
+<div id="product-modal" class="fixed inset-0 z-50 hidden items-center justify-center px-4 py-8 font-mono" role="dialog" aria-modal="true" aria-labelledby="pmodal-title">
+  <div id="pmodal-backdrop" class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+
+  <div class="relative z-10 w-full max-w-lg bg-base border border-line-strong shadow-[0_20px_60px_rgba(0,0,0,0.7)] max-h-full overflow-y-auto">
+    <div class="flex items-center justify-between px-5 py-3 border-b border-line-strong bg-panel">
+      <div class="flex items-center gap-3">
+        <span id="pmodal-num" class="text-accent font-mono text-xs font-bold">01</span>
+        <span class="text-fg-faint font-mono text-[10px] uppercase tracking-[0.35em]">Product Detail</span>
+      </div>
+      <button id="pmodal-close" type="button" aria-label="Close" class="w-7 h-7 flex items-center justify-center border border-line-strong text-fg-faint hover:text-accent hover:border-accent transition-colors text-sm leading-none">&times;</button>
+    </div>
+
+    <div class="p-6 md:p-8 flex flex-col gap-5">
+      <div class="flex items-center gap-3">
+        <span id="pmodal-dot" class="w-3 h-3 rounded-full shrink-0"></span>
+        <div>
+          <h2 id="pmodal-title" class="font-display text-2xl font-bold uppercase tracking-tight text-fg leading-none">Nodegen</h2>
+          <p id="pmodal-tagline" class="mt-1.5 font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint">Chord Generator / Stab Sequencer</p>
+        </div>
+      </div>
+
+      <div id="pmodal-cover" class="aspect-[16/10] w-full bg-inset border border-line grain-overlay-dark relative overflow-hidden flex items-center justify-center">
+        <img id="pmodal-image" src="" alt="" class="w-full h-full object-cover hidden" />
+        <span id="pmodal-cover-label" class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint/40">Cover art</span>
+      </div>
+
+      <p id="pmodal-detail" class="font-body text-sm leading-relaxed text-fg-muted"></p>
+
+      <div class="flex items-end justify-between border-t border-line pt-4">
+        <div>
+          <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint block">Price</span>
+          <span id="pmodal-price" class="font-display text-3xl font-bold text-accent leading-none">£15</span>
+        </div>
+        <span id="pmodal-note" class="font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint text-right max-w-[50%]"></span>
+      </div>
+
+      <div class="border-t border-line pt-4">
+        <span class="font-mono text-[9px] uppercase tracking-[0.3em] text-accent block mb-3">What's inside</span>
+        <ul id="pmodal-features" class="flex flex-col gap-2.5"></ul>
+      </div>
+
+      <div class="border-t border-line pt-4">
+        <span class="font-mono text-[9px] uppercase tracking-[0.3em] text-accent block mb-3">Specs</span>
+        <ul id="pmodal-meta" class="flex flex-col gap-2"></ul>
+      </div>
+
+      <button id="pmodal-buy" type="button" disabled class="w-full text-center py-4 bg-raised text-fg-faint font-mono font-black text-[12px] uppercase tracking-[0.3em] cursor-not-allowed">
+        Buy &mdash; Coming Soon
+      </button>
+      <a href="/contact" class="w-full text-center font-mono text-[10px] uppercase tracking-[0.25em] text-fg-faint hover:text-accent transition-colors">
+        Questions? Get in touch &rarr;
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('product-modal');
+    const modalBackdrop = document.getElementById('pmodal-backdrop');
+    const modalClose = document.getElementById('pmodal-close');
+    if (!modal) return;
+
+    const setText = (id: string, value: string) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    };
+    let lastFocused: HTMLElement | null = null;
+
+    function openModal(card: HTMLElement) {
+      if (!modal) return;
+      const d = card.dataset;
+      setText('pmodal-num', d.num || '');
+      setText('pmodal-title', d.title || '');
+      setText('pmodal-tagline', d.tagline || '');
+      setText('pmodal-detail', d.detail || '');
+      setText('pmodal-price', d.price || '');
+      setText('pmodal-note', d.note || '');
+
+      const dot = document.getElementById('pmodal-dot');
+      if (dot && d.hex) {
+        dot.style.background = d.hex;
+        dot.style.boxShadow = `0 0 8px ${d.hex}`;
+      }
+
+      const img = document.getElementById('pmodal-image') as HTMLImageElement | null;
+      const coverLabel = document.getElementById('pmodal-cover-label');
+      if (img && coverLabel) {
+        if (d.image) {
+          img.src = d.image;
+          img.alt = d.title || '';
+          img.classList.remove('hidden');
+          coverLabel.classList.add('hidden');
+        } else {
+          img.src = '';
+          img.classList.add('hidden');
+          coverLabel.classList.remove('hidden');
+        }
+      }
+
+      const featureList = document.getElementById('pmodal-features');
+      if (featureList) {
+        featureList.innerHTML = '';
+        let features: string[] = [];
+        try { features = JSON.parse(d.features || '[]'); } catch { features = []; }
+        for (const feature of features) {
+          const li = document.createElement('li');
+          li.className = 'flex gap-2.5 font-body text-[12px] leading-snug text-fg-muted';
+          const mark = document.createElement('span');
+          mark.className = 'text-accent shrink-0 mt-px';
+          mark.textContent = '+';
+          const text = document.createElement('span');
+          text.textContent = feature;
+          li.append(mark, text);
+          featureList.appendChild(li);
+        }
+      }
+
+      const metaList = document.getElementById('pmodal-meta');
+      if (metaList) {
+        metaList.innerHTML = '';
+        let meta: { label: string; value: string }[] = [];
+        try { meta = JSON.parse(d.meta || '[]'); } catch { meta = []; }
+        for (const row of meta) {
+          const li = document.createElement('li');
+          li.className = 'flex justify-between font-mono text-[11px] uppercase tracking-wide text-fg-muted';
+          const label = document.createElement('span');
+          label.className = 'text-fg-faint';
+          label.textContent = row.label;
+          const value = document.createElement('span');
+          value.className = 'font-bold';
+          value.textContent = row.value;
+          li.append(label, value);
+          metaList.appendChild(li);
+        }
+      }
+
+      lastFocused = card;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      modalClose?.focus();
+    }
+
+    function closeModal() {
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+      lastFocused?.focus();
+    }
+
+    document.querySelectorAll<HTMLElement>('.product-card').forEach((card) => {
+      card.addEventListener('click', () => openModal(card));
+    });
+    modalBackdrop?.addEventListener('click', closeModal);
+    modalClose?.addEventListener('click', closeModal);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !modal.classList.contains('hidden')) closeModal();
+    });
+  });
+</script>

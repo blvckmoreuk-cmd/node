@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ServiceModal from '../components/ServiceModal.astro';
+import ServiceCard from '../components/ServiceCard.astro';
 import ReviewsCarousel from '../components/ReviewsCarousel.astro';
 import { services } from '../data/services';
 
@@ -8,7 +9,7 @@ import { services } from '../data/services';
 // order reads as unranked rather than a leaderboard.
 const clientNames = [
   'Casmalia', 'Solara', 'Morry', 'Akonite', 'Covert', 'HiFeelings', 'Dankstreet',
-  'Denno', 'Slink', 'UKF', 'Unique Vibes', 'Motive', 'Teks LV', 'Joe Allen',
+  'Denno', 'Slinki', 'UKF', 'Unique Vibes', 'Motive', 'Teks LV', 'Joe Allen',
   'TerryBoy', 'Sohl', 'ElTacoFiesta', 'Gold Digger', '3000 Bass',
 ];
 const clients = [...clientNames].sort(() => Math.random() - 0.5);
@@ -27,7 +28,7 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 md:gap-10 items-end px-4 md:px-8 py-8 md:py-12">
-          <h1 class="font-display font-bold uppercase leading-[0.9] tracking-tight text-fg text-[14vw] md:text-[5.5rem]">
+          <h1 class="font-display font-bold uppercase leading-[0.9] tracking-tight text-fg text-[13vw] md:text-[5.5rem]">
             Dance Music<br /><span class="text-accent">Engineering.</span>
           </h1>
           <div class="flex flex-col gap-5 md:items-end">
@@ -82,11 +83,12 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
               <div class="relative w-full sm:w-80">
                 <select id="track-selector" class="w-full bg-black/65 backdrop-blur-sm border border-accent text-accent pl-3 pr-7 py-2 text-[10px] font-mono font-bold uppercase tracking-wider cursor-pointer outline-none appearance-none rounded-sm shadow-[0_4px_14px_rgba(0,0,0,0.55)]">
                   <option value="/audio/Wanna Feel.mp3">Track 01: Wanna Feel // Mix/Master</option>
-                  <option value="/audio/BE OK.mp3">Track 02: BE OK // Full Production</option>
-                  <option value="/audio/Sure Thing.mp3">Track 03: Sure Thing // Master</option>
-                  <option value="/audio/2HOT.mp3">Track 04: 2HOT // Master</option>
-                  <option value="/audio/wet-morry.mp3">Track 05: WET // Master</option>
-                  <option value="/audio/tellmehowtorave-casmalia.mp3">Track 06: Tell Me How To Rave // Mix/Master</option>
+                  <option value="/audio/shake it.mp3">Track 02: Shake It // Mix/Master</option>
+                  <option value="/audio/BE OK.mp3">Track 03: BE OK // Full Production</option>
+                  <option value="/audio/Sure Thing.mp3">Track 04: Sure Thing // Master</option>
+                  <option value="/audio/2HOT.mp3">Track 05: 2HOT // Master</option>
+                  <option value="/audio/wet-morry.mp3">Track 06: WET // Master</option>
+                  <option value="/audio/tellmehowtorave-casmalia.mp3">Track 07: Tell Me How To Rave // Mix/Master</option>
                 </select>
                 <div class="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-accent text-[8px]">&#9660;</div>
               </div>
@@ -138,45 +140,9 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
           <span class="text-fg-faint font-mono text-[9px] uppercase tracking-[0.2em]">Tap a card</span>
         </div>
 
-        <div id="services" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-px bg-line-strong">
+        <div id="services" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 p-3 md:p-4">
           {services.map((service) => (
-            <button
-              type="button"
-              class="service-card service-plate group h-56 text-left cursor-pointer relative overflow-hidden p-5 flex flex-col justify-between outline-none focus-visible:ring-1 focus-visible:ring-accent"
-              data-num={service.num}
-              data-title={service.title}
-              data-tagline={service.tagline}
-              data-detail={service.detail}
-              data-price={service.price}
-              data-note={service.note}
-              data-revisions={service.revisions}
-              data-hex={service.hex}
-              data-reqs={JSON.stringify(service.reqs)}
-              aria-haspopup="dialog"
-            >
-              <span class="plate-screw absolute top-2.5 left-2.5"></span>
-              <span class="plate-screw absolute top-2.5 right-2.5"></span>
-              <span class="plate-screw absolute bottom-2.5 left-2.5"></span>
-              <span class="plate-screw absolute bottom-2.5 right-2.5"></span>
-
-              <div class="flex items-start justify-between relative z-10">
-                <span class="font-display text-5xl font-bold leading-none text-transparent [-webkit-text-stroke:1px_rgba(47,111,237,0.4)] group-hover:[-webkit-text-stroke:1px_rgba(47,111,237,0.7)] transition-all">{service.num}</span>
-                <div class="w-4 h-4 rounded-full bg-black border border-line-strong flex items-center justify-center shadow-[inset_0_1px_2px_rgba(0,0,0,0.9)]">
-                  <div class={`w-1.5 h-1.5 rounded-full ${service.wire} ${service.glow}`}></div>
-                </div>
-              </div>
-              <div class="relative z-10">
-                <h3 class="font-display text-lg font-bold uppercase tracking-tight text-fg leading-none plate-engrave">{service.title}</h3>
-                <p class="mt-2 font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint">{service.tagline}</p>
-                {service.revisions && (
-                  <p class="mt-2 font-mono text-[8px] uppercase tracking-[0.15em] text-accent">&#8635; {service.revisions}</p>
-                )}
-              </div>
-              <div class="flex items-end justify-between border-t border-white/5 pt-3 relative z-10">
-                <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint group-hover:text-accent transition-colors">Details &rarr;</span>
-                <span class="font-display text-xl font-bold text-accent leading-none plate-engrave">{service.price}</span>
-              </div>
-            </button>
+            <ServiceCard service={service} compact />
           ))}
         </div>
       </section>
@@ -495,7 +461,18 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
       renderLoop();
     }
 
+    // iOS routes Web Audio to the "ambient" session by default, so it obeys the
+    // hardware silent switch. Requesting the "playback" session (iOS 16.4+) makes
+    // the visualiser audio play through even when the phone is on silent.
+    function enablePlaybackAudioSession() {
+      try {
+        const audioSession = (navigator as any).audioSession;
+        if (audioSession) audioSession.type = 'playback';
+      } catch { /* unsupported browser: ignore */ }
+    }
+
     playBtn.addEventListener('click', () => {
+      enablePlaybackAudioSession();
       if (!analyser && Howler.ctx) {
         analyser = Howler.ctx.createAnalyser();
         analyser.fftSize = 1024;

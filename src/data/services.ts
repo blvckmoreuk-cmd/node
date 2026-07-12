@@ -14,6 +14,8 @@ export interface Service {
   glow: string;
   hex: string;
   reqs: string[];
+  reqsLabel?: string; // overrides the modal "What to send" heading; list hides when reqs is empty
+  shopHref?: string; // when set, the modal CTA points here (the shop) instead of /contact
 }
 
 export const services: Service[] = [
@@ -70,12 +72,9 @@ export const services: Service[] = [
     num: '05', title: 'Tools & Samples', slug: 'sounddesign', tagline: 'Custom Patches',
     price: 'From £5', note: 'tools from £5, custom on enquiry', revisions: '',
     detail: 'Bespoke patches, racks and one-shots built around your reference. Prefer something off-the-shelf? Sample packs, stock FX racks and the Nodegen VST are fixed-price tools.',
-    wire: 'bg-purple-500', glow: 'shadow-[0_0_8px_rgba(168,85,247,0.9)]', hex: '#a855f7',
-    reqs: [
-      'Reference sounds or a track that captures the texture you want.',
-      'The target synth or plugin (e.g. Serum, Vital) and its version.',
-      'Where it sits in the mix: lead, bass, pad, FX.',
-    ],
+    wire: 'bg-purple-500', glow: 'shadow-[0_0_8px_rgba(168,85,247,0.9)]', hex: '#a855f7', shopHref: '/shop',
+    reqsLabel: 'Workflow and production tools',
+    reqs: [],
   },
   {
     num: '06', title: 'Track Analysis', slug: 'consulting', tagline: 'Feedback / Breakdown',

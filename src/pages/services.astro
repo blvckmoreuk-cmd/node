@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import SectionFrame from '../components/SectionFrame.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import ServiceModal from '../components/ServiceModal.astro';
+import ServiceCard from '../components/ServiceCard.astro';
 import { services } from '../data/services';
 ---
 
@@ -31,43 +32,9 @@ import { services } from '../data/services';
         <SectionHeader num="02" label="Services / Signal Chain">
           <span slot="meta" class="text-fg-faint font-mono text-[9px] uppercase tracking-[0.2em]">Tap a card</span>
         </SectionHeader>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-line-strong">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 p-3 md:p-4">
           {services.map((service) => (
-            <button
-              type="button"
-              class="service-card group bg-panel p-6 flex flex-col gap-4 text-left cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-accent hover:bg-inset transition-colors"
-              data-num={service.num}
-              data-title={service.title}
-              data-tagline={service.tagline}
-              data-detail={service.detail}
-              data-price={service.price}
-              data-note={service.note}
-              data-revisions={service.revisions}
-              data-hex={service.hex}
-              data-reqs={JSON.stringify(service.reqs)}
-              aria-haspopup="dialog"
-            >
-              <div class="flex items-start justify-between">
-                <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-full bg-black border border-line-strong shadow-[inset_0_2px_4px_rgba(0,0,0,0.9)] flex items-center justify-center shrink-0">
-                    <div class={`w-2 h-2 rounded-full ${service.wire} ${service.glow}`}></div>
-                  </div>
-                  <div>
-                    <h2 class="font-display text-base font-bold uppercase tracking-tight text-fg leading-none">{service.title}</h2>
-                    <p class="mt-1 font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint">{service.tagline}</p>
-                  </div>
-                </div>
-                <span class="font-display text-lg font-bold text-fg-faint/30 leading-none">{service.num}</span>
-              </div>
-              <p class="font-body text-[13px] leading-relaxed text-fg-muted flex-1">{service.detail}</p>
-              {service.revisions && (
-                <p class="font-mono text-[9px] uppercase tracking-[0.15em] text-accent">&#8635; {service.revisions}</p>
-              )}
-              <div class="flex items-end justify-between border-t border-line pt-3">
-                <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint group-hover:text-accent transition-colors">Details &rarr;</span>
-                <span class="font-display text-xl font-bold text-accent leading-none">{service.price}</span>
-              </div>
-            </button>
+            <ServiceCard service={service} />
           ))}
         </div>
       </section>

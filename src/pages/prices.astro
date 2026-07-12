@@ -105,9 +105,12 @@ const toolRows = [
             <p class="mt-4 font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint">Hosted on Muse or Discord</p>
           </div>
 
-          <!-- Digital Tools -->
-          <div class="bg-panel p-6">
-            <h3 class="font-display text-[13px] font-bold uppercase tracking-[0.15em] text-accent mb-4 border-b border-line pb-3">Digital Tools</h3>
+          <!-- Digital Tools (links to the shop) -->
+          <a href="/shop" class="group bg-panel p-6 block hover:bg-inset transition-colors">
+            <h3 class="font-display text-[13px] font-bold uppercase tracking-[0.15em] text-accent mb-4 border-b border-line pb-3 flex items-center justify-between">
+              Digital Tools
+              <span class="font-mono text-[8px] tracking-[0.2em] text-fg-faint group-hover:text-accent transition-colors">Shop &rarr;</span>
+            </h3>
             <ul class="space-y-3">
               {toolRows.map((row) => (
                 <li class="flex justify-between text-[11px] uppercase tracking-wide text-fg-muted">
@@ -115,7 +118,7 @@ const toolRows = [
                 </li>
               ))}
             </ul>
-          </div>
+          </a>
 
         </div>
       </section>

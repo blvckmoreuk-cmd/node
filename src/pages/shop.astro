@@ -1,0 +1,150 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionFrame from '../components/SectionFrame.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import ProductModal from '../components/ProductModal.astro';
+import { products, categories } from '../data/products';
+
+const catById = Object.fromEntries(categories.map((c) => [c.id, c]));
+const tabs = [{ id: 'all', label: 'All' }, ...categories.map((c) => ({ id: c.id, label: c.label }))];
+---
+
+<Layout>
+  <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-mono">
+    <SectionFrame max="max-w-4xl">
+
+      <!-- Masthead -->
+      <header class="border-b border-line-strong">
+        <div class="flex items-center justify-between px-4 md:px-5 py-2.5 border-b border-line">
+          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Node // Shop</span>
+          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Digital goods</span>
+        </div>
+        <div class="px-4 md:px-8 py-8 md:py-11">
+          <h1 class="font-display font-bold uppercase leading-[0.9] tracking-tight text-fg text-[11vw] md:text-[3.75rem]">
+            The<br /><span class="text-accent">store.</span>
+          </h1>
+          <p class="mt-5 font-body text-sm text-fg-muted max-w-md leading-relaxed">
+            VSTs, racks, templates and sample packs from the studio. Instant downloads coming soon &mdash; browse the shelf below.
+          </p>
+        </div>
+      </header>
+
+      <!-- Filter tabs -->
+      <div class="flex flex-wrap gap-px bg-line-strong border-b border-line-strong">
+        {tabs.map((tab, i) => (
+          <button
+            type="button"
+            class={`shop-tab flex-1 min-w-[33%] sm:min-w-0 px-4 py-3 bg-panel font-mono text-[10px] uppercase tracking-[0.2em] transition-colors hover:text-accent ${i === 0 ? 'text-accent' : 'text-fg-faint'}`}
+            data-tab={tab.id}
+            aria-pressed={i === 0 ? 'true' : 'false'}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      <!-- Product grid -->
+      <section class="border-b border-line-strong">
+        <SectionHeader num="01" label="Shop / Catalogue">
+          <span slot="meta" class="text-fg-faint font-mono text-[9px] uppercase tracking-[0.2em]">Tap a card</span>
+        </SectionHeader>
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 gap-px bg-line-strong">
+          {products.map((product) => {
+            const cat = catById[product.category];
+            return (
+              <button
+                type="button"
+                class="product-card group bg-panel p-6 flex flex-col gap-4 text-left cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-accent hover:bg-inset transition-colors"
+                data-category={product.category}
+                data-num={product.num}
+                data-title={product.title}
+                data-tagline={product.tagline}
+                data-detail={product.detail}
+                data-price={product.price}
+                data-note={product.priceNote}
+                data-hex={cat?.hex}
+                data-image={product.image}
+                data-features={JSON.stringify(product.features)}
+                data-meta={JSON.stringify(product.meta)}
+                aria-haspopup="dialog"
+              >
+                <div class="aspect-[16/10] w-full bg-inset border border-line grain-overlay-dark relative overflow-hidden flex items-center justify-center">
+                  {product.image
+                    ? <img src={product.image} alt={product.title} class="w-full h-full object-cover" loading="lazy" />
+                    : <span class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint/40">Cover art</span>}
+                </div>
+                <div class="flex items-start justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-full bg-black border border-line-strong shadow-[inset_0_2px_4px_rgba(0,0,0,0.9)] flex items-center justify-center shrink-0">
+                      <div class={`w-2 h-2 rounded-full ${cat?.wire} ${cat?.glow}`}></div>
+                    </div>
+                    <div>
+                      <h2 class="font-display text-[1rem] font-bold uppercase tracking-tight text-fg leading-none">{product.title}</h2>
+                      <p class="mt-1 font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint">{product.tagline}</p>
+                    </div>
+                  </div>
+                  {product.badge
+                    ? <span class="font-mono text-[8px] uppercase tracking-[0.2em] text-accent border border-accent/40 px-1.5 py-0.5 leading-none">{product.badge}</span>
+                    : <span class="font-display text-lg font-bold text-fg-faint/30 leading-none">{product.num}</span>}
+                </div>
+                <p class="font-body text-[13px] leading-relaxed text-fg-muted flex-1">{product.detail}</p>
+                <p class="font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint">{cat?.label}</p>
+                <div class="flex items-end justify-between border-t border-line pt-3">
+                  <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint group-hover:text-accent transition-colors">View &rarr;</span>
+                  <span class="font-display text-xl font-bold text-accent leading-none">{product.price}</span>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+        <!-- Empty state: shown when a filter matches no products -->
+        <div id="shop-empty" class="hidden bg-panel px-6 py-12 text-center">
+          <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-fg-faint">Nothing here yet &mdash; more coming soon.</p>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="flex flex-col sm:flex-row items-stretch">
+        <a href="/services" class="flex-1 text-center px-6 py-5 bg-panel border-b sm:border-b-0 sm:border-r border-line-strong text-fg-muted font-mono font-bold text-[11px] uppercase tracking-[0.2em] hover:text-accent hover:border-accent transition-colors">
+          Studio Services
+        </a>
+        <a href="/contact" class="flex-1 text-center px-6 py-5 bg-accent-dim text-white font-mono font-bold text-[11px] uppercase tracking-[0.2em] hover:bg-accent transition-colors">
+          Custom Request
+        </a>
+      </section>
+
+    </SectionFrame>
+  </div>
+
+  <ProductModal />
+</Layout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll<HTMLElement>('.shop-tab');
+    const cards = document.querySelectorAll<HTMLElement>('.product-card');
+    const empty = document.getElementById('shop-empty');
+
+    function applyFilter(id: string) {
+      let visible = 0;
+      cards.forEach((card) => {
+        const show = id === 'all' || card.dataset.category === id;
+        card.classList.toggle('hidden', !show);
+        if (show) visible++;
+      });
+      empty?.classList.toggle('hidden', visible > 0);
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => {
+          const active = t === tab;
+          t.setAttribute('aria-pressed', active ? 'true' : 'false');
+          t.classList.toggle('text-accent', active);
+          t.classList.toggle('text-fg-faint', !active);
+        });
+        applyFilter(tab.dataset.tab || 'all');
+      });
+    });
+  });
+</script>
