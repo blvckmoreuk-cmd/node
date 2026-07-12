@@ -1,10 +1,53 @@
 @import "tailwindcss";
 
+/* =========================================
+   DESIGN TOKENS
+   Single source of truth for colour, type, spacing and radius.
+   Font cssVariables are registered in astro.config.mjs and emitted
+   by the Font tags in Layout.astro.
+   ========================================= */
+@theme {
+  /* Surfaces: bright mastering-suite daylight. Page sits on grey, modules are white. */
+  --color-page: #e4e8ee;
+  --color-base: #ffffff;
+  --color-panel: #f6f8fb;
+  --color-inset: #e6ebf1;
+  --color-raised: #dbe2ea;
+  --color-tint: #e9eef4;
+  --color-line: #d7dee6;
+  --color-line-strong: #b7c1cd;
+
+  /* Text: cool near-black ink to soft slate */
+  --color-fg: #14181d;
+  --color-fg-muted: #4a5560;
+  --color-fg-faint: #8b96a3;
+
+  /* Accent: cobalt, the cool signature colour */
+  --color-accent: #2f6fed;
+  --color-accent-bright: #5a8ff5;
+  --color-accent-dim: #1f52b8;
+
+  /* Type roles */
+  --font-display: var(--font-space-grotesk), "Space Grotesk", sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-body: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Radius: one system, 4px controls and 8px panels */
+  --radius-control: 4px;
+  --radius-panel: 8px;
+
+  /* Spacing on an 8pt scale; numeric p-* and gap-* utilities map to the
+     same grid, so p-4 is 16, p-8 is 32 and gap-16 is 64 */
+  --spacing-card: 16px;
+  --spacing-section: 32px;
+  --spacing-gap: 64px;
+}
+
 @layer base {
   body {
-    background-color: #050608;
-    color: #94a3b8;
-    font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+    background-color: var(--color-page);
+    color: var(--color-fg-muted);
+    font-family: var(--font-body);
   }
 }
 
@@ -55,6 +98,84 @@
     background-image: radial-gradient(140% 60% at 30% -10%, rgba(255,255,255,0.35) 0%, transparent 55%);
   }
 
+  /* ---- Service faceplate: premium analogue hardware panel ----
+     Layered so the card reads as a milled, top-lit metal plate: a graphite
+     base with a bevelled edge, fine machining lines + noise grain, a raking
+     highlight, and screwed-down corners. */
+  .service-plate {
+    position: relative;
+    isolation: isolate;
+    background: linear-gradient(160deg, #fdfeff 0%, #eef2f6 55%, #e0e6ec 100%);
+    border: 1px solid #c9d1da;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      inset 0 -18px 28px rgba(90, 105, 125, 0.09),
+      0 3px 10px rgba(40, 55, 75, 0.12);
+    transition: box-shadow 0.35s ease, transform 0.35s ease;
+  }
+  /* machining lines + noise grain */
+  .service-plate::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image:
+      repeating-linear-gradient(94deg, rgba(40, 55, 75, 0.05) 0 1px, transparent 1px 3px),
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size: auto, 130px 130px;
+    mix-blend-mode: multiply;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+  /* raking light from the top-left, like a panel under a studio lamp */
+  .service-plate::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(130% 90% at 25% -15%, rgba(255, 255, 255, 0.7) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .service-plate:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.95),
+      inset 0 -18px 28px rgba(90, 105, 125, 0.08),
+      0 14px 30px rgba(40, 55, 75, 0.18),
+      0 0 0 1px rgba(47, 111, 237, 0.4);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .service-plate { transition: none; }
+    .service-plate:hover { transform: none; }
+  }
+
+  /* countersunk screw in each plate corner */
+  .plate-screw {
+    width: 7px;
+    height: 7px;
+    border-radius: 9999px;
+    background: radial-gradient(circle at 35% 30%, #eef2f6 0%, #9aa6b3 72%);
+    box-shadow:
+      inset 0 1px 1px rgba(255, 255, 255, 0.9),
+      inset 0 -1px 2px rgba(40, 55, 75, 0.5),
+      0 1px 1px rgba(255, 255, 255, 0.7);
+  }
+  .plate-screw::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 4px;
+    height: 1px;
+    background: rgba(40, 55, 75, 0.4);
+    transform: rotate(45deg);
+  }
+
+  /* engraved / debossed text on the plate */
+  .plate-engrave {
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.85), 0 -1px 0 rgba(40, 55, 75, 0.08);
+  }
+
   /* ---- Volume knob knurled ring ---- */
   .knob-knurl {
     background-image: repeating-conic-gradient(
@@ -67,7 +188,7 @@
   input[type="color"] {
     -webkit-appearance: none;
     appearance: none;
-    border: 1px solid #23272e;
+    border: 1px solid #c9d1da;
     padding: 0;
   }
   input[type="color"]::-webkit-color-swatch-wrapper {
@@ -82,23 +203,23 @@
     border-radius: 2px;
   }
 
-  /* ---- Patch cables (drawn into #cable-layer by index.astro's script) ---- */
-  .cable {
-    fill: none;
-    stroke-width: 2.5;
-    stroke-linecap: round;
-    opacity: 0.8;
-    stroke-dasharray: 7 9;
-    animation: cable-flow 2.5s linear infinite;
+  /* ---- Client marquee (homepage, under the masthead) ----
+     Track holds the client list twice; translating it -50% loops seamlessly. */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 42s linear infinite;
   }
-  .cable-red     { stroke: #ef4444; filter: drop-shadow(0 0 3px rgba(239,68,68,0.65)); }
-  .cable-blue    { stroke: #3b82f6; filter: drop-shadow(0 0 3px rgba(59,130,246,0.65)); }
-  .cable-yellow  { stroke: #facc15; filter: drop-shadow(0 0 3px rgba(250,204,21,0.65)); }
-  .cable-green   { stroke: #22c55e; filter: drop-shadow(0 0 3px rgba(34,197,94,0.65)); }
-  .cable-purple  { stroke: #a855f7; filter: drop-shadow(0 0 3px rgba(168,85,247,0.65)); }
-  .cable-orange  { stroke: #f97316; filter: drop-shadow(0 0 3px rgba(249,115,22,0.65)); }
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+  }
+
 }
 
-@keyframes cable-flow {
-  to { stroke-dashoffset: -160; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }

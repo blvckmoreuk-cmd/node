@@ -1,0 +1,13 @@
+---
+// The shared "rack unit" shell. One bordered frame that every page lives inside,
+// matching the homepage so the whole site reads as one system of modules.
+interface Props {
+  max?: string;
+  class?: string;
+  id?: string;
+}
+const { max = 'max-w-4xl', class: cls = '', id } = Astro.props;
+---
+<div id={id} class:list={["w-full border border-line-strong bg-base relative z-10", max, cls]}>
+  <slot />
+</div>

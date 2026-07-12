@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { Font } from 'astro:assets';
 import Header from '../components/Header.astro';
 ---
 
@@ -9,6 +10,12 @@ import Header from '../components/Header.astro';
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Node | Audio Engineering</title>
+
+    <!-- Font roles: display (Space Grotesk), mono (JetBrains Mono), body (Inter).
+         Registered in astro.config.mjs; preload the two above-the-fold faces. -->
+    <Font cssVariable="--font-space-grotesk" preload />
+    <Font cssVariable="--font-inter" preload />
+    <Font cssVariable="--font-jetbrains-mono" />
   </head>
 
   <body class="min-h-screen flex flex-col relative">
@@ -26,7 +33,7 @@ import Header from '../components/Header.astro';
     </main>
 
     <!-- Footer -->
-    <footer class="w-full py-8 mt-12 text-center text-[10px] tracking-[0.3em] uppercase text-[#64748b] border-t border-[#171c22] z-10 relative">
+    <footer class="w-full py-8 mt-12 text-center text-[10px] font-mono tracking-[0.3em] uppercase text-fg-faint border-t border-line-strong z-10 relative">
       &copy; {new Date().getFullYear()} Node Leeds. All Rights Reserved.
     </footer>
 
