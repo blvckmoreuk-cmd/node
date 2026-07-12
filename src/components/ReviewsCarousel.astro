@@ -1,0 +1,86 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import { testimonials } from '../data/testimonials';
+---
+
+<section class="reviews-carousel border-b border-line-strong">
+  <SectionHeader label="Reviews / What Clients Say">
+    <span slot="meta" class="text-fg-faint font-mono text-[9px] uppercase tracking-[0.2em]">{testimonials.length} reviews</span>
+  </SectionHeader>
+
+  <div class="relative">
+    <!-- Slides -->
+    <div class="overflow-hidden">
+      <div data-track class="flex transition-transform duration-500 ease-out">
+        {testimonials.map((t) => (
+          <figure data-slide class="w-full shrink-0 px-10 md:px-20 py-6 md:py-7 flex flex-col items-center text-center gap-3">
+            <div class="flex gap-0.5 text-[11px]" aria-label={`${t.rating} out of 5`}>
+              {Array.from({ length: 5 }).map((_, s) => (
+                <span class={s < t.rating ? 'text-accent' : 'text-fg-faint/40'}>&#9733;</span>
+              ))}
+            </div>
+            <blockquote class="font-body text-sm md:text-base text-fg leading-relaxed max-w-xl">&ldquo;{t.quote}&rdquo;</blockquote>
+            <figcaption class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">
+              {t.author} <span class="text-accent">&middot; via {t.source}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+
+    <!-- Prev / next -->
+    <button data-prev type="button" aria-label="Previous review"
+      class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center border border-line-strong bg-base/70 backdrop-blur-sm text-fg-faint hover:text-accent hover:border-accent transition-colors outline-none focus-visible:ring-1 focus-visible:ring-accent">&#8249;</button>
+    <button data-next type="button" aria-label="Next review"
+      class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-8 h-8 flex items-center justify-center border border-line-strong bg-base/70 backdrop-blur-sm text-fg-faint hover:text-accent hover:border-accent transition-colors outline-none focus-visible:ring-1 focus-visible:ring-accent">&#8250;</button>
+  </div>
+
+  <!-- Dots -->
+  <div class="flex items-center justify-center gap-2 pb-3.5 border-t border-line pt-3">
+    {testimonials.map((_, i) => (
+      <button data-dot type="button" aria-label={`Go to review ${i + 1}`}
+        class="w-2 h-2 rounded-full border border-line-strong transition-colors outline-none focus-visible:ring-1 focus-visible:ring-accent"></button>
+    ))}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.reviews-carousel').forEach((root) => {
+    const track = root.querySelector<HTMLElement>('[data-track]');
+    const slides = root.querySelectorAll('[data-slide]');
+    const dots = root.querySelectorAll<HTMLElement>('[data-dot]');
+    const prev = root.querySelector('[data-prev]');
+    const next = root.querySelector('[data-next]');
+    const n = slides.length;
+    if (!track || n === 0) return;
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let i = 0;
+    let timer: ReturnType<typeof setInterval> | undefined;
+
+    function go(k: number) {
+      i = (k + n) % n;
+      track!.style.transform = `translateX(-${i * 100}%)`;
+      dots.forEach((d, di) => {
+        d.classList.toggle('bg-accent', di === i);
+        d.classList.toggle('border-accent', di === i);
+      });
+    }
+    function restart() {
+      if (reduce || n < 2) return;
+      clearInterval(timer);
+      timer = setInterval(() => go(i + 1), 6000);
+    }
+
+    prev?.addEventListener('click', () => { go(i - 1); restart(); });
+    next?.addEventListener('click', () => { go(i + 1); restart(); });
+    dots.forEach((d, di) => d.addEventListener('click', () => { go(di); restart(); }));
+    root.addEventListener('mouseenter', () => clearInterval(timer));
+    root.addEventListener('mouseleave', restart);
+    root.addEventListener('focusin', () => clearInterval(timer));
+    root.addEventListener('focusout', restart);
+
+    go(0);
+    restart();
+  });
+</script>

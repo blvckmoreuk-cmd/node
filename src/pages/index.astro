@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import ServiceModal from '../components/ServiceModal.astro';
+import ReviewsCarousel from '../components/ReviewsCarousel.astro';
 import { services } from '../data/services';
 
 // Clients scroll continuously under the masthead. Shuffled at build time so the
@@ -212,7 +213,7 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
       </section>
 
       <!-- ===================== TRUSTED BY ===================== -->
-      <section>
+      <section class="border-b border-line-strong">
         <div class="flex items-center gap-3 px-4 md:px-5 py-3 border-b border-line-strong bg-panel">
           <span class="text-fg-faint font-mono text-[10px] uppercase tracking-[0.35em]">Trusted By</span>
         </div>
@@ -226,6 +227,9 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
           <img src="/logos/motive.jpg" class="h-7" alt="Motive" />
         </div>
       </section>
+
+      <!-- ===================== REVIEWS ===================== -->
+      <ReviewsCarousel />
 
     </div>
   </main>

@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import SectionFrame from '../components/SectionFrame.astro';
 import SectionHeader from '../components/SectionHeader.astro';
+import ReviewsCarousel from '../components/ReviewsCarousel.astro';
 
 const works = [
   { title: 'Wanna Feel', artist: 'Node', credit: 'Mix / Master', wire: 'bg-red-500' },
@@ -60,6 +61,9 @@ const bars = [3, 6, 4, 8, 5, 7, 4, 9, 6, 3, 7, 5, 8, 4, 6, 5, 7, 3];
           ))}
         </div>
       </section>
+
+      <!-- Reviews -->
+      <ReviewsCarousel />
 
       <!-- CTA -->
       <section>
