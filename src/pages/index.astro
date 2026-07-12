@@ -66,7 +66,7 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
         <div class="flex items-center justify-between px-4 md:px-5 py-3 border-b border-line-strong bg-panel">
           <div class="flex items-center gap-3">
             <span class="text-accent font-mono text-xs font-bold">01</span>
-            <span class="text-fg-faint font-mono text-[10px] uppercase tracking-[0.35em]">Visualiser / Listen</span>
+            <span class="text-fg-faint font-mono text-[10px] uppercase tracking-[0.35em]">Our Work / Press Play</span>
           </div>
           <label class="flex items-center gap-2 cursor-pointer">
             <span class="text-[9px] font-mono tracking-[0.2em] uppercase text-fg-faint">Particle</span>
@@ -86,13 +86,13 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
             <div class="absolute top-3 left-3 right-3 sm:left-auto z-20 pointer-events-auto">
               <div class="relative w-full sm:w-80">
                 <select id="track-selector" class="w-full bg-black/65 backdrop-blur-sm border border-accent text-accent pl-3 pr-7 py-2 text-[10px] font-mono font-bold uppercase tracking-wider cursor-pointer outline-none appearance-none rounded-sm shadow-[0_4px_14px_rgba(0,0,0,0.55)]">
-                  <option value="/audio/Wanna Feel.mp3">Track 01: Wanna Feel // Mix/Master</option>
-                  <option value="/audio/shake it.mp3">Track 02: Shake It // Mix/Master</option>
-                  <option value="/audio/BE OK.mp3">Track 03: BE OK // Full Production</option>
-                  <option value="/audio/Sure Thing.mp3">Track 04: Sure Thing // Master</option>
-                  <option value="/audio/2HOT.mp3">Track 05: 2HOT // Master</option>
-                  <option value="/audio/wet-morry.mp3">Track 06: WET // Master</option>
-                  <option value="/audio/tellmehowtorave-casmalia.mp3">Track 07: Tell Me How To Rave // Mix/Master</option>
+                  <option value="/audio/Wanna Feel.mp3">Wanna Feel — Mix/Master</option>
+                  <option value="/audio/shake it.mp3">Shake It — Mix/Master</option>
+                  <option value="/audio/BE OK.mp3">BE OK — Full Production</option>
+                  <option value="/audio/Sure Thing.mp3">Sure Thing — Master</option>
+                  <option value="/audio/2HOT.mp3">2HOT — Master</option>
+                  <option value="/audio/wet-morry.mp3">WET — Master</option>
+                  <option value="/audio/tellmehowtorave-casmalia.mp3">Tell Me How To Rave — Mix/Master</option>
                 </select>
                 <div class="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-accent text-[8px]">&#9660;</div>
               </div>
@@ -131,6 +131,10 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
               <div id="scrub-progress" class="h-full bg-accent w-0 shadow-[0_0_10px_rgba(47,111,237,0.7)] relative"></div>
             </div>
           </div>
+
+          <p class="font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint text-center">
+            Real releases we mixed, mastered &amp; produced &mdash; switch tracks to hear more.
+          </p>
         </div>
       </section>
 

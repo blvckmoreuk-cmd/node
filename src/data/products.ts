@@ -25,6 +25,7 @@ export interface Product {
   meta: { label: string; value: string }[]; // spec rows: Format, DAW, Size...
   badge?: string;        // optional flag: 'New', 'Bestseller'
   image?: string;        // cover art path, e.g. '/products/nodegen.jpg' (drop file in public/products/)
+  preview?: string;      // audio preview embed URL (Spotify/SoundCloud track). Shown as an iframe in the modal.
 }
 
 export const categories: Category[] = [
@@ -74,6 +75,7 @@ export const products: Product[] = [
       { label: 'Licence', value: 'Royalty-free' },
       { label: 'DAW', value: 'Any' },
     ],
-    image: '/products/nodepack001.jpg',
+    image: '/products/nodepack001.png',
+    preview: '', // add embed URL, e.g. 'https://w.soundcloud.com/player/?url=...' or Spotify track embed
   },
 ];

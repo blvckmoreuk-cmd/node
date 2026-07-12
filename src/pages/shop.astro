@@ -67,6 +67,7 @@ const tabs = [{ id: 'all', label: 'All' }, ...categories.map((c) => ({ id: c.id,
                 data-note={product.priceNote}
                 data-hex={cat?.hex}
                 data-image={product.image}
+                data-preview={product.preview}
                 data-features={JSON.stringify(product.features)}
                 data-meta={JSON.stringify(product.meta)}
                 aria-haspopup="dialog"

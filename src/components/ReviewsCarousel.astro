@@ -19,7 +19,7 @@ import { testimonials } from '../data/testimonials';
                 <span class={s < t.rating ? 'text-accent' : 'text-fg-faint/40'}>&#9733;</span>
               ))}
             </div>
-            <blockquote class="font-body text-sm md:text-[1rem] text-fg leading-relaxed max-w-xl">&ldquo;{t.quote}&rdquo;</blockquote>
+            <blockquote class={`font-body text-fg leading-relaxed max-w-xl ${t.quote.length > 200 ? 'text-xs md:text-sm' : 'text-sm md:text-[1rem]'}`}>&ldquo;{t.quote}&rdquo;</blockquote>
             <figcaption class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">
               {t.author} <span class="text-accent">&middot; via {t.source}</span>
             </figcaption>

@@ -41,9 +41,30 @@ const bars = [3, 6, 4, 8, 5, 7, 4, 9, 6, 3, 7, 5, 8, 4, 6, 5, 7, 3];
         </div>
       </header>
 
+      <!-- Spotify credits playlist -->
+      <section class="border-b border-line-strong">
+        <SectionHeader num="01" label="Credits / Spotify Playlist" />
+        <div class="p-4 md:p-5 flex flex-col gap-3">
+          <p class="font-body text-sm text-fg-muted max-w-lg leading-relaxed">
+            A running playlist of releases we hold credits on. Hit play or open it in Spotify.
+          </p>
+          <iframe
+            title="Node Production — selected credits"
+            style="border-radius:12px"
+            src="https://open.spotify.com/embed/playlist/2GYiWsreoEEDMsLh5LOprH?utm_source=generator&theme=0"
+            width="100%"
+            height="420"
+            frameborder="0"
+            allowfullscreen
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            loading="lazy"
+          ></iframe>
+        </div>
+      </section>
+
       <!-- Works grid -->
       <section class="border-b border-line-strong">
-        <SectionHeader num="01" label="Catalogue / Recent Cuts" />
+        <SectionHeader num="02" label="Catalogue / Recent Cuts" />
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-line-strong">
           {works.map((work) => (
             <div class="group bg-panel p-5 flex flex-col justify-between gap-6 min-h-52">
