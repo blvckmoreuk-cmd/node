@@ -30,7 +30,10 @@ import SectionHeader from '../components/SectionHeader.astro';
         <div class="grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-px bg-line-strong">
 
           <!-- Form -->
-          <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" enctype="multipart/form-data" class="bg-panel p-6 md:p-7 grid grid-cols-1 gap-5">
+          <form name="contact" method="POST" enctype="multipart/form-data" data-netlify="true" data-netlify-honeypot="bot-field" action="/contact?success=true" class="bg-panel p-6 md:p-7 grid grid-cols-1 gap-5">
+            <!-- Netlify Forms: hidden name field + honeypot (bots fill it, humans don't) -->
+            <input type="hidden" name="form-name" value="contact" />
+            <p class="hidden"><label>Don't fill this out: <input name="bot-field" /></label></p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div class="flex flex-col gap-2">
                 <label for="name" class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">Name / Artist</label>

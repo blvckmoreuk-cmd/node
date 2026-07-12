@@ -154,7 +154,10 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
           <span class="text-fg-faint font-mono text-[10px] uppercase tracking-[0.35em]">Enquire / There Are No Stupid Questions</span>
         </div>
 
-        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" enctype="multipart/form-data" class="grid grid-cols-1 md:grid-cols-2 gap-px bg-line-strong">
+        <form name="enquiry" method="POST" enctype="multipart/form-data" data-netlify="true" data-netlify-honeypot="bot-field" action="/?success=true" class="grid grid-cols-1 md:grid-cols-2 gap-px bg-line-strong">
+          <!-- Netlify Forms: hidden name field + honeypot (bots fill it, humans don't) -->
+          <input type="hidden" name="form-name" value="enquiry" />
+          <p class="hidden"><label>Don't fill this out: <input name="bot-field" /></label></p>
           <div class="bg-panel p-5">
             <label for="name" class="block font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint mb-2">Name / Artist</label>
             <input type="text" id="name" name="name" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors" />
