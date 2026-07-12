@@ -9,7 +9,10 @@ const catById = Object.fromEntries(categories.map((c) => [c.id, c]));
 const tabs = [{ id: 'all', label: 'All' }, ...categories.map((c) => ({ id: c.id, label: c.label }))];
 ---
 
-<Layout>
+<Layout
+  title="Shop | VSTs, Sample Packs & Racks — Node Production"
+  description="Digital goods from the Node Production studio: VSTs, FX racks, Ableton templates and sample packs for dance music producers."
+>
   <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-mono">
     <SectionFrame max="max-w-4xl">
 

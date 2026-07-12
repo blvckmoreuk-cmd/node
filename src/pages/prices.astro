@@ -25,9 +25,38 @@ const toolRows = [
   { label: 'Stock FX Racks', value: '£5' },
   { label: 'Visualiser', value: '£5' },
 ];
+
+// Structured pricing so search engines can surface rate-rich results. Prices
+// are the from/entry point of each rate group above.
+const priceJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: 'Audio mixing and mastering',
+  provider: { '@type': 'MusicGroup', name: 'Node Production' },
+  areaServed: 'Worldwide',
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Rates',
+    itemListElement: [
+      { name: 'Mastering (per track)', price: '30.00' },
+      { name: 'Mixing (10 stems)', price: '50.00' },
+      { name: '1:1 Tech Analysis / Call', price: '40.00' },
+      { name: 'Ableton Tutoring (per hour)', price: '25.00' },
+    ].map((o) => ({
+      '@type': 'Offer',
+      itemOffered: { '@type': 'Service', name: o.name },
+      price: o.price,
+      priceCurrency: 'GBP',
+    })),
+  },
+};
 ---
 
-<Layout>
+<Layout
+  title="Rates | Mixing & Mastering Prices — Node Production"
+  description="Transparent rates for electronic music producers. Mastering from £30, mixing from £50. A 50% deposit books the work."
+>
+  <script type="application/ld+json" set:html={JSON.stringify(priceJsonLd)} is:inline />
   <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-mono">
     <SectionFrame max="max-w-4xl">
 

@@ -2,6 +2,44 @@
 import '../styles/global.css';
 import { Font } from 'astro:assets';
 import Header from '../components/Header.astro';
+
+// Per-page SEO. Every page passes its own title + description; the rest fall
+// back to sensible site-wide defaults so no page ships bare.
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = 'Node Production | Dance Music Mixing & Mastering, Leeds',
+  description = 'Mix, master and ghost production for dance music. Leeds studio working worldwide. Same-day reply.',
+  image = '/og.jpg',
+  noindex = false,
+} = Astro.props;
+
+// Canonical + absolute OG image, resolved against the `site` in astro.config.mjs.
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL(image, Astro.site).href;
+
+// LocalBusiness structured data — one studio, Leeds, so search engines can
+// surface hours-independent rich results and local-pack eligibility.
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'MusicGroup',
+  name: 'Node Production',
+  description,
+  url: Astro.site?.href,
+  image: ogImage,
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Leeds',
+    addressCountry: 'GB',
+  },
+  areaServed: 'Worldwide',
+  genre: 'Dance Music',
+};
 ---
 
 <!doctype html>
@@ -9,13 +47,35 @@ import Header from '../components/Header.astro';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Node | Audio Engineering</title>
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+
+    <!-- Open Graph (Facebook, WhatsApp, LinkedIn, Instagram) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Node Production" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
     <!-- Font roles: display (Space Grotesk), mono (JetBrains Mono), body (Inter).
          Registered in astro.config.mjs; preload the two above-the-fold faces. -->
     <Font cssVariable="--font-space-grotesk" preload />
     <Font cssVariable="--font-inter" preload />
     <Font cssVariable="--font-jetbrains-mono" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
   </head>
 
   <body class="min-h-screen flex flex-col relative">
