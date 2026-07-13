@@ -1,0 +1,93 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { listPending, listApproved } from '../../lib/reviews';
+
+export const prerender = false;
+
+// Gate on the admin token. Different secret from the public review link.
+const { token } = Astro.params;
+const adminToken = process.env.REVIEW_ADMIN_TOKEN;
+if (!adminToken || token !== adminToken) {
+  return new Response('Not found', { status: 404 });
+}
+
+const pending = await listPending();
+const approvedCount = (await listApproved()).length;
+
+const stars = (n: number) => '★★★★★☆☆☆☆☆'.slice(5 - n, 10 - n);
+---
+
+<Layout title="Review Moderation | Node" description="Moderate submitted reviews." noindex={true}>
+  <div class="w-full min-h-[70vh] flex flex-col items-center px-3 md:px-4 py-10 md:py-14 font-mono">
+    <div class="w-full max-w-2xl border border-line-strong bg-base">
+      <div class="flex items-center justify-between px-4 md:px-5 py-2.5 border-b border-line-strong bg-panel">
+        <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Node // Moderation</span>
+        <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">{approvedCount} live · {pending.length} pending</span>
+      </div>
+
+      <div class="px-4 md:px-8 py-7 md:py-9" data-token={token}>
+        <h1 class="font-display font-bold uppercase tracking-tight text-fg text-2xl md:text-3xl">Pending reviews</h1>
+
+        {pending.length === 0 && (
+          <p class="mt-6 font-body text-sm text-fg-muted">Nothing waiting. New submissions show up here.</p>
+        )}
+
+        <ul class="mt-6 flex flex-col gap-4">
+          {pending.map((r) => (
+            <li class="review-row border border-line-strong p-4 flex flex-col gap-3" data-id={r.id}>
+              <div class="flex items-center justify-between gap-3">
+                <span class="text-accent text-sm" aria-label={`${r.rating} out of 5`}>{stars(r.rating)}</span>
+                <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint">{new Date(r.createdAt).toLocaleDateString()}</span>
+              </div>
+              <blockquote class="font-body text-sm text-fg leading-relaxed">&ldquo;{r.quote}&rdquo;</blockquote>
+              <figcaption class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">
+                {r.author} <span class="text-accent">· via {r.source}</span>
+              </figcaption>
+              <div class="flex gap-2 pt-1">
+                <button data-action="approve" class="flex-1 py-2.5 bg-accent-dim text-white font-mono font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-accent transition-colors disabled:opacity-40">Approve</button>
+                <button data-action="reject" class="flex-1 py-2.5 bg-panel border border-line-strong text-fg-muted font-mono font-bold text-[10px] uppercase tracking-[0.2em] hover:text-red-400 hover:border-red-400 transition-colors disabled:opacity-40">Reject</button>
+              </div>
+              <p class="row-msg hidden font-mono text-[10px] text-fg-faint"></p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const scope = document.querySelector<HTMLElement>('[data-token]');
+  const token = scope?.dataset.token || '';
+
+  document.querySelectorAll<HTMLElement>('.review-row').forEach((row) => {
+    const id = row.dataset.id || '';
+    const msg = row.querySelector<HTMLElement>('.row-msg');
+    row.querySelectorAll<HTMLButtonElement>('button[data-action]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const action = btn.dataset.action;
+        row.querySelectorAll('button').forEach((b) => (b.disabled = true));
+        try {
+          const res = await fetch('/api/moderate-review', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json' },
+            body: JSON.stringify({ token, id, action }),
+          });
+          if (!res.ok) throw new Error();
+          row.style.transition = 'opacity 0.3s';
+          row.style.opacity = '0.35';
+          if (msg) {
+            msg.textContent = action === 'approve' ? 'Approved — now live.' : 'Rejected — removed.';
+            msg.classList.remove('hidden');
+          }
+        } catch {
+          row.querySelectorAll('button').forEach((b) => (b.disabled = false));
+          if (msg) {
+            msg.textContent = 'Failed. Try again.';
+            msg.classList.remove('hidden');
+          }
+        }
+      });
+    });
+  });
+</script>

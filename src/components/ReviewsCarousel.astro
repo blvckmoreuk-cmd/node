@@ -5,7 +5,7 @@ import { testimonials } from '../data/testimonials';
 
 <section class="reviews-carousel border-b border-line-strong">
   <SectionHeader label="Reviews / What Clients Say">
-    <span slot="meta" class="text-fg-faint font-mono text-[9px] uppercase tracking-[0.2em]">{testimonials.length} reviews</span>
+    <span slot="meta" data-count class="text-fg-faint font-mono text-[9px] uppercase tracking-[0.2em]">{testimonials.length} reviews</span>
   </SectionHeader>
 
   <div class="relative">
@@ -36,7 +36,7 @@ import { testimonials } from '../data/testimonials';
   </div>
 
   <!-- Dots -->
-  <div class="flex items-center justify-center gap-2 pb-3.5 border-t border-line pt-3">
+  <div data-dots class="flex items-center justify-center gap-2 pb-3.5 border-t border-line pt-3">
     {testimonials.map((_, i) => (
       <button data-dot type="button" aria-label={`Go to review ${i + 1}`}
         class="w-2 h-2 rounded-full border border-line-strong transition-colors outline-none focus-visible:ring-1 focus-visible:ring-accent"></button>
@@ -45,7 +45,52 @@ import { testimonials } from '../data/testimonials';
 </section>
 
 <script>
-  document.querySelectorAll<HTMLElement>('.reviews-carousel').forEach((root) => {
+  interface PublicReview { quote: string; author: string; source: string; rating: number; }
+
+  // Build a slide <figure> matching the server-rendered markup so appended
+  // approved reviews look identical to the hardcoded seed ones.
+  function buildSlide(r: PublicReview): HTMLElement {
+    const fig = document.createElement('figure');
+    fig.setAttribute('data-slide', '');
+    fig.className = 'w-full shrink-0 px-10 md:px-20 py-6 md:py-7 flex flex-col items-center text-center gap-3';
+
+    const stars = document.createElement('div');
+    stars.className = 'flex gap-0.5 text-[11px]';
+    stars.setAttribute('aria-label', `${r.rating} out of 5`);
+    for (let s = 0; s < 5; s++) {
+      const star = document.createElement('span');
+      star.textContent = '★';
+      star.className = s < r.rating ? 'text-accent' : 'text-fg-faint/40';
+      stars.appendChild(star);
+    }
+
+    const quote = document.createElement('blockquote');
+    quote.className = 'font-body text-fg leading-relaxed max-w-xl ' +
+      (r.quote.length > 200 ? 'text-xs md:text-sm' : 'text-sm md:text-[1rem]');
+    quote.textContent = `“${r.quote}”`;
+
+    const cap = document.createElement('figcaption');
+    cap.className = 'font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint';
+    cap.textContent = r.author + ' ';
+    const via = document.createElement('span');
+    via.className = 'text-accent';
+    via.textContent = `· via ${r.source}`;
+    cap.appendChild(via);
+
+    fig.append(stars, quote, cap);
+    return fig;
+  }
+
+  function buildDot(index: number): HTMLElement {
+    const dot = document.createElement('button');
+    dot.setAttribute('data-dot', '');
+    dot.type = 'button';
+    dot.setAttribute('aria-label', `Go to review ${index + 1}`);
+    dot.className = 'w-2 h-2 rounded-full border border-line-strong transition-colors outline-none focus-visible:ring-1 focus-visible:ring-accent';
+    return dot;
+  }
+
+  function initCarousel(root: HTMLElement) {
     const track = root.querySelector<HTMLElement>('[data-track]');
     const slides = root.querySelectorAll('[data-slide]');
     const dots = root.querySelectorAll<HTMLElement>('[data-dot]');
@@ -82,5 +127,34 @@ import { testimonials } from '../data/testimonials';
 
     go(0);
     restart();
-  });
+  }
+
+  async function setup(root: HTMLElement) {
+    const track = root.querySelector<HTMLElement>('[data-track]');
+    const dotsWrap = root.querySelector<HTMLElement>('[data-dots]');
+    // Fetch approved reviews and append them to the seed set before init.
+    // On any failure, fall back to the server-rendered seed reviews.
+    if (track && dotsWrap) {
+      try {
+        const res = await fetch('/api/get-reviews');
+        if (res.ok) {
+          const { reviews } = (await res.json()) as { reviews: PublicReview[] };
+          const seedCount = track.querySelectorAll('[data-slide]').length;
+          reviews.forEach((r, idx) => {
+            track.appendChild(buildSlide(r));
+            dotsWrap.appendChild(buildDot(seedCount + idx));
+          });
+          if (reviews.length) {
+            const countEl = root.querySelector<HTMLElement>('[data-count]');
+            if (countEl) countEl.textContent = `${seedCount + reviews.length} reviews`;
+          }
+        }
+      } catch {
+        /* keep seed reviews only */
+      }
+    }
+    initCarousel(root);
+  }
+
+  document.querySelectorAll<HTMLElement>('.reviews-carousel').forEach(setup);
 </script>

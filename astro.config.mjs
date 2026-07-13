@@ -2,6 +2,7 @@
 
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
+import netlify from '@astrojs/netlify';
 import { defineConfig, fontProviders } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
@@ -9,6 +10,10 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://nodeproduction.co.uk',
+
+  // Static by default; individual routes opt into on-demand rendering with
+  // `export const prerender = false` (the review pages + /api endpoints).
+  adapter: netlify(),
   
   // Enabled hosting for tunnel access
   server: {
