@@ -74,7 +74,7 @@ const tabs = [{ id: 'all', label: 'All' }, ...categories.map((c) => ({ id: c.id,
               >
                 <div class="aspect-[16/10] w-full bg-inset border border-line grain-overlay-dark relative overflow-hidden flex items-center justify-center">
                   {product.image
-                    ? <img src={product.image} alt={product.title} class="w-full h-full object-cover" loading="lazy" />
+                    ? <img src={product.image} alt={product.title} class="w-full h-full object-contain" loading="lazy" />
                     : <span class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint/40">Cover art</span>}
                 </div>
                 <div class="flex items-start justify-between">

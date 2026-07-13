@@ -79,7 +79,7 @@ export const services: Service[] = [
   {
     num: '06', title: 'Track Analysis', slug: 'consulting', tagline: 'Feedback / Breakdown',
     price: '£15', note: 'per track', revisions: '',
-    detail: 'A detailed listen-through of your track with honest technical and creative feedback: mix balance, arrangement, sound selection and where it stands next to reference records. Delivered as written notes or a call.',
+    detail: 'A detailed listen-through of your track with honest technical and creative feedback: mix balance, arrangement, sound selection and where it stands next to reference records. Includes technical analysis with annotated screenshots (metering, EQ, spectrum) and clear explanations of what each one shows and how to fix it. Delivered as written notes or a call.',
     wire: 'bg-orange-500', glow: 'shadow-[0_0_8px_rgba(249,115,22,0.9)]', hex: '#f97316',
     reqs: [
       'The track as an .mp3 or WAV, or a private streaming link.',

@@ -38,14 +38,14 @@ export const categories: Category[] = [
 export const products: Product[] = [
   {
     num: '01', title: 'Nodegen', slug: 'nodegen-vst', category: 'vst',
-    tagline: 'Chord Generator / Stab Sequencer',
+    tagline: 'Analog-Style Stab Synth',
     price: '£15', priceNote: 'one-time, lifetime updates',
     badge: 'New',
-    detail: 'A chord generator and stab sequencer in one plugin. Roll out progressions, lock them to a scale, and fire rhythmic stabs without leaving the box. Built for fast idea-to-arrangement writing.',
+    detail: 'A stab synth built around an analog synth workflow. Outputs audio straight from a sample-based oscillator, with the option to save MIDI. Perfect for making classic minimal house stabs.',
     features: [
-      'Chord generator with scale-locked voicings.',
-      'Built-in stab sequencer with per-step gate and velocity.',
-      'MIDI drag-out to any instrument in your DAW.',
+      'Analog synth workflow, tuned for stab writing.',
+      'Sample-based oscillator with audio output.',
+      'Save your patterns out as MIDI when you need it.',
       'Preset bank of house, garage and techno progressions.',
       'macOS only — native Apple Silicon (M-series) build.',
       'Lifetime updates included with purchase.',

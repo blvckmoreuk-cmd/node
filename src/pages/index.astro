@@ -17,8 +17,8 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
 ---
 
 <Layout
-  title="Node Production | Dance Music Mixing & Mastering, Leeds"
-  description="Mix, master and ghost production for dance music. Leeds studio working worldwide. Same-day reply, 50% deposit books the work."
+  title="Node Production | Electronic Music Mixing & Mastering, Leeds"
+  description="Mix, master and ghost production for electronic music. Specialist in House, Grime, Garage, Dubstep, DnB, Drill and Trap. Leeds studio working worldwide."
 >
   <main class="w-full min-h-screen bg-page flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-mono relative overflow-hidden">
 
@@ -31,13 +31,16 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
           <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Leeds, UK</span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 md:gap-10 items-end px-4 md:px-8 py-8 md:py-12">
-          <h1 class="font-display font-bold uppercase leading-[0.9] tracking-tight text-fg text-[13vw] md:text-[5.5rem]">
-            Dance Music<br /><span class="text-accent">Engineering.</span>
+        <div class="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-5 md:gap-10 items-end px-4 md:px-8 py-5 md:py-8">
+          <h1 class="font-display font-bold uppercase leading-[0.9] tracking-tight text-fg text-[10vw] md:text-[4rem]">
+            Electronic Music<br /><span class="text-accent">Engineering.</span>
           </h1>
-          <div class="flex flex-col gap-5 md:items-end">
+          <div class="flex flex-col gap-4 md:items-end">
             <p class="font-body text-sm text-fg-muted max-w-xs md:text-right leading-relaxed">
-              Mix, master and ghost production for dance music. Based in Leeds, working worldwide.
+              Mix, master and ghost production for electronic music. Based in Leeds, working worldwide.
+            </p>
+            <p class="font-mono text-[10px] uppercase tracking-[0.25em] text-fg-faint max-w-xs md:text-right leading-relaxed">
+              Specialist Genres: House, Grime, Garage, Dubstep, DnB, Drill, Trap
             </p>
             <div class="flex">
               <a href="/contact" class="px-6 py-3 bg-accent-dim text-white font-mono font-bold text-[11px] uppercase tracking-[0.2em] hover:bg-accent transition-colors">Start a Project</a>
@@ -175,8 +178,9 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
             <input type="email" id="email" name="email" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors" />
           </div>
           <div class="bg-panel p-5 md:col-span-2">
-            <label for="message" class="block font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint mb-2">Project Details &mdash; please include a WeTransfer, Google Drive, Dropbox or SwissTransfer link to your files in this box.</label>
+            <label for="message" class="block font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint mb-2">Project Details</label>
             <textarea id="message" name="message" rows="5" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors"></textarea>
+            <p class="font-mono text-[10px] leading-relaxed text-fg-faint mt-2">Feel free to attach any rough mix files here. We don&rsquo;t need your stems yet &mdash; you&rsquo;ll be sent a link to upload these when you receive your confirmation email.</p>
           </div>
           <button type="submit" class="md:col-span-2 w-full py-4 bg-accent-dim text-white font-mono font-black text-[13px] uppercase tracking-[0.3em] hover:bg-accent active:translate-y-px transition-all">
             Send Enquiry

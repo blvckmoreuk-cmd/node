@@ -64,8 +64,9 @@ import SuccessPopup from '../components/SuccessPopup.astro';
             </div>
 
             <div class="flex flex-col gap-2">
-              <label for="message" class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">Project Details &mdash; please include a WeTransfer, Google Drive, Dropbox or SwissTransfer link to your files in this box.</label>
+              <label for="message" class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">Project Details</label>
               <textarea id="message" name="message" rows="6" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors resize-y"></textarea>
+              <p class="font-mono text-[10px] leading-relaxed text-fg-faint">Feel free to attach any rough mix files here. We don&rsquo;t need your stems yet &mdash; you&rsquo;ll be sent a link to upload these when you receive your confirmation email.</p>
             </div>
 
             <button type="submit" class="w-full py-4 bg-accent-dim text-white font-mono font-black text-[12px] uppercase tracking-[0.3em] hover:bg-accent active:translate-y-px transition-all">
@@ -88,9 +89,9 @@ import SuccessPopup from '../components/SuccessPopup.astro';
               <span class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint block mb-3">How it works</span>
               <ol class="space-y-2 font-body text-[12px] text-fg-muted leading-snug">
                 <li><span class="text-accent font-mono mr-2">01</span>Send your request.</li>
-                <li><span class="text-accent font-mono mr-2">02</span>Confirm scope and rate.</li>
-                <li><span class="text-accent font-mono mr-2">03</span>Pay a 50% deposit.</li>
-                <li><span class="text-accent font-mono mr-2">04</span>Receive your project.</li>
+                <li><span class="text-accent font-mono mr-2">02</span>We confirm scope, rate and timeframe.</li>
+                <li><span class="text-accent font-mono mr-2">03</span>Get a link to upload your files and pay a 50% deposit.</li>
+                <li><span class="text-accent font-mono mr-2">04</span>Files uploaded and deposit paid &mdash; project delivered within the agreed timeframe.</li>
               </ol>
             </div>
           </aside>
