@@ -1,0 +1,35 @@
+---
+// Sitewide first-order offer bar. Rendered above the header in Layout.astro.
+// Dismissal is remembered per-browser via localStorage; the offer itself is a
+// manual new-client discount, not tied to this flag.
+---
+
+<div id="promo-bar" class="hidden border-b border-line-strong bg-panel">
+  <div class="relative max-w-4xl mx-auto flex items-center justify-center gap-3 px-4 py-2 font-mono">
+    <a href="/contact" class="group flex items-center gap-2 no-underline text-center">
+      <span class="text-accent text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.15em] sm:tracking-[0.2em]">50% OFF your first order</span>
+      <span class="hidden sm:inline text-fg-muted text-[10px] uppercase tracking-[0.15em]">— half-price Mastering &amp; Mixing for new clients</span>
+      <span class="text-fg-faint group-hover:text-accent transition-colors text-[11px]">&rarr;</span>
+    </a>
+    <button id="promo-close" type="button" aria-label="Dismiss offer" class="absolute right-3 w-6 h-6 flex items-center justify-center text-fg-faint hover:text-accent transition-colors text-sm leading-none">&times;</button>
+  </div>
+</div>
+
+<script is:inline>
+  (function () {
+    var KEY = 'promo-firstorder-dismissed';
+    var bar = document.getElementById('promo-bar');
+    if (!bar) return;
+    try {
+      if (localStorage.getItem(KEY) === '1') return;
+    } catch (e) { /* localStorage blocked — just show the bar */ }
+    bar.classList.remove('hidden');
+    var close = document.getElementById('promo-close');
+    if (close) {
+      close.addEventListener('click', function () {
+        bar.classList.add('hidden');
+        try { localStorage.setItem(KEY, '1'); } catch (e) {}
+      });
+    }
+  })();
+</script>
