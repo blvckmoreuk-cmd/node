@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { Font } from 'astro:assets';
 import Header from '../components/Header.astro';
+import PromoBar from '../components/PromoBar.astro';
 
 // Per-page SEO. Every page passes its own title + description; the rest fall
 // back to sensible site-wide defaults so no page ships bare.
@@ -85,6 +86,7 @@ const jsonLd = {
          site-wide instead of using an external asset. -->
     <div class="page-grain fixed inset-0 pointer-events-none z-0" aria-hidden="true"></div>
 
+    <PromoBar />
     <Header />
 
     <!-- Main Content: z-10 keeps it above the grain overlay -->

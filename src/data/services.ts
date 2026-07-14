@@ -16,12 +16,13 @@ export interface Service {
   reqs: string[];
   reqsLabel?: string; // overrides the modal "What to send" heading; list hides when reqs is empty
   shopHref?: string; // when set, the modal CTA points here (the shop) instead of /contact
+  firstOrderOffer?: boolean; // 50% off first order — shows the promo badge/line on this service
 }
 
 export const services: Service[] = [
   {
     num: '01', title: 'Mastering', slug: 'mastering', tagline: 'Loudness / Translation',
-    price: '£30', note: 'single track, £20/track on EPs (2+)', revisions: '2 revisions included on every order',
+    price: '£30', note: 'single track, £20/track on EPs (2+)', revisions: '2 revisions included on every order', firstOrderOffer: true,
     detail: 'A final master on an already-mixed track: commercial loudness, tonal balance and translation across systems via an analogue chain. Discounted per-track rate for EPs.',
     wire: 'bg-yellow-400', glow: 'shadow-[0_0_8px_rgba(250,204,21,0.9)]', hex: '#facc15',
     reqs: [
@@ -34,7 +35,7 @@ export const services: Service[] = [
   },
   {
     num: '02', title: 'Mixing', slug: 'mixing', tagline: 'Balance / Width / Depth',
-    price: '£50', note: 'Mastering included, 10 stems, scales to 30+', revisions: '2 revisions included on every order',
+    price: '£50', note: 'Mastering included, 10 stems, scales to 30+', revisions: '2 revisions included on every order', firstOrderOffer: true,
     detail: 'Stems mixed and balanced into a cohesive, club-ready record: gain staging, EQ, dynamics and spatial placement. Mastering is included, so the track leaves release-ready. Priced by stem count.',
     wire: 'bg-blue-500', glow: 'shadow-[0_0_8px_rgba(59,130,246,0.9)]', hex: '#3b82f6',
     reqs: [
