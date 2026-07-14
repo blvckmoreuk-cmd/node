@@ -38,6 +38,9 @@ import SuccessPopup from '../components/SuccessPopup.astro';
             <!-- Netlify Forms: hidden name field + honeypot (bots fill it, humans don't) -->
             <input type="hidden" name="form-name" value="contact" />
             <p class="hidden"><label>Don't fill this out: <input name="bot-field" /></label></p>
+            <p class="border border-accent/40 bg-accent-dim/10 px-4 py-3 font-mono text-[10px] leading-relaxed uppercase tracking-[0.15em] text-accent">
+              New client? Your first Mastering or Mixing order is 50% off &mdash; mention it here.
+            </p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div class="flex flex-col gap-2">
                 <label for="name" class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">Name / Artist</label>
@@ -53,8 +56,8 @@ import SuccessPopup from '../components/SuccessPopup.astro';
               <label for="service" class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">Service Required</label>
               <select id="service" name="service" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs uppercase tracking-wider outline-none focus:border-accent transition-colors appearance-none cursor-pointer">
                 <option value="" disabled selected>Select a service...</option>
-                <option value="mastering">Mastering</option>
-                <option value="mixing-mastering">Mixing &amp; Mastering</option>
+                <option value="mastering">Mastering (50% off first order)</option>
+                <option value="mixing-mastering">Mixing &amp; Mastering (50% off first order)</option>
                 <option value="production">Ghost Production</option>
                 <option value="finishing">Finish Your Track</option>
                 <option value="education">Consultation &amp; Education</option>
