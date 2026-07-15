@@ -39,8 +39,8 @@ export const products: Product[] = [
   {
     num: '01', title: 'Nodegen', slug: 'nodegen-vst', category: 'vst',
     tagline: 'Analog-Style Stab Synth',
-    price: '£15', priceNote: 'one-time, lifetime updates',
-    badge: 'New',
+    price: 'TBA', priceNote: 'coming soon',
+    badge: 'Coming Soon',
     detail: 'A stab synth built around an analog synth workflow. Outputs audio straight from a sample-based oscillator, with the option to save MIDI. Perfect for making classic minimal house stabs.',
     features: [
       'Analog synth workflow, tuned for stab writing.',
@@ -77,5 +77,41 @@ export const products: Product[] = [
     ],
     image: '/products/nodepack001.png',
     preview: '', // add embed URL, e.g. 'https://w.soundcloud.com/player/?url=...' or Spotify track embed
+  },
+  {
+    num: '03', title: 'Nodescope', slug: 'nodescope-vst', category: 'vst',
+    tagline: 'Analog-Style Visual Analyser',
+    price: 'TBA', priceNote: 'coming soon',
+    badge: 'Coming Soon',
+    detail: 'Nodescope is on the way. A new Node VST built to sit in the same workflow as Nodegen. Full details, pricing and preview land at launch.',
+    features: [
+      'Details revealed at launch.',
+      'macOS only — native Apple Silicon (M-series) build.',
+      'Lifetime updates included with purchase.',
+    ],
+    meta: [
+      { label: 'Format', value: 'VST3 / AU' },
+      { label: 'Platform', value: 'macOS (Apple Silicon)' },
+      { label: 'Status', value: 'Coming soon' },
+    ],
+    image: '', // drop cover at public/products/nodescope.jpg then set to '/products/nodescope.jpg'
+  },
+  {
+    num: '04', title: 'Node Pack 002', slug: 'node-pack-002', category: 'sample-pack',
+    tagline: 'Sample Pack / Vol. 2',
+    price: 'TBA', priceNote: 'coming soon',
+    badge: 'Coming Soon',
+    detail: 'The second Node sample pack. More drums, one-shots and loops from the same sessions behind our releases. Full contents and pricing land at launch.',
+    features: [
+      'Contents revealed at launch.',
+      'Royalty-free for use in your own releases.',
+      '24-bit WAV, works in any DAW.',
+    ],
+    meta: [
+      { label: 'Format', value: '24-bit WAV' },
+      { label: 'Licence', value: 'Royalty-free' },
+      { label: 'Status', value: 'Coming soon' },
+    ],
+    image: '', // drop cover at public/products/nodepack002.png then set to '/products/nodepack002.png'
   },
 ];
