@@ -46,14 +46,16 @@ const trusted = [
 
         <!-- Lockup: NODE / PRODUCTION over the 2×16 step grid. The grid carries the single orange step. -->
         <div class="px-4 md:px-8 pt-10 md:pt-16">
+          <div class="w-full max-w-[520px]">
           <div class="inline-flex flex-col" aria-hidden="true">
-            <span class="font-display font-extrabold uppercase text-fg leading-[0.78] tracking-[-0.04em] text-[clamp(5.5rem,26vw,15rem)]">Node</span>
+            <span class="font-display font-extrabold uppercase text-fg leading-[0.78] tracking-[-0.04em] text-[clamp(5.5rem,26vw,9rem)]">Node</span>
             <span class="mt-3 md:mt-5 flex justify-between font-mono font-medium uppercase text-fg-dim text-[clamp(0.7rem,2.6vw,1.5rem)]">
               {[...'PRODUCTION'].map((ch) => <span>{ch}</span>)}
             </span>
           </div>
           <div class="mt-6 md:mt-10">
             <StepGrid fluid />
+          </div>
           </div>
           <div class="mt-3 flex justify-end">
             <span class="font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">53.80 N&nbsp;&nbsp;1.55 W</span>
