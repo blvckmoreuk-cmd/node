@@ -8,7 +8,7 @@
 <div id="product-modal" class="fixed inset-0 z-50 hidden items-center justify-center px-4 py-8 font-mono" role="dialog" aria-modal="true" aria-labelledby="pmodal-title">
   <div id="pmodal-backdrop" class="absolute inset-0" style="background: rgba(16,16,14,0.86)"></div>
 
-  <div class="relative z-10 w-full max-w-lg bg-base border border-line-strong max-h-full overflow-y-auto">
+  <div class="relative z-10 w-full max-w-lg bg-ground border border-line-strong max-h-full overflow-y-auto">
     <div class="flex items-center justify-between px-5 py-3 border-b border-line-strong bg-panel">
       <div class="flex items-center gap-3">
         <span id="pmodal-num" class="font-mono text-[11px] font-semibold tracking-[0.18em] text-fg">01</span>
@@ -27,14 +27,14 @@
         </div>
       </div>
 
-      <div id="pmodal-cover" class="aspect-[16/10] w-full bg-inset border border-line dot-matrix relative overflow-hidden flex items-center justify-center">
-        <img id="pmodal-image" src="" alt="" class="w-full h-full object-contain hidden" />
+      <div id="pmodal-cover" class="aspect-[16/10] w-full bg-inset border border-cell-line relative overflow-hidden flex items-center justify-center">
+        <img id="pmodal-image" alt="" class="w-full h-full object-contain hidden" />
         <span id="pmodal-cover-label" class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-faint">Cover art</span>
       </div>
 
       <div id="pmodal-preview" class="hidden flex-col gap-3">
         <span class="font-mono text-[10px] uppercase tracking-[0.32em] text-fg-dim block">Preview</span>
-        <iframe id="pmodal-preview-frame" title="Audio preview" src="" width="100%" height="152" style="border-radius:0" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <iframe id="pmodal-preview-frame" title="Audio preview" width="100%" height="152" style="border-radius:0" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       </div>
 
       <p id="pmodal-detail" class="font-body text-sm leading-relaxed text-fg-muted"></p>
@@ -106,7 +106,7 @@
           img.classList.remove('hidden');
           coverLabel.classList.add('hidden');
         } else {
-          img.src = '';
+          img.removeAttribute('src');
           img.classList.add('hidden');
           coverLabel.classList.remove('hidden');
         }

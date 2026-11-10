@@ -30,9 +30,9 @@ import { testimonials } from '../data/testimonials';
 
     <!-- Prev / next -->
     <button data-prev type="button" aria-label="Previous review"
-      class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center border border-line-strong bg-base text-fg-dim hover:text-fg hover:border-fg font-mono">&larr;</button>
+      class="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center border border-line-strong bg-ground text-fg-dim hover:text-fg hover:border-fg font-mono">&larr;</button>
     <button data-next type="button" aria-label="Next review"
-      class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center border border-line-strong bg-base text-fg-dim hover:text-fg hover:border-fg font-mono">&rarr;</button>
+      class="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center border border-line-strong bg-ground text-fg-dim hover:text-fg hover:border-fg font-mono">&rarr;</button>
   </div>
 
   <!-- Pager: square step cells; the current review is the armed step -->
@@ -106,8 +106,8 @@ import { testimonials } from '../data/testimonials';
       i = (k + n) % n;
       track!.style.transform = `translateX(-${i * 100}%)`;
       dots.forEach((d, di) => {
-        d.classList.toggle('bg-accent', di === i);
-        d.classList.toggle('border-accent', di === i);
+        d.classList.toggle('bg-fg', di === i);
+        d.classList.toggle('border-fg', di === i);
         d.classList.toggle('border-cell-line', di !== i);
       });
     }

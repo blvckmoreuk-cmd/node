@@ -57,7 +57,7 @@ const bars = [3, 6, 4, 8, 5, 7, 4, 9, 6, 3, 7, 5, 8, 4, 6, 5, 7, 3];
         <SectionHeader num="02" label="Catalogue / Recent Cuts" />
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-line-strong">
           {works.map((work) => (
-            <div class="group bg-base hover:bg-panel p-6 flex flex-col justify-between gap-8 min-h-56 relative" style={`--ch:${work.ch}`}>
+            <div class="group bg-ground hover:bg-panel p-6 flex flex-col justify-between gap-8 min-h-56 relative" style={`--ch:${work.ch}`}>
               <div class="flex items-center justify-between">
                 <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">{work.credit}</span>
                 <span class="block w-3 h-3 border group-hover:bg-(--ch)" style="border-color: var(--ch)" aria-hidden="true"></span>

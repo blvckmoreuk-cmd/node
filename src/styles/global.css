@@ -11,7 +11,7 @@
 @theme {
   /* Surfaces: warm charcoal, deepest -> lifted */
   --color-page: #1c1c1a;
-  --color-base: #1c1c1a;
+  --color-ground: #1c1c1a;
   --color-panel: #222220;
   --color-inset: #151513;
   --color-raised: #2a2a27;
@@ -22,7 +22,7 @@
   --color-fg: #f2ede3;
   --color-fg-muted: #cdc7ba;
   --color-fg-dim: #a29d92;
-  --color-fg-faint: #6f6b63;
+  --color-fg-faint: #918c82; /* >=4.5:1 on page, panel and inset (small mono text) */
 
   /* The armed step: the one accent. Text on an orange fill is charcoal (4.8:1);
      cream on orange fails contrast. */

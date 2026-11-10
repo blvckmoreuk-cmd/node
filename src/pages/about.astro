@@ -29,7 +29,7 @@ const supporters = ['BBC Radio 1', 'BBC Radio 1Xtra', 'Shiba San', 'MPH', 'Oppid
       <section class="border-b border-line-strong">
         <SectionHeader num="01" label="Who We Are" />
         <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-line-strong">
-          <div class="md:col-span-3 bg-base p-6 md:p-10">
+          <div class="md:col-span-3 bg-ground p-6 md:p-10">
             <p class="font-body text-base md:text-lg text-fg-muted leading-relaxed max-w-3xl">
               Node Production are dance music specialists based in Leeds. Bridging the gap between
               amateur and professional production is not easy or cheap, so we built Node to make a
@@ -38,15 +38,15 @@ const supporters = ['BBC Radio 1', 'BBC Radio 1Xtra', 'Shiba San', 'MPH', 'Oppid
               Digger, All Ways Dance and many more.
             </p>
           </div>
-          <div class="bg-base p-6 md:p-8 flex flex-col justify-center gap-2">
+          <div class="bg-ground p-6 md:p-8 flex flex-col justify-center gap-2">
             <span class="font-display text-3xl font-extrabold uppercase tracking-[-0.03em] text-fg leading-none">Leeds, UK</span>
             <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">Studio base</span>
           </div>
-          <div class="bg-base p-6 md:p-8 flex flex-col justify-center gap-2">
+          <div class="bg-ground p-6 md:p-8 flex flex-col justify-center gap-2">
             <span class="font-display text-3xl font-extrabold uppercase tracking-[-0.03em] text-fg leading-none">Same-day</span>
             <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">Reply, guaranteed</span>
           </div>
-          <div class="bg-base p-6 md:p-8 flex flex-col justify-center gap-2">
+          <div class="bg-ground p-6 md:p-8 flex flex-col justify-center gap-2">
             <span class="font-display text-3xl font-extrabold uppercase tracking-[-0.03em] text-fg leading-none">Worldwide</span>
             <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">Working remotely</span>
           </div>
@@ -58,7 +58,7 @@ const supporters = ['BBC Radio 1', 'BBC Radio 1Xtra', 'Shiba San', 'MPH', 'Oppid
         <SectionHeader num="02" label="How It Works / Signal Chain" />
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-px bg-line-strong">
           {steps.map((step) => (
-            <div class="bg-base p-6 flex flex-col gap-6 min-h-52">
+            <div class="bg-ground p-6 flex flex-col gap-6 min-h-52">
               <span class="seq" style="--steps:4; --cell:12px" aria-hidden="true">
                 {[1, 2, 3, 4].map((n) => <span class={`seq-cell ${n === Number(step.num) ? 'is-cream' : ''}`}></span>)}
               </span>
@@ -84,7 +84,7 @@ const supporters = ['BBC Radio 1', 'BBC Radio 1Xtra', 'Shiba San', 'MPH', 'Oppid
 
       <!-- CTA -->
       <section class="flex flex-col sm:flex-row items-stretch gap-px bg-line-strong">
-        <a href="/prices" class="key flex-1 py-5 !border-0 bg-base hover:bg-panel">
+        <a href="/prices" class="key flex-1 py-5 !border-0 bg-ground hover:bg-panel">
           View Rates
         </a>
         <a href="/contact" class="key key-primary flex-1 py-5 !border-0">

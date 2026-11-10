@@ -24,7 +24,7 @@ import SuccessPopup from '../components/SuccessPopup.astro';
         <div class="grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-px bg-line-strong">
 
           <!-- Form -->
-          <form name="contact" method="POST" enctype="multipart/form-data" data-netlify="true" data-netlify-honeypot="bot-field" action="/contact?success=true" class="bg-base p-6 md:p-8 grid grid-cols-1 gap-5">
+          <form name="contact" method="POST" enctype="multipart/form-data" data-netlify="true" data-netlify-honeypot="bot-field" action="/contact?success=true" class="bg-ground p-6 md:p-8 grid grid-cols-1 gap-5">
             <!-- Netlify Forms: hidden name field + honeypot (bots fill it, humans don't) -->
             <input type="hidden" name="form-name" value="contact" />
             <p class="hidden"><label>Don't fill this out: <input name="bot-field" /></label></p>
@@ -65,7 +65,7 @@ import SuccessPopup from '../components/SuccessPopup.astro';
           </form>
 
           <!-- Info -->
-          <aside class="bg-base p-6 md:p-8 flex flex-col gap-7">
+          <aside class="bg-ground p-6 md:p-8 flex flex-col gap-7">
             <div>
               <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim block mb-2">Response</span>
               <span class="font-display text-3xl font-extrabold uppercase tracking-[-0.03em] text-fg leading-none">Same-day</span>

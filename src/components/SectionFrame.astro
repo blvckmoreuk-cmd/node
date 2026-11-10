@@ -8,6 +8,6 @@ interface Props {
 }
 const { max = 'max-w-5xl', class: cls = '', id } = Astro.props;
 ---
-<div id={id} class:list={["w-full border border-line-strong bg-base relative z-10 crop-marks", max, cls]}>
+<div id={id} class:list={["w-full border border-line-strong bg-ground relative z-10 crop-marks", max, cls]}>
   <slot />
 </div>

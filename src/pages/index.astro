@@ -35,7 +35,7 @@ const trusted = [
 >
   <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-mono relative">
 
-    <div id="home-frame" class="w-full max-w-6xl border border-line-strong bg-base relative z-10 crop-marks">
+    <div id="home-frame" class="w-full max-w-6xl border border-line-strong bg-ground relative z-10 crop-marks">
 
       <!-- ===================== MASTHEAD ===================== -->
       <header class="border-b border-line-strong">
@@ -111,7 +111,7 @@ const trusted = [
             <!-- Track selector: compact, sits on top of the screen -->
             <div class="absolute top-3 left-3 right-3 sm:left-auto z-20 pointer-events-auto">
               <div class="relative w-full sm:w-80">
-                <select id="track-selector" class="w-full bg-base border border-line-strong text-fg pl-3 pr-8 py-2.5 text-[10px] font-mono font-medium uppercase tracking-[0.12em] cursor-pointer outline-none appearance-none rounded-none hover:border-fg focus:border-accent">
+                <select id="track-selector" class="w-full bg-ground border border-line-strong text-fg pl-3 pr-8 py-2.5 text-[10px] font-mono font-medium uppercase tracking-[0.12em] cursor-pointer outline-none appearance-none rounded-none hover:border-fg focus:border-accent">
                   <option value="/audio/Wanna Feel.mp3">Wanna Feel — Mix/Master</option>
                   <option value="/audio/some people.mp3">Some People — Full Production</option>
                   <option value="/audio/shake it.mp3">Shake It — Mix/Master</option>
@@ -132,7 +132,7 @@ const trusted = [
             <div class="absolute bottom-3 left-3 right-3 z-20 flex items-end justify-between gap-3 pointer-events-none">
 
               <!-- Volume encoder: square hardware knob + 8-step level meter -->
-              <div class="flex items-center gap-3 bg-base border border-line-strong px-3 py-2 pointer-events-auto">
+              <div class="flex items-center gap-2 sm:gap-3 bg-ground border border-line-strong px-2 sm:px-3 py-2 pointer-events-auto">
                 <span class="font-mono text-[9px] uppercase tracking-[0.18em] text-fg-dim">Vol</span>
                 <div class="relative w-10 h-10 shrink-0">
                   <div id="knob-volume" class="w-full h-full relative border border-fg-dim bg-inset cursor-ns-resize">
@@ -148,7 +148,7 @@ const trusted = [
               </div>
 
               <!-- Play / pause -->
-              <button id="play-btn" class="key pointer-events-auto bg-base !border-fg">
+              <button id="play-btn" class="key pointer-events-auto bg-ground !border-fg !px-4 sm:!px-6 shrink-0">
                 <span>Play/Pause</span>
               </button>
             </div>
@@ -198,6 +198,19 @@ const trusted = [
             <input type="email" id="email" name="email" required class="field" />
           </div>
           <div class="md:col-span-2">
+            <label for="service" class="field-label">Service Required</label>
+            <select id="service" name="service" required class="field">
+              <option value="" disabled selected>Select a service...</option>
+              <option value="mastering">Mastering</option>
+              <option value="mixing-mastering">Mixing &amp; Mastering</option>
+              <option value="production">Ghost Production</option>
+              <option value="finishing">Finish Your Track</option>
+              <option value="education">Consultation &amp; Education</option>
+              <option value="sound-design">Sound Design</option>
+              <option value="other">Other / Not sure</option>
+            </select>
+          </div>
+          <div class="md:col-span-2">
             <label for="message" class="field-label">Project Details</label>
             <textarea id="message" name="message" rows="5" required class="field"></textarea>
             <p class="font-mono text-[10px] leading-relaxed text-fg-dim mt-2.5 max-w-2xl">Feel free to attach any rough mix files here. We don&rsquo;t need your stems yet &mdash; you&rsquo;ll be sent a link to upload these when you receive your confirmation email.</p>
@@ -213,11 +226,11 @@ const trusted = [
         <SectionHeader label="Trusted By" />
         <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-px bg-line-strong">
           {trusted.map((logo) => (
-            <div class="bg-base p-5 md:p-6 flex items-center justify-center">
-              <img src={logo.src} class="h-10 md:h-11 w-auto max-w-full object-contain opacity-60 grayscale hover:opacity-100 hover:grayscale-0" alt={logo.alt} loading="lazy" />
+            <div class="bg-ground p-5 md:p-6 flex items-center justify-center">
+              <img src={logo.src} class="h-10 md:h-11 w-auto max-w-full object-contain opacity-80 grayscale hover:opacity-100 hover:grayscale-0" alt={logo.alt} loading="lazy" />
             </div>
           ))}
-          <div class="bg-base lg:hidden" aria-hidden="true"></div>
+          <div class="bg-ground lg:hidden" aria-hidden="true"></div>
         </div>
       </section>
 
