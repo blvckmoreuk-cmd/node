@@ -24,7 +24,7 @@ import SuccessPopup from '../components/SuccessPopup.astro';
         <div class="grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-px bg-line-strong">
 
           <!-- Form -->
-          <form name="contact" method="POST" enctype="multipart/form-data" data-netlify="true" data-netlify-honeypot="bot-field" action="/contact/?success=true" class="bg-ground p-6 md:p-8 grid grid-cols-1 gap-5">
+          <form id="contact-form" name="contact" method="POST" enctype="multipart/form-data" data-netlify="true" data-netlify-honeypot="bot-field" action="/contact/?success=true" class="bg-ground p-6 md:p-8 grid grid-cols-1 gap-5">
             <!-- Netlify Forms: hidden name field + honeypot (bots fill it, humans don't) -->
             <input type="hidden" name="form-name" value="contact" />
             <p class="hidden"><label>Don't fill this out: <input name="bot-field" /></label></p>
@@ -59,8 +59,8 @@ import SuccessPopup from '../components/SuccessPopup.astro';
               <p class="mt-2.5 font-mono text-[10px] leading-relaxed text-fg-dim">Feel free to attach any rough mix files here. We don&rsquo;t need your stems yet &mdash; you&rsquo;ll be sent a link to upload these when you receive your confirmation email.</p>
             </div>
 
-            <button type="submit" class="key key-primary w-full py-4 text-[12px]">
-              Send Enquiry
+            <button type="submit" id="contact-submit" class="key key-primary key-sending w-full py-4 text-[12px]">
+              <span data-label>Send Enquiry</span>
             </button>
           </form>
 
@@ -94,3 +94,27 @@ import SuccessPopup from '../components/SuccessPopup.astro';
 
   <SuccessPopup />
 </Layout>
+
+<script>
+  // Submit feedback only: the native Netlify POST is untouched. The submit event
+  // fires after browser validation passes, so invalid forms never show "Sending".
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const btn = document.getElementById('contact-submit') as HTMLButtonElement | null;
+  const setLabel = (text: string) => {
+    const label = btn?.querySelector('[data-label]');
+    if (label) label.textContent = text;
+  };
+  form?.addEventListener('submit', () => {
+    if (!btn || btn.classList.contains('is-sending')) return;
+    setLabel('Sending…');
+    btn.classList.add('is-sending');
+    btn.setAttribute('aria-busy', 'true');
+  });
+  // Back/forward cache restore: reset the button.
+  window.addEventListener('pageshow', (e) => {
+    if (!e.persisted || !btn) return;
+    btn.classList.remove('is-sending');
+    btn.removeAttribute('aria-busy');
+    setLabel('Send Enquiry');
+  });
+</script>

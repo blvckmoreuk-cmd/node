@@ -79,7 +79,24 @@ const { service, compact = false } = Astro.props;
     background: var(--color-panel);
     border-color: var(--color-fg-dim);
   }
-  .svc:active { transform: translateY(1px); }
+  .svc:active { transform: scale(0.99); }
+
+  /* corner tick that appears on hover (cream, not orange) */
+  .svc::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 10px;
+    height: 10px;
+    border-top: 1px solid var(--color-fg);
+    border-left: 1px solid var(--color-fg);
+    opacity: 0;
+    transition: opacity 0.12s steps(2);
+    pointer-events: none;
+  }
+  .svc:hover::before,
+  .svc:focus-visible::before { opacity: 1; }
   .svc:focus-visible { outline: 1px solid var(--color-accent); outline-offset: 3px; }
 
   /* channel chip: a hollow square that fills on hover, like an armed step */
@@ -187,6 +204,7 @@ const { service, compact = false } = Astro.props;
   .svc:focus-visible .svc-rule { transform: scaleX(1); }
 
   @media (prefers-reduced-motion: reduce) {
-    .svc-rule { transition: none; }
+    .svc-rule, .svc::before { transition: none; }
+    .svc:active { transform: none; }
   }
 </style>
