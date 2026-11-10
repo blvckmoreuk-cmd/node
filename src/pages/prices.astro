@@ -72,7 +72,7 @@ const priceJsonLd = {
 
           <!-- Mastering -->
           <div class="bg-ground p-6 md:p-8" style="--ch: var(--color-ch-mastering)">
-            <h3 class="rate-head"><span class="rate-chip"></span>Mastering</h3>
+            <h2 class="rate-head"><span class="rate-chip"></span>Mastering</h2>
             <ul>
               {masteringRows.map((row) => (
                 <li class={`rate-row ${row.muted ? 'is-muted' : ''}`}>
@@ -84,7 +84,7 @@ const priceJsonLd = {
 
           <!-- Mixing & Mastering -->
           <div class="bg-ground p-6 md:p-8" style="--ch: var(--color-ch-mixing)">
-            <h3 class="rate-head"><span class="rate-chip"></span>Mixing &amp; Mastering</h3>
+            <h2 class="rate-head"><span class="rate-chip"></span>Mixing &amp; Mastering</h2>
             <ul>
               {mixingRows.map((row) => (
                 <li class={`rate-row ${row.muted ? 'is-muted' : ''}`}>
@@ -96,7 +96,7 @@ const priceJsonLd = {
 
           <!-- Production & Finishing (wide) -->
           <div class="md:col-span-2 bg-ground p-6 md:p-8" style="--ch: var(--color-ch-production)">
-            <h3 class="rate-head"><span class="rate-chip"></span>Production &amp; Finishing</h3>
+            <h2 class="rate-head"><span class="rate-chip"></span>Production &amp; Finishing</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-10">
               <div class="rate-row">
                 <span>Ghost Production, exclusive &amp; royalty-free</span>
@@ -112,7 +112,7 @@ const priceJsonLd = {
 
           <!-- Consultation & Education -->
           <div class="bg-ground p-6 md:p-8" style="--ch: var(--color-ch-education)">
-            <h3 class="rate-head"><span class="rate-chip"></span>Consultation &amp; Education</h3>
+            <h2 class="rate-head"><span class="rate-chip"></span>Consultation &amp; Education</h2>
             <ul>
               {educationRows.map((row) => (
                 <li class="rate-row">
@@ -124,11 +124,11 @@ const priceJsonLd = {
           </div>
 
           <!-- Digital Tools (links to the shop) -->
-          <a href="/shop" class="group bg-ground p-6 md:p-8 block hover:bg-panel no-underline" style="--ch: var(--color-ch-tools)">
-            <h3 class="rate-head justify-between">
+          <a href="/shop/" class="group bg-ground p-6 md:p-8 block hover:bg-panel no-underline" style="--ch: var(--color-ch-tools)">
+            <h2 class="rate-head justify-between">
               <span class="flex items-center gap-3"><span class="rate-chip"></span>Digital Tools</span>
               <span class="font-mono text-[10px] tracking-[0.18em] text-fg-dim group-hover:text-fg">Shop &rarr;</span>
-            </h3>
+            </h2>
             <ul>
               {toolRows.map((row) => (
                 <li class="rate-row">
@@ -143,7 +143,7 @@ const priceJsonLd = {
 
       <!-- CTA -->
       <section>
-        <a href="/contact" class="key key-primary w-full py-5">
+        <a href="/contact/"class="key key-primary w-full py-5">
           Start a Project
         </a>
       </section>

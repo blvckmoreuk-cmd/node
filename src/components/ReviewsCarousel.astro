@@ -14,7 +14,7 @@ import { testimonials } from '../data/testimonials';
       <div data-track class="flex transition-transform duration-500 ease-out">
         {testimonials.map((t) => (
           <figure data-slide class="w-full shrink-0 px-14 md:px-24 py-10 md:py-12 flex flex-col items-start gap-5">
-            <div class="flex gap-1" aria-label={`${t.rating} out of 5`}>
+            <div class="flex gap-1" role="img" aria-label={`${t.rating} out of 5`}>
               {Array.from({ length: 5 }).map((_, s) => (
                 <span class={`block w-3 h-3 border ${s < t.rating ? 'bg-fg border-fg' : 'border-cell-line'}`}></span>
               ))}
@@ -39,7 +39,7 @@ import { testimonials } from '../data/testimonials';
   <div data-dots class="flex flex-wrap items-center justify-center gap-1.5 border-t border-line px-4 py-4">
     {testimonials.map((_, i) => (
       <button data-dot type="button" aria-label={`Go to review ${i + 1}`}
-        class="w-3 h-3 border border-cell-line"></button>
+        class="relative w-3 h-3 border border-cell-line after:content-[''] after:absolute after:-inset-1.5"></button>
     ))}
   </div>
 </section>
@@ -56,6 +56,7 @@ import { testimonials } from '../data/testimonials';
 
     const stars = document.createElement('div');
     stars.className = 'flex gap-1';
+    stars.setAttribute('role', 'img');
     stars.setAttribute('aria-label', `${r.rating} out of 5`);
     for (let s = 0; s < 5; s++) {
       const cell = document.createElement('span');
@@ -85,7 +86,7 @@ import { testimonials } from '../data/testimonials';
     dot.setAttribute('data-dot', '');
     dot.type = 'button';
     dot.setAttribute('aria-label', `Go to review ${index + 1}`);
-    dot.className = 'w-3 h-3 border border-cell-line';
+    dot.className = "relative w-3 h-3 border border-cell-line after:content-[''] after:absolute after:-inset-1.5";
     return dot;
   }
 

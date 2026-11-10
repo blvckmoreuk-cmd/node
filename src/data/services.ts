@@ -72,7 +72,7 @@ export const services: Service[] = [
     num: '05', title: 'Tools & Samples', slug: 'sounddesign', tagline: 'Custom Patches',
     price: 'From £5', note: 'tools from £5, custom on enquiry', revisions: '',
     detail: 'Bespoke patches, racks and one-shots built around your reference. Prefer something off-the-shelf? Sample packs, stock FX racks and the Nodegen VST are fixed-price tools.',
-    wire: 'bg-ch-tools', glow: '', hex: '#a08cb4', shopHref: '/shop',
+    wire: 'bg-ch-tools', glow: '', hex: '#a08cb4', shopHref: '/shop/',
     reqsLabel: 'Workflow and production tools',
     reqs: [],
   },

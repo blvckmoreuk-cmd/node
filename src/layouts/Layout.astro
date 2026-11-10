@@ -25,22 +25,31 @@ const {
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(image, Astro.site).href;
 
-// LocalBusiness structured data — one studio, Leeds, so search engines can
-// surface hours-independent rich results and local-pack eligibility.
+// Indexing is opt-out only for non-production Netlify builds (deploy previews,
+// branch deploys). Netlify sets CONTEXT=production solely for the production
+// branch's deploy. Local builds (CONTEXT unset) are also noindexed, which is
+// harmless; production is the only context that stays indexable.
+const isProductionBuild = process.env.CONTEXT === 'production';
+const robotsNoindex = noindex || !isProductionBuild;
+
+// ProfessionalService structured data: a Leeds studio working worldwide.
+// Only facts already on the site (no address/phone published).
+const siteUrl = 'https://nodeproduction.co.uk';
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'MusicGroup',
+  '@type': 'ProfessionalService',
   name: 'Node Production',
   description,
-  url: Astro.site?.href,
-  image: ogImage,
+  url: siteUrl,
+  logo: new URL('/brand/logo-mark.svg', siteUrl).href,
+  image: new URL('/og.jpg', siteUrl).href,
+  priceRange: '££',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Leeds',
     addressCountry: 'GB',
   },
   areaServed: 'Worldwide',
-  genre: 'Dance Music',
 };
 ---
 
@@ -53,7 +62,7 @@ const jsonLd = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {robotsNoindex && <meta name="robots" content="noindex, nofollow" />}
 
     <!-- Open Graph (Facebook, WhatsApp, LinkedIn, Instagram) -->
     <meta property="og:type" content="website" />
@@ -62,6 +71,9 @@ const jsonLd = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="Node Production — electronic music mixing and mastering, Leeds" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -98,12 +110,12 @@ const jsonLd = {
           <StepGrid rows={['C...C.....C.C...', '..G...G.G..C..G.']} />
         </div>
         <nav aria-label="Footer navigation" class="flex flex-wrap gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-[0.18em]">
-          <a href="/about" class="text-fg-dim hover:text-fg no-underline">About</a>
-          <a href="/services" class="text-fg-dim hover:text-fg no-underline">Services</a>
-          <a href="/prices" class="text-fg-dim hover:text-fg no-underline">Rates</a>
-          <a href="/shop" class="text-fg-dim hover:text-fg no-underline">Shop</a>
-          <a href="/portfolio" class="text-fg-dim hover:text-fg no-underline">Portfolio</a>
-          <a href="/contact" class="text-fg-dim hover:text-fg no-underline">Contact</a>
+          <a href="/about/" class="text-fg-dim hover:text-fg no-underline">About</a>
+          <a href="/services/" class="text-fg-dim hover:text-fg no-underline">Services</a>
+          <a href="/prices/" class="text-fg-dim hover:text-fg no-underline">Rates</a>
+          <a href="/shop/" class="text-fg-dim hover:text-fg no-underline">Shop</a>
+          <a href="/portfolio/" class="text-fg-dim hover:text-fg no-underline">Portfolio</a>
+          <a href="/contact/" class="text-fg-dim hover:text-fg no-underline">Contact</a>
         </nav>
       </div>
       <div class="border-t border-line">
