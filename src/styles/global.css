@@ -305,3 +305,24 @@
   .seq.is-playing::after,
   .seq-arm .seq-cell { animation: none; }
 }
+
+/* ---- Phase 1: page transitions + press feedback (CSS only) ---- */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+
+  ::view-transition-old(root) { animation: none; }
+  ::view-transition-new(root) {
+    animation: seq-wipe 240ms steps(6, end) both;
+  }
+  @keyframes seq-wipe {
+    from { clip-path: inset(0 100% 0 0); }
+    to   { clip-path: inset(0 0 0 0); }
+  }
+}
+
+/* Press states: instant, no shadow */
+.key-primary:active:not(:disabled) { background: #a83d1e; border-color: #a83d1e; }
+.product-card:active { transform: scale(0.99); }
+@media (prefers-reduced-motion: reduce) {
+  .key:active, .product-card:active { transform: none; }
+}
