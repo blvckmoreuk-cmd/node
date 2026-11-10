@@ -280,9 +280,17 @@
   .credits-cell + .credits-cell { border-top: 1px solid var(--color-line-strong); }
   .credits-pip { flex: none; width: 6px; height: 6px; margin-right: 0.75rem; border: 1px solid var(--color-cell-line); }
   @media (min-width: 768px) {
-    .credits-strip { grid-template-columns: repeat(3, 1fr); }
-    .credits-cell { padding: 0.8rem 1.25rem; letter-spacing: 0.1em; white-space: nowrap; }
-    .credits-cell + .credits-cell { border-top: 0; border-left: 1px solid var(--color-line-strong); }
+    .credits-strip { grid-template-columns: repeat(2, 1fr); }
+    .credits-cell { padding: 0.8rem 1.25rem; letter-spacing: 0.1em; }
+    .credits-cell + .credits-cell { border-top: 0; }
+    .credits-cell:nth-child(even) { border-left: 1px solid var(--color-line-strong); }
+    .credits-cell:nth-child(n+3) { border-top: 1px solid var(--color-line-strong); }
+  }
+  @media (min-width: 1024px) {
+    .credits-strip { grid-template-columns: repeat(4, 1fr); }
+    .credits-cell { padding: 0.8rem 1rem; }
+    .credits-cell:nth-child(n+3) { border-top: 0; }
+    .credits-cell + .credits-cell { border-left: 1px solid var(--color-line-strong); }
   }
 
   /* ---- Trusted-by logo marquee: two identical lists; -50% loops seamlessly ---- */
