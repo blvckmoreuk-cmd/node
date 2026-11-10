@@ -35,8 +35,6 @@
         <span id="modal-note" class="font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint text-right max-w-[50%]"></span>
       </div>
 
-      <p id="modal-offer" class="hidden font-mono text-[10px] uppercase tracking-[0.2em] text-accent">50% off your first order.</p>
-
       <div id="modal-revisions-row" class="hidden items-center gap-2.5 border-t border-line pt-4">
         <span class="text-accent leading-none">&#8635;</span>
         <span id="modal-revisions" class="font-mono text-[11px] uppercase tracking-[0.15em] text-fg-muted"></span>
@@ -89,10 +87,6 @@
           revRow.classList.add('hidden');
           revRow.classList.remove('flex');
         }
-      }
-      const offerLine = document.getElementById('modal-offer');
-      if (offerLine) {
-        offerLine.classList.toggle('hidden', d.offer !== '1');
       }
       const dot = document.getElementById('modal-dot');
       if (dot && d.hex) {
