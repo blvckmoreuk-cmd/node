@@ -326,3 +326,16 @@
 @media (prefers-reduced-motion: reduce) {
   .key:active, .product-card:active { transform: none; }
 }
+
+/* ---- Phase 2: scroll reveals (JS marks only below-the-fold items as pending;
+   with JS off or reduced motion nothing is ever hidden) ---- */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal-pending] { opacity: 0; translate: 0 8px; }
+  [data-reveal-in] {
+    transition: opacity 220ms steps(4, end) var(--reveal-delay, 0ms),
+                translate 220ms steps(4, end) var(--reveal-delay, 0ms);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal-pending] { opacity: 1; translate: none; }
+}
