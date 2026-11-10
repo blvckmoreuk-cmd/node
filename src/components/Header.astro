@@ -12,7 +12,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
 
 <header class="w-full border-b border-line-strong bg-page relative z-30">
-  <div class="max-w-6xl mx-auto flex items-stretch justify-between">
+  <div class="max-w-6xl mx-auto flex items-stretch justify-between md:grid md:grid-cols-[1fr_auto_1fr]">
 
     <a href="/" class="flex items-center gap-3 px-4 sm:px-6 py-3 no-underline border-r border-line-strong" aria-label="Node Production, home">
       <Logo variant="mark" class="w-8 h-8 shrink-0" />
@@ -20,7 +20,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     </a>
 
     <!-- Desktop / tablet: a row of step cells. The active page is the armed (orange) step. -->
-    <nav aria-label="Site navigation" class="hidden md:flex items-stretch">
+    <nav aria-label="Site navigation" class="hidden md:flex items-stretch border-r border-line-strong">
       {navItems.map((item, i) => {
         const isActive = currentPath === item.href;
         return (
@@ -38,6 +38,9 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
         );
       })}
     </nav>
+
+    <!-- Desktop spacer balances the logo so the tabs are truly centred -->
+    <div class="hidden md:block" aria-hidden="true"></div>
 
     <!-- Mobile: menu key -->
     <button id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" class="md:hidden flex items-center gap-3 px-4 border-l border-line-strong font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-fg">
