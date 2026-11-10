@@ -89,8 +89,8 @@
     font-family: var(--font-display);
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
+    letter-spacing: -0.025em;
+    line-height: 1;
     color: var(--color-fg);
   }
   .t-label {
