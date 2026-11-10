@@ -72,7 +72,7 @@ const tabs = [{ id: 'all', label: 'All' }, ...categories.map((c) => ({ id: c.id,
                   <div class="flex items-start gap-3">
                     <span class="block w-3 h-3 mt-1 shrink-0 border group-hover:bg-(--ch)" style="border-color: var(--ch)" aria-hidden="true"></span>
                     <div>
-                      <h2 class="font-display text-2xl font-extrabold uppercase tracking-[-0.03em] text-fg leading-[0.95]">{product.title}</h2>
+                      <h2 class="font-display text-xl font-extrabold uppercase tracking-[-0.02em] text-fg leading-tight">{product.title}</h2>
                       <p class="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">{product.tagline}</p>
                     </div>
                   </div>
@@ -84,7 +84,7 @@ const tabs = [{ id: 'all', label: 'All' }, ...categories.map((c) => ({ id: c.id,
                 <p class="font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">{cat?.label}</p>
                 <div class="flex items-end justify-between border-t border-line pt-4">
                   <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim group-hover:text-fg">View &rarr;</span>
-                  <span class="font-display text-2xl font-extrabold tracking-[-0.02em] text-fg leading-none">{product.price}</span>
+                  <span class="font-display text-xl font-extrabold tracking-[-0.02em] text-fg leading-none">{product.price}</span>
                 </div>
               </button>
             );
