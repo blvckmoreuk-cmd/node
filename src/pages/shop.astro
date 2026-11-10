@@ -27,7 +27,7 @@ const tabs = [{ id: 'all', label: 'All' }, ...categories.map((c) => ({ id: c.id,
         {tabs.map((tab, i) => (
           <button
             type="button"
-            class={`shop-tab flex-1 min-w-[33%] sm:min-w-0 px-4 py-3.5 font-mono text-[11px] font-medium uppercase tracking-[0.18em] hover:text-fg ${i === 0 ? 'bg-accent text-accent-ink hover:text-accent-ink' : 'bg-base text-fg-dim hover:bg-panel'}`}
+            class={`shop-tab flex-1 min-w-[33%] sm:min-w-0 px-4 py-3.5 font-mono text-[11px] font-medium uppercase tracking-[0.18em] hover:text-fg ${i === 0 ? 'bg-fg text-accent-ink hover:text-accent-ink' : 'bg-base text-fg-dim hover:bg-panel'}`}
             data-tab={tab.id}
             aria-pressed={i === 0 ? 'true' : 'false'}
           >
@@ -133,7 +133,7 @@ const tabs = [{ id: 'all', label: 'All' }, ...categories.map((c) => ({ id: c.id,
         tabs.forEach((t) => {
           const active = t === tab;
           t.setAttribute('aria-pressed', active ? 'true' : 'false');
-          t.classList.toggle('bg-accent', active);
+          t.classList.toggle('bg-fg', active);
           t.classList.toggle('text-accent-ink', active);
           t.classList.toggle('hover:text-accent-ink', active);
           t.classList.toggle('bg-base', !active);

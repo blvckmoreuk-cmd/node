@@ -81,8 +81,6 @@ const trusted = [
 
       <!-- ===================== CLIENTS MARQUEE ===================== -->
       <div class="border-b border-line-strong bg-inset overflow-hidden relative" aria-label="Clients">
-        <div class="absolute inset-y-0 left-0 w-12 md:w-20 z-10 bg-linear-to-r from-inset to-transparent pointer-events-none"></div>
-        <div class="absolute inset-y-0 right-0 w-12 md:w-20 z-10 bg-linear-to-l from-inset to-transparent pointer-events-none"></div>
         <div class="marquee-track py-3.5">
           {[...clients, ...clients].map((client) => (
             <span class="flex items-center whitespace-nowrap px-5 md:px-7 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">
@@ -98,7 +96,7 @@ const trusted = [
         <SectionHeader num="01" label="Our Work / Press Play">
           <label slot="meta" class="flex items-center gap-2 cursor-pointer">
             <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">Particle</span>
-            <input id="particle-color" type="color" value="#e8552a" class="w-6 h-6 bg-transparent cursor-pointer" />
+            <input id="particle-color" type="color" value="#f2ede3" class="w-6 h-6 bg-transparent cursor-pointer" />
           </label>
         </SectionHeader>
 
@@ -372,7 +370,7 @@ const trusted = [
 
       const geometry = new THREE.BufferGeometry();
       geometry.setAttribute('position', new THREE.BufferAttribute(shapePositions[0].slice(), 3));
-      const material = new THREE.PointsMaterial({ size: 0.055, color: 0xe8552a, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending });
+      const material = new THREE.PointsMaterial({ size: 0.055, color: 0xf2ede3, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending });
       const points = new THREE.Points(geometry, material);
       points.position.y = 0; // centred in the screen; transport controls overlay the bottom
       scene.add(points);
@@ -381,7 +379,7 @@ const trusted = [
       // modulates brightness/hue around whatever base colour is chosen here.
       const colorInput = document.getElementById('particle-color') as HTMLInputElement | null;
       const hslTarget = { h: 0, s: 0, l: 0 };
-      new THREE.Color(colorInput?.value || '#e8552a').getHSL(hslTarget);
+      new THREE.Color(colorInput?.value || '#f2ede3').getHSL(hslTarget);
       let baseHue = hslTarget.h;
       let baseSaturation = hslTarget.s;
 

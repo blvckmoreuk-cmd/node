@@ -29,7 +29,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
             aria-current={isActive ? 'page' : undefined}
             class:list={[
               'group flex items-center gap-3 px-5 lg:px-7 no-underline border-l border-line-strong font-mono text-[11px] font-medium uppercase tracking-[0.18em]',
-              isActive ? 'bg-accent text-accent-ink' : 'text-fg-dim hover:text-fg hover:bg-panel',
+              isActive ? 'bg-raised text-fg' : 'text-fg-dim hover:text-fg hover:bg-panel',
             ]}
           >
             <span class={isActive ? 'opacity-70' : 'text-fg-faint group-hover:text-fg-dim'}>{String(i + 1).padStart(2, '0')}</span>
@@ -43,7 +43,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     <button id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" class="md:hidden flex items-center gap-3 px-4 border-l border-line-strong font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-fg">
       <span id="nav-toggle-label">Menu</span>
       <span class="grid grid-cols-2 gap-0.5" aria-hidden="true">
-        <span class="w-1.5 h-1.5 bg-accent"></span><span class="w-1.5 h-1.5 border border-cell-line"></span>
+        <span class="w-1.5 h-1.5 bg-fg"></span><span class="w-1.5 h-1.5 border border-cell-line"></span>
         <span class="w-1.5 h-1.5 border border-cell-line"></span><span class="w-1.5 h-1.5 bg-fg"></span>
       </span>
     </button>
@@ -58,7 +58,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
           aria-current={isActive ? 'page' : undefined}
           class:list={[
             'flex items-center justify-between px-5 py-4 border-b border-line-strong no-underline font-mono text-xs font-medium uppercase tracking-[0.18em]',
-            isActive ? 'bg-accent text-accent-ink' : 'text-fg-muted',
+            isActive ? 'bg-raised text-fg' : 'text-fg-muted',
           ]}
         >
           <span>{item.label}</span>
