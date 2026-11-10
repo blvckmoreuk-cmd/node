@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import SectionFrame from '../components/SectionFrame.astro';
 import SectionHeader from '../components/SectionHeader.astro';
+import PageHero from '../components/PageHero.astro';
 import SuccessPopup from '../components/SuccessPopup.astro';
 ---
 
@@ -10,23 +11,12 @@ import SuccessPopup from '../components/SuccessPopup.astro';
   description="Send your dance music project details for a same-day reply. Mixing, mastering and production enquiries welcome."
 >
   <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-mono">
-    <SectionFrame max="max-w-4xl">
+    <SectionFrame>
 
-      <!-- Masthead -->
-      <header class="border-b border-line-strong">
-        <div class="flex items-center justify-between px-4 md:px-5 py-2.5 border-b border-line">
-          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Node // Enquire</span>
-          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Same-day reply</span>
-        </div>
-        <div class="px-4 md:px-8 py-8 md:py-11">
-          <h1 class="font-display font-bold uppercase leading-[0.9] tracking-tight text-fg text-[11vw] md:text-[3.75rem]">
-            Initiate a<br /><span class="text-accent">project.</span>
-          </h1>
-          <p class="mt-5 font-body text-sm text-fg-muted max-w-md leading-relaxed">
-            Send your project details, questions and turnaround. We guarantee a same-day response.
-          </p>
-        </div>
-      </header>
+      <PageHero left="Node // Enquire" right="Same-day reply">
+        <Fragment slot="title">Initiate a<br />project.</Fragment>
+        Send your project details, questions and turnaround. We guarantee a same-day response.
+      </PageHero>
 
       <!-- Form + info -->
       <section>
@@ -34,24 +24,24 @@ import SuccessPopup from '../components/SuccessPopup.astro';
         <div class="grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-px bg-line-strong">
 
           <!-- Form -->
-          <form name="contact" method="POST" enctype="multipart/form-data" data-netlify="true" data-netlify-honeypot="bot-field" action="/contact?success=true" class="bg-panel p-6 md:p-7 grid grid-cols-1 gap-5">
+          <form name="contact" method="POST" enctype="multipart/form-data" data-netlify="true" data-netlify-honeypot="bot-field" action="/contact?success=true" class="bg-base p-6 md:p-8 grid grid-cols-1 gap-5">
             <!-- Netlify Forms: hidden name field + honeypot (bots fill it, humans don't) -->
             <input type="hidden" name="form-name" value="contact" />
             <p class="hidden"><label>Don't fill this out: <input name="bot-field" /></label></p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div class="flex flex-col gap-2">
-                <label for="name" class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">Name / Artist</label>
-                <input type="text" id="name" name="name" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors" />
+              <div>
+                <label for="name" class="field-label">Name / Artist</label>
+                <input type="text" id="name" name="name" required class="field" />
               </div>
-              <div class="flex flex-col gap-2">
-                <label for="email" class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">Email</label>
-                <input type="email" id="email" name="email" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors" />
+              <div>
+                <label for="email" class="field-label">Email</label>
+                <input type="email" id="email" name="email" required class="field" />
               </div>
             </div>
 
-            <div class="flex flex-col gap-2">
-              <label for="service" class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">Service Required</label>
-              <select id="service" name="service" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs uppercase tracking-wider outline-none focus:border-accent transition-colors appearance-none cursor-pointer">
+            <div>
+              <label for="service" class="field-label">Service Required</label>
+              <select id="service" name="service" required class="field">
                 <option value="" disabled selected>Select a service...</option>
                 <option value="mastering">Mastering</option>
                 <option value="mixing-mastering">Mixing &amp; Mastering</option>
@@ -63,35 +53,35 @@ import SuccessPopup from '../components/SuccessPopup.astro';
               </select>
             </div>
 
-            <div class="flex flex-col gap-2">
-              <label for="message" class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">Project Details</label>
-              <textarea id="message" name="message" rows="6" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors resize-y"></textarea>
-              <p class="font-mono text-[10px] leading-relaxed text-fg-faint">Feel free to attach any rough mix files here. We don&rsquo;t need your stems yet &mdash; you&rsquo;ll be sent a link to upload these when you receive your confirmation email.</p>
+            <div>
+              <label for="message" class="field-label">Project Details</label>
+              <textarea id="message" name="message" rows="6" required class="field resize-y"></textarea>
+              <p class="mt-2.5 font-mono text-[10px] leading-relaxed text-fg-dim">Feel free to attach any rough mix files here. We don&rsquo;t need your stems yet &mdash; you&rsquo;ll be sent a link to upload these when you receive your confirmation email.</p>
             </div>
 
-            <button type="submit" class="w-full py-4 bg-accent-dim text-white font-mono font-black text-[12px] uppercase tracking-[0.3em] hover:bg-accent active:translate-y-px transition-all">
+            <button type="submit" class="key key-primary w-full py-4 text-[12px]">
               Send Enquiry
             </button>
           </form>
 
           <!-- Info -->
-          <aside class="bg-base p-6 md:p-7 flex flex-col gap-6">
+          <aside class="bg-base p-6 md:p-8 flex flex-col gap-7">
             <div>
-              <span class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint block mb-1.5">Response</span>
-              <span class="font-display text-xl font-bold text-accent leading-none">Same-day</span>
+              <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim block mb-2">Response</span>
+              <span class="font-display text-3xl font-extrabold uppercase tracking-[-0.03em] text-fg leading-none">Same-day</span>
             </div>
             <div>
-              <span class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint block mb-1.5">Based in</span>
-              <span class="font-display text-xl font-bold text-fg leading-none">Leeds, UK</span>
-              <p class="mt-1 font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint">Working worldwide</p>
+              <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim block mb-2">Based in</span>
+              <span class="font-display text-3xl font-extrabold uppercase tracking-[-0.03em] text-fg leading-none">Leeds, UK</span>
+              <p class="mt-2 font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">Working worldwide &middot; 53.80 N&nbsp;&nbsp;1.55 W</p>
             </div>
             <div class="mt-auto pt-6 border-t border-line">
-              <span class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint block mb-3">How it works</span>
-              <ol class="space-y-2 font-body text-[12px] text-fg-muted leading-snug">
-                <li><span class="text-accent font-mono mr-2">01</span>Send your request.</li>
-                <li><span class="text-accent font-mono mr-2">02</span>We confirm scope, rate and timeframe.</li>
-                <li><span class="text-accent font-mono mr-2">03</span>Get a link to upload your files and pay a 50% deposit.</li>
-                <li><span class="text-accent font-mono mr-2">04</span>Files uploaded and deposit paid &mdash; project delivered within the agreed timeframe.</li>
+              <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim block mb-4">How it works</span>
+              <ol class="space-y-3 font-body text-[13px] text-fg-muted leading-snug">
+                <li class="flex gap-3"><span class="text-fg-dim font-mono text-[11px] font-semibold shrink-0">01</span><span>Send your request.</span></li>
+                <li class="flex gap-3"><span class="text-fg-dim font-mono text-[11px] font-semibold shrink-0">02</span><span>We confirm scope, rate and timeframe.</span></li>
+                <li class="flex gap-3"><span class="text-fg-dim font-mono text-[11px] font-semibold shrink-0">03</span><span>Get a link to upload your files and pay a 50% deposit.</span></li>
+                <li class="flex gap-3"><span class="text-fg-dim font-mono text-[11px] font-semibold shrink-0">04</span><span>Files uploaded and deposit paid &mdash; project delivered within the agreed timeframe.</span></li>
               </ol>
             </div>
           </aside>

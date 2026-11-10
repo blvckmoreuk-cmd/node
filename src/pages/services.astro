@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import SectionFrame from '../components/SectionFrame.astro';
 import SectionHeader from '../components/SectionHeader.astro';
+import PageHero from '../components/PageHero.astro';
 import ServiceModal from '../components/ServiceModal.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import { services } from '../data/services';
@@ -12,30 +13,19 @@ import { services } from '../data/services';
   description="Six audio engineering disciplines from a Leeds dance music studio: mixing, mastering, ghost production, tutoring and more."
 >
   <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-mono">
-    <SectionFrame max="max-w-4xl">
+    <SectionFrame>
 
-      <!-- Masthead -->
-      <header class="border-b border-line-strong">
-        <div class="flex items-center justify-between px-4 md:px-5 py-2.5 border-b border-line">
-          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Node // Services</span>
-          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Six disciplines</span>
-        </div>
-        <div class="px-4 md:px-8 py-8 md:py-11">
-          <h1 class="font-display font-bold uppercase leading-[0.9] tracking-tight text-fg text-[11vw] md:text-[3.75rem]">
-            What we<br /><span class="text-accent">offer.</span>
-          </h1>
-          <p class="mt-5 font-body text-sm text-fg-muted max-w-md leading-relaxed">
-            Six disciplines, one studio. Tap a service for the full brief, or send a track and we will point you to the right one.
-          </p>
-        </div>
-      </header>
+      <PageHero left="Node // Services" right="Six disciplines">
+        <Fragment slot="title">What we<br />offer.</Fragment>
+        Six disciplines, one studio. Tap a service for the full brief, or send a track and we will point you to the right one.
+      </PageHero>
 
       <!-- Signal chain -->
       <section class="border-b border-line-strong">
         <SectionHeader num="02" label="Services / Signal Chain">
-          <span slot="meta" class="text-fg-faint font-mono text-[9px] uppercase tracking-[0.2em]">Tap a card</span>
+          <span slot="meta" class="font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">Tap a card</span>
         </SectionHeader>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 p-3 md:p-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 p-4 md:p-6">
           {services.map((service) => (
             <ServiceCard service={service} />
           ))}
@@ -43,11 +33,11 @@ import { services } from '../data/services';
       </section>
 
       <!-- CTA -->
-      <section class="flex flex-col sm:flex-row items-stretch">
-        <a href="/prices" class="flex-1 text-center px-6 py-5 bg-panel border-b sm:border-b-0 sm:border-r border-line-strong text-fg-muted font-mono font-bold text-[11px] uppercase tracking-[0.2em] hover:text-accent hover:border-accent transition-colors">
+      <section class="flex flex-col sm:flex-row items-stretch gap-px bg-line-strong">
+        <a href="/prices" class="key flex-1 py-5 !border-0 bg-base hover:bg-panel">
           Full Price List
         </a>
-        <a href="/contact" class="flex-1 text-center px-6 py-5 bg-accent-dim text-white font-mono font-bold text-[11px] uppercase tracking-[0.2em] hover:bg-accent transition-colors">
+        <a href="/contact" class="key key-primary flex-1 py-5 !border-0">
           Start a Project
         </a>
       </section>

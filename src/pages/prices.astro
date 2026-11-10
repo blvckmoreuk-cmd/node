@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import SectionFrame from '../components/SectionFrame.astro';
 import SectionHeader from '../components/SectionHeader.astro';
+import PageHero from '../components/PageHero.astro';
 
 const masteringRows = [
   { label: 'Per Track', value: '£30' },
@@ -51,30 +52,18 @@ const priceJsonLd = {
   },
 };
 ---
-
 <Layout
   title="Rates | Mixing & Mastering Prices — Node Production"
   description="Transparent rates for electronic music producers. Mastering from £30, mixing from £50. A 50% deposit books the work."
 >
   <script type="application/ld+json" set:html={JSON.stringify(priceJsonLd)} is:inline />
   <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-mono">
-    <SectionFrame max="max-w-4xl">
+    <SectionFrame>
 
-      <!-- Masthead -->
-      <header class="border-b border-line-strong">
-        <div class="flex items-center justify-between px-4 md:px-5 py-2.5 border-b border-line">
-          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Node // Rate Card</span>
-          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">GBP</span>
-        </div>
-        <div class="px-4 md:px-8 py-8 md:py-11">
-          <h1 class="font-display font-bold uppercase leading-[0.9] tracking-tight text-fg text-[11vw] md:text-[3.75rem]">
-            Rates &<br /><span class="text-accent">services.</span>
-          </h1>
-          <p class="mt-5 font-body text-sm text-fg-muted max-w-md leading-relaxed">
-            Transparent pricing for electronic music producers. A 50% deposit books the work.
-          </p>
-        </div>
-      </header>
+      <PageHero left="Node // Rate Card" right="GBP">
+        <Fragment slot="title">Rates &amp;<br />services.</Fragment>
+        Transparent pricing for electronic music producers. A 50% deposit books the work.
+      </PageHero>
 
       <!-- Rate card -->
       <section class="border-b border-line-strong">
@@ -82,68 +71,68 @@ const priceJsonLd = {
         <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-line-strong">
 
           <!-- Mastering -->
-          <div class="bg-panel p-6">
-            <h3 class="font-display text-[13px] font-bold uppercase tracking-[0.15em] text-accent mb-4 border-b border-line pb-3">Mastering</h3>
-            <ul class="space-y-3">
+          <div class="bg-base p-6 md:p-8" style="--ch: var(--color-ch-mastering)">
+            <h3 class="rate-head"><span class="rate-chip"></span>Mastering</h3>
+            <ul>
               {masteringRows.map((row) => (
-                <li class={`flex justify-between text-[11px] uppercase tracking-wide ${row.muted ? 'text-fg-faint' : 'text-fg-muted'}`}>
-                  <span>{row.label}</span><span class="font-bold">{row.value}</span>
+                <li class={`rate-row ${row.muted ? 'is-muted' : ''}`}>
+                  <span>{row.label}</span><span class="rate-val">{row.value}</span>
                 </li>
               ))}
             </ul>
           </div>
 
           <!-- Mixing & Mastering -->
-          <div class="bg-panel p-6">
-            <h3 class="font-display text-[13px] font-bold uppercase tracking-[0.15em] text-accent mb-4 border-b border-line pb-3">Mixing & Mastering</h3>
-            <ul class="space-y-3">
+          <div class="bg-base p-6 md:p-8" style="--ch: var(--color-ch-mixing)">
+            <h3 class="rate-head"><span class="rate-chip"></span>Mixing &amp; Mastering</h3>
+            <ul>
               {mixingRows.map((row) => (
-                <li class={`flex justify-between text-[11px] uppercase tracking-wide ${row.muted ? 'text-fg-faint' : 'text-fg-muted'}`}>
-                  <span>{row.label}</span><span class="font-bold">{row.value}</span>
+                <li class={`rate-row ${row.muted ? 'is-muted' : ''}`}>
+                  <span>{row.label}</span><span class="rate-val">{row.value}</span>
                 </li>
               ))}
             </ul>
           </div>
 
           <!-- Production & Finishing (wide) -->
-          <div class="md:col-span-2 bg-base p-6">
-            <h3 class="font-display text-[13px] font-bold uppercase tracking-[0.15em] text-accent mb-4 border-b border-line pb-3">Production & Finishing</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="flex items-baseline justify-between gap-4">
-                <span class="text-[11px] uppercase font-bold text-fg-muted">Ghost Production, exclusive &amp; royalty-free</span>
-                <span class="font-display text-lg font-bold text-accent leading-none">£250</span>
+          <div class="md:col-span-2 bg-base p-6 md:p-8" style="--ch: var(--color-ch-production)">
+            <h3 class="rate-head"><span class="rate-chip"></span>Production &amp; Finishing</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-10">
+              <div class="rate-row">
+                <span>Ghost Production, exclusive &amp; royalty-free</span>
+                <span class="rate-val">£250</span>
               </div>
-              <div class="flex items-baseline justify-between gap-4">
-                <span class="text-[11px] uppercase font-bold text-fg-muted">Finish Your Track, analysis included</span>
-                <span class="font-display text-lg font-bold text-accent leading-none whitespace-nowrap">£120-200</span>
+              <div class="rate-row">
+                <span>Finish Your Track, analysis included</span>
+                <span class="rate-val whitespace-nowrap">£120-200</span>
               </div>
             </div>
-            <p class="mt-4 font-body text-[11px] italic text-fg-faint">Price varies with complexity. Enquire for a custom quote.</p>
+            <p class="mt-5 font-body text-[12px] italic text-fg-dim">Price varies with complexity. Enquire for a custom quote.</p>
           </div>
 
           <!-- Consultation & Education -->
-          <div class="bg-panel p-6">
-            <h3 class="font-display text-[13px] font-bold uppercase tracking-[0.15em] text-accent mb-4 border-b border-line pb-3">Consultation & Education</h3>
-            <ul class="space-y-3">
+          <div class="bg-base p-6 md:p-8" style="--ch: var(--color-ch-education)">
+            <h3 class="rate-head"><span class="rate-chip"></span>Consultation &amp; Education</h3>
+            <ul>
               {educationRows.map((row) => (
-                <li class="flex justify-between text-[11px] uppercase tracking-wide text-fg-muted">
-                  <span>{row.label}</span><span class="font-bold">{row.value}</span>
+                <li class="rate-row">
+                  <span>{row.label}</span><span class="rate-val">{row.value}</span>
                 </li>
               ))}
             </ul>
-            <p class="mt-4 font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint">Hosted on Muse or Discord</p>
+            <p class="mt-5 font-mono text-[10px] uppercase tracking-[0.12em] text-fg-dim">Hosted on Muse or Discord</p>
           </div>
 
           <!-- Digital Tools (links to the shop) -->
-          <a href="/shop" class="group bg-panel p-6 block hover:bg-inset transition-colors">
-            <h3 class="font-display text-[13px] font-bold uppercase tracking-[0.15em] text-accent mb-4 border-b border-line pb-3 flex items-center justify-between">
-              Digital Tools
-              <span class="font-mono text-[8px] tracking-[0.2em] text-fg-faint group-hover:text-accent transition-colors">Shop &rarr;</span>
+          <a href="/shop" class="group bg-base p-6 md:p-8 block hover:bg-panel no-underline" style="--ch: var(--color-ch-tools)">
+            <h3 class="rate-head justify-between">
+              <span class="flex items-center gap-3"><span class="rate-chip"></span>Digital Tools</span>
+              <span class="font-mono text-[10px] tracking-[0.18em] text-fg-dim group-hover:text-fg">Shop &rarr;</span>
             </h3>
-            <ul class="space-y-3">
+            <ul>
               {toolRows.map((row) => (
-                <li class="flex justify-between text-[11px] uppercase tracking-wide text-fg-muted">
-                  <span>{row.label}</span><span class="font-bold">{row.value}</span>
+                <li class="rate-row">
+                  <span>{row.label}</span><span class="rate-val">{row.value}</span>
                 </li>
               ))}
             </ul>
@@ -154,7 +143,7 @@ const priceJsonLd = {
 
       <!-- CTA -->
       <section>
-        <a href="/contact" class="block text-center px-6 py-5 bg-accent-dim text-white font-mono font-bold text-[11px] uppercase tracking-[0.2em] hover:bg-accent transition-colors">
+        <a href="/contact" class="key key-primary w-full py-5">
           Start a Project
         </a>
       </section>
@@ -162,3 +151,52 @@ const priceJsonLd = {
     </SectionFrame>
   </div>
 </Layout>
+
+<style is:global>
+  .rate-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--color-line-strong);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-eyebrow);
+    color: var(--color-fg);
+  }
+  .rate-chip {
+    display: block;
+    width: 10px;
+    height: 10px;
+    border: 1px solid var(--ch);
+    background: var(--ch);
+    flex-shrink: 0;
+  }
+  .rate-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--color-line);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-fg-muted);
+  }
+  /* prices are cream (never orange) */
+  .rate-val {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--color-fg);
+  }
+  .rate-row.is-muted { color: var(--color-fg-faint); }
+  .rate-row.is-muted .rate-val { color: var(--color-fg-dim); font-size: 1.1rem; }
+</style>

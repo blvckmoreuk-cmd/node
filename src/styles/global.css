@@ -1,150 +1,307 @@
 @import "tailwindcss";
 
 /* =========================================
-   DESIGN TOKENS
-   Single source of truth for colour, type, spacing and radius.
-   Font cssVariables are registered in astro.config.mjs and emitted
-   by the Font tags in Layout.astro.
+   NODE PRODUCTION — "SEQUENCER" DESIGN SYSTEM
+   Warm charcoal ground, cream type, square cells, and a single orange-red
+   "armed step" per region. Hardware step-sequencer language: hairline outlines,
+   uppercase tracked IBM Plex Mono labels, Archivo 800 headings.
+   Font cssVariables are registered in astro.config.mjs and emitted by the
+   Font tags in Layout.astro.
    ========================================= */
 @theme {
-  /* Surfaces: obsidian-black studio at night. Page is pure black, modules are
-     near-black plates that lift off it. */
-  --color-page: #0c0e11;
-  --color-base: #171a20;
-  --color-panel: #1b1f26;
-  --color-inset: #121519;
-  --color-raised: #23272f;
-  --color-tint: #191d23;
-  --color-line: #21262e;
-  --color-line-strong: #333a44;
+  /* Surfaces: warm charcoal, deepest -> lifted */
+  --color-page: #1c1c1a;
+  --color-base: #1c1c1a;
+  --color-panel: #222220;
+  --color-inset: #151513;
+  --color-raised: #2a2a27;
+  --color-line: #2c2b28;
+  --color-line-strong: #3b3a36;
 
-  /* Text: clean white ink down to a light grey and a dim slate */
-  --color-fg: #ffffff;
-  --color-fg-muted: #e0e3e8;
-  --color-fg-faint: #7d8794;
+  /* Foreground: cream tiers */
+  --color-fg: #f2ede3;
+  --color-fg-muted: #cdc7ba;
+  --color-fg-dim: #a29d92;
+  --color-fg-faint: #6f6b63;
 
-  /* Accent: cobalt signature. `accent` is the vivid cobalt used for labels,
-     dots, borders and glows so they stay legible on black; `accent-dim` is the
-     deep cobalt CTA fill. */
-  --color-accent: #2f6fed;
-  --color-accent-bright: #5a8ff5;
-  --color-accent-dim: #0d47a1;
+  /* The armed step: the one accent. Text on an orange fill is charcoal (4.8:1);
+     cream on orange fails contrast. */
+  --color-accent: #e8552a;
+  --color-accent-bright: #f26c43;
+  --color-accent-dim: #a83d1e;
+  --color-accent-ink: #1c1c1a;
+
+  /* Sequencer cells */
+  --color-cell-grey: #6b6862;
+  --color-cell-line: #4a4844;
+
+  /* Service channels: warm hues, hairline rules / cells / small squares only */
+  --color-ch-mastering: #e3a83b;
+  --color-ch-mixing: #8aa69a;
+  --color-ch-production: #d0483a;
+  --color-ch-education: #a8b25a;
+  --color-ch-tools: #a08cb4;
+  --color-ch-analysis: #d78d5c;
 
   /* Type roles */
-  --font-display: var(--font-space-grotesk), "Space Grotesk", sans-serif;
-  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-  --font-body: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-plex-mono), "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-body: var(--font-plex-sans), "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
 
-  /* Radius: one system, 4px controls and 8px panels */
-  --radius-control: 4px;
-  --radius-panel: 8px;
+  /* Square everywhere */
+  --radius-control: 0px;
+  --radius-panel: 0px;
 
-  /* Spacing on an 8pt scale; numeric p-* and gap-* utilities map to the
-     same grid, so p-4 is 16, p-8 is 32 and gap-16 is 64 */
-  --spacing-card: 16px;
-  --spacing-section: 32px;
-  --spacing-gap: 64px;
+  /* Tracking ladder */
+  --tracking-lockup: 0.62em;
+  --tracking-eyebrow: 0.32em;
+  --tracking-label: 0.18em;
+  --tracking-caption: 0.12em;
+
+  /* Layout */
+  --spacing-card: 24px;
+  --spacing-section: 48px;
+  --spacing-gap: 96px;
+
+  /* Cell geometry */
+  --cell: 14px;
+  --cell-gap: 6px;
 }
 
 @layer base {
+  html { background-color: var(--color-page); }
   body {
     background-color: var(--color-page);
     color: var(--color-fg-muted);
     font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
   }
+  ::selection { background: var(--color-accent); color: var(--color-accent-ink); }
+  :focus-visible { outline: 1px solid var(--color-accent); outline-offset: 3px; }
+  button, a, input, select, textarea { border-radius: 0; }
+  button { cursor: pointer; }
 }
 
-/* =========================================
-   SHARED COMPONENT TEXTURES
-   Used across Header.astro, index.astro, and any future page that needs
-   the same brass/dark-panel look. One copy here so nothing drifts.
-   ========================================= */
 @layer components {
 
-  /* ---- Noise/grain overlays ---- */
-  .grain-overlay,
-  .page-grain {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-    background-size: 120px 120px;
-    mix-blend-mode: overlay;
+  /* ---- Typography primitives ---- */
+  .t-display {
+    font-family: var(--font-display);
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+    color: var(--color-fg);
   }
-  .grain-overlay { opacity: 0.05; }
-  .page-grain { opacity: 0.04; }
+  .t-label {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--color-fg-dim);
+  }
+  .t-eyebrow {
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-eyebrow);
+    color: var(--color-fg-dim);
+  }
+  .t-caption {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-caption);
+    color: var(--color-fg-faint);
+  }
 
-  .grain-overlay-dark {
-    position: relative;
+  /* ---- Keys (buttons). Primary = the armed step. ---- */
+  .key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6em;
+    padding: 0.95rem 1.5rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    border: 1px solid var(--color-line-strong);
+    background: transparent;
+    color: var(--color-fg);
+    text-decoration: none;
+    transition: background-color 0s steps(1), color 0s steps(1), border-color 0s steps(1);
   }
-  .grain-overlay-dark::before {
+  .key:hover { border-color: var(--color-fg); }
+  .key:active { transform: translateY(1px); }
+  .key-primary {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+  .key-primary:hover { background: var(--color-accent-bright); border-color: var(--color-accent-bright); }
+  .key:disabled, .key[disabled] {
+    background: var(--color-raised);
+    border-color: var(--color-raised);
+    color: var(--color-fg-faint);
+    cursor: not-allowed;
+  }
+
+  /* ---- Form fields: recessed wells with hairline edges ---- */
+  .field {
+    width: 100%;
+    background: var(--color-inset);
+    border: 1px solid var(--color-line-strong);
+    padding: 0.8rem 1rem;
+    color: var(--color-fg);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    outline: none;
+    transition: border-color 0s steps(1);
+  }
+  .field:hover { border-color: var(--color-cell-grey); }
+  .field:focus { border-color: var(--color-accent); }
+  .field-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    color: var(--color-fg-dim);
+  }
+  select.field {
+    appearance: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    background-image: linear-gradient(45deg, transparent 50%, var(--color-fg-dim) 50%), linear-gradient(135deg, var(--color-fg-dim) 50%, transparent 50%);
+    background-position: calc(100% - 18px) 55%, calc(100% - 13px) 55%;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 2.5rem;
+  }
+
+  /* ---- Step-sequencer cells (the signature motif) ---- */
+  .seq {
+    display: grid;
+    grid-template-columns: repeat(var(--steps, 16), var(--cell));
+    gap: var(--cell-gap);
+  }
+  .seq-cell {
+    display: block;
+    width: var(--cell);
+    height: var(--cell);
+    box-sizing: border-box;
+    border: 1px solid var(--color-cell-line);
+    background: transparent;
+  }
+  .seq-cell.is-step  { background: var(--color-accent);    border-color: var(--color-accent); }
+  .seq-cell.is-cream { background: var(--color-fg);        border-color: var(--color-fg); }
+  .seq-cell.is-grey  { background: var(--color-cell-grey); border-color: var(--color-cell-grey); }
+
+  .seq.is-playing { position: relative; }
+  .seq.is-playing::after {
     content: "";
     position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-    background-size: 120px 120px;
-    mix-blend-mode: overlay;
-    opacity: 0.06;
+    top: -4px; bottom: -4px;
+    width: var(--cell);
+    border-left: 1px solid var(--color-accent);
+    border-right: 1px solid var(--color-accent);
+    animation: seq-playhead calc(var(--steps, 16) * 0.125s) steps(var(--steps, 16)) infinite;
     pointer-events: none;
   }
+  .seq-arm .seq-cell { animation: seq-arm 0.24s steps(1) both; }
+  .seq-arm .seq-cell:nth-child(2)  { animation-delay: 0.05s; }
+  .seq-arm .seq-cell:nth-child(3)  { animation-delay: 0.10s; }
+  .seq-arm .seq-cell:nth-child(4)  { animation-delay: 0.15s; }
+  .seq-arm .seq-cell:nth-child(5)  { animation-delay: 0.20s; }
+  .seq-arm .seq-cell:nth-child(6)  { animation-delay: 0.25s; }
+  .seq-arm .seq-cell:nth-child(7)  { animation-delay: 0.30s; }
+  .seq-arm .seq-cell:nth-child(8)  { animation-delay: 0.35s; }
 
-  /* ---- Brushed metal: brass header plate + service-card fronts ---- */
-  .brushed-metal::before,
-  .brushed-metal::after {
+  /* ---- Panel helpers ---- */
+  .grid-paper {
+    background-image:
+      linear-gradient(to right, var(--color-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-line) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .dot-matrix {
+    background-image: radial-gradient(var(--color-line-strong) 1px, transparent 1.5px);
+    background-size: 8px 8px;
+  }
+  .crop-marks { position: relative; }
+  .crop-marks::before,
+  .crop-marks::after {
     content: "";
     position: absolute;
-    inset: 0;
+    width: 10px; height: 10px;
     pointer-events: none;
   }
-  .brushed-metal::before {
-    background-image: repeating-linear-gradient(91deg, rgba(0,0,0,0.18) 0px, rgba(0,0,0,0.18) 1px, transparent 1px, transparent 3px);
-    mix-blend-mode: multiply;
+  .crop-marks::before {
+    top: -1px; left: -1px;
+    border-top: 1px solid var(--color-fg-dim);
+    border-left: 1px solid var(--color-fg-dim);
   }
-  .brushed-metal::after {
-    background-image: radial-gradient(140% 60% at 30% -10%, rgba(255,255,255,0.35) 0%, transparent 55%);
-  }
-
-  /* ---- Volume knob knurled ring ---- */
-  .knob-knurl {
-    background-image: repeating-conic-gradient(
-      rgba(0,0,0,0.55) 0deg 2deg,
-      rgba(255,255,255,0.18) 2deg 4deg
-    );
+  .crop-marks::after {
+    bottom: -1px; right: -1px;
+    border-bottom: 1px solid var(--color-fg-dim);
+    border-right: 1px solid var(--color-fg-dim);
   }
 
   /* ---- Particle colour picker (visualiser) ---- */
   input[type="color"] {
     -webkit-appearance: none;
     appearance: none;
-    border: 1px solid #2b323c;
+    border: 1px solid var(--color-line-strong);
     padding: 0;
+    border-radius: 0;
   }
-  input[type="color"]::-webkit-color-swatch-wrapper {
-    padding: 0;
-  }
-  input[type="color"]::-webkit-color-swatch {
-    border: none;
-    border-radius: 2px;
-  }
-  input[type="color"]::-moz-color-swatch {
-    border: none;
-    border-radius: 2px;
-  }
+  input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+  input[type="color"]::-webkit-color-swatch { border: none; border-radius: 0; }
+  input[type="color"]::-moz-color-swatch { border: none; border-radius: 0; }
 
-  /* ---- Client marquee (homepage, under the masthead) ----
-     Track holds the client list twice; translating it -50% loops seamlessly. */
+  /* ---- Client marquee: track holds the list twice; -50% loops seamlessly ---- */
   .marquee-track {
     display: flex;
     width: max-content;
     animation: marquee 84s linear infinite;
   }
-  .marquee-track:hover {
-    animation-play-state: paused;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .marquee-track { animation: none; }
-  }
+  .marquee-track:hover { animation-play-state: paused; }
 
+  /* ---- Fluid grid: cells scale with the container (hero lockup) ---- */
+  .seq-fluid {
+    grid-template-columns: repeat(var(--steps, 16), minmax(0, 1fr));
+    gap: clamp(3px, 0.9vw, 8px);
+  }
+  .seq-fluid .seq-cell { width: auto; height: auto; aspect-ratio: 1; }
+
+  /* ---- Scrub bar: 32 step segments ---- */
+  .scrub-steps {
+    background-image: repeating-linear-gradient(to right, transparent 0, transparent calc(100% / 32 - 2px), var(--color-inset) calc(100% / 32 - 2px), var(--color-inset) calc(100% / 32));
+    background-size: 100% 100%;
+  }
 }
 
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
+}
+@keyframes seq-playhead {
+  from { left: 0; }
+  to   { left: calc(var(--steps, 16) * (var(--cell) + var(--cell-gap))); }
+}
+@keyframes seq-arm {
+  from { background: transparent; border-color: var(--color-cell-line); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .seq.is-playing::after,
+  .seq-arm .seq-cell { animation: none; }
 }

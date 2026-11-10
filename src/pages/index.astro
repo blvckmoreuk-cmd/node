@@ -4,6 +4,8 @@ import ServiceModal from '../components/ServiceModal.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import ReviewsCarousel from '../components/ReviewsCarousel.astro';
 import SuccessPopup from '../components/SuccessPopup.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import StepGrid from '../components/StepGrid.astro';
 import { services } from '../data/services';
 
 // Clients scroll continuously under the masthead. Shuffled at build time so the
@@ -15,50 +17,76 @@ const clientNames = [
   'DMC', 'Mwangi', 'Karellos', 'Wilmore',
 ];
 const clients = [...clientNames].sort(() => Math.random() - 0.5);
+
+const trusted = [
+  { src: '/logos/3000.jpg', alt: '3000' },
+  { src: '/logos/awd.jpg', alt: 'AWD' },
+  { src: '/logos/ukf.jpg', alt: 'UKF' },
+  { src: '/logos/gs.jpg', alt: 'GS' },
+  { src: '/logos/gd.jpg', alt: 'GD' },
+  { src: '/logos/uv.jpg', alt: 'UV' },
+  { src: '/logos/motive.jpg', alt: 'Motive' },
+];
 ---
 
 <Layout
   title="Node Production | Electronic Music Mixing & Mastering, Leeds"
   description="Mix, master and ghost production for electronic music. Specialist in House, Techno, Trance, Grime, Garage, Dubstep, DnB, Drill and Trap. Leeds studio working worldwide."
 >
-  <main class="w-full min-h-screen bg-page flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-mono relative overflow-hidden">
+  <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-mono relative">
 
-    <div id="home-frame" class="w-full max-w-5xl border border-line-strong bg-base relative z-10">
+    <div id="home-frame" class="w-full max-w-6xl border border-line-strong bg-base relative z-10 crop-marks">
 
       <!-- ===================== MASTHEAD ===================== -->
       <header class="border-b border-line-strong">
-        <div class="flex items-center justify-between px-4 md:px-5 py-2.5 border-b border-line">
-          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Node // Audio Engineering</span>
-          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Leeds, UK</span>
+        <div class="flex items-center justify-between px-4 md:px-6 py-2.5 border-b border-line">
+          <span class="font-mono text-[10px] uppercase tracking-[0.32em] text-fg-dim">Node // Audio Engineering</span>
+          <span class="font-mono text-[10px] uppercase tracking-[0.32em] text-fg-faint">Leeds, UK</span>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-5 md:gap-10 items-start px-4 md:px-8 py-5 md:py-8">
-          <h1 class="font-display font-bold uppercase leading-[0.9] tracking-tight text-fg text-[10vw] md:text-[4rem]">
-            Electronic Music<br /><span class="text-accent">Engineering.</span>
+        <!-- Lockup: NODE / PRODUCTION over the 2×16 step grid. The grid carries the single orange step. -->
+        <div class="px-4 md:px-8 pt-10 md:pt-16">
+          <div class="inline-flex flex-col" aria-hidden="true">
+            <span class="font-display font-extrabold uppercase text-fg leading-[0.78] tracking-[-0.04em] text-[clamp(5.5rem,26vw,15rem)]">Node</span>
+            <span class="mt-3 md:mt-5 flex justify-between font-mono font-medium uppercase text-fg-dim text-[clamp(0.7rem,2.6vw,1.5rem)]">
+              {[...'PRODUCTION'].map((ch) => <span>{ch}</span>)}
+            </span>
+          </div>
+          <div class="mt-6 md:mt-10">
+            <StepGrid fluid />
+          </div>
+          <div class="mt-3 flex justify-end">
+            <span class="font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">53.80 N&nbsp;&nbsp;1.55 W</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-[1.25fr_1fr] gap-8 md:gap-12 items-end px-4 md:px-8 py-10 md:py-14">
+          <h1 class="t-display text-[clamp(2.4rem,8vw,4.5rem)]">
+            Electronic Music<br />Engineering.
           </h1>
-          <div class="flex flex-col gap-4 md:items-end">
-            <p class="font-body text-sm text-fg-muted max-w-xs md:text-right leading-relaxed">
+          <div class="flex flex-col gap-5">
+            <p class="font-body text-sm md:text-base text-fg-muted max-w-sm leading-relaxed">
               Mix, master and ghost production for electronic music. Based in Leeds, working worldwide.
             </p>
-            <p class="font-mono text-[10px] uppercase tracking-[0.25em] text-fg-faint max-w-xs md:text-right md:-mr-[0.25em] leading-relaxed">
+            <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim max-w-sm leading-relaxed">
               Specialist Genres: House, Techno, Trance, Grime, Garage, Dubstep, DnB, Drill, Trap
             </p>
-            <div class="flex">
-              <a href="/contact" class="px-6 py-3 bg-accent-dim text-white font-mono font-bold text-[11px] uppercase tracking-[0.2em] hover:bg-accent transition-colors">Start a Project</a>
-              <a href="/prices" class="px-6 py-3 bg-panel border border-line-strong border-l-0 text-fg-muted font-mono font-bold text-[11px] uppercase tracking-[0.2em] hover:text-accent hover:border-accent transition-colors">Rates</a>
+            <div class="flex flex-wrap gap-3">
+              <a href="/contact" class="key key-primary">Start a Project</a>
+              <a href="/prices" class="key">Rates</a>
             </div>
           </div>
         </div>
       </header>
 
       <!-- ===================== CLIENTS MARQUEE ===================== -->
-      <div class="border-b border-line-strong bg-base overflow-hidden relative" aria-label="Clients">
-        <div class="absolute inset-y-0 left-0 w-12 md:w-20 z-10 bg-linear-to-r from-base to-transparent pointer-events-none"></div>
-        <div class="absolute inset-y-0 right-0 w-12 md:w-20 z-10 bg-linear-to-l from-base to-transparent pointer-events-none"></div>
-        <div class="marquee-track py-3">
+      <div class="border-b border-line-strong bg-inset overflow-hidden relative" aria-label="Clients">
+        <div class="absolute inset-y-0 left-0 w-12 md:w-20 z-10 bg-linear-to-r from-inset to-transparent pointer-events-none"></div>
+        <div class="absolute inset-y-0 right-0 w-12 md:w-20 z-10 bg-linear-to-l from-inset to-transparent pointer-events-none"></div>
+        <div class="marquee-track py-3.5">
           {[...clients, ...clients].map((client) => (
-            <span class="flex items-center whitespace-nowrap px-5 md:px-7 font-mono text-[11px] uppercase tracking-[0.25em] text-fg-muted">
-              <span class="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_6px_rgba(47,111,237,0.7)] mr-5 md:mr-7"></span>
+            <span class="flex items-center whitespace-nowrap px-5 md:px-7 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">
+              <span class="w-1.5 h-1.5 border border-cell-line mr-5 md:mr-7"></span>
               {client}
             </span>
           ))}
@@ -67,29 +95,23 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
 
       <!-- ===================== 01 // VISUALISER ===================== -->
       <section class="border-b border-line-strong">
-        <div class="flex items-center justify-between px-4 md:px-5 py-3 border-b border-line-strong bg-panel">
-          <div class="flex items-center gap-3">
-            <span class="text-accent font-mono text-xs font-bold">01</span>
-            <span class="text-fg-faint font-mono text-[10px] uppercase tracking-[0.35em]">Our Work / Press Play</span>
-          </div>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <span class="text-[9px] font-mono tracking-[0.2em] uppercase text-fg-faint">Particle</span>
-            <input id="particle-color" type="color" value="#2f6fed" class="w-5 h-5 bg-transparent cursor-pointer" />
+        <SectionHeader num="01" label="Our Work / Press Play">
+          <label slot="meta" class="flex items-center gap-2 cursor-pointer">
+            <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">Particle</span>
+            <input id="particle-color" type="color" value="#e8552a" class="w-6 h-6 bg-transparent cursor-pointer" />
           </label>
-        </div>
+        </SectionHeader>
 
-        <div class="p-4 md:p-5 flex flex-col gap-4">
+        <div class="p-4 md:p-6 flex flex-col gap-4">
 
           <!-- Visualiser: full module width, transport controls overlaid on screen -->
-          <div id="canvas-container" class="w-full h-72 bg-[#030605] border border-black overflow-hidden relative">
-            <div class="absolute inset-0 bg-[radial-gradient(120%_100%_at_50%_0%,rgba(47,111,237,0.07)_0%,transparent_55%)] pointer-events-none z-10"></div>
-            <div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0)_50%,rgba(0,0,0,0.35)_50%)] bg-size-[100%_3px] pointer-events-none z-10 opacity-70"></div>
-            <div class="absolute top-2 left-2 font-mono text-[8px] uppercase tracking-[0.3em] text-accent/70 z-10">RT / Spectrum</div>
+          <div id="canvas-container" class="w-full h-72 bg-inset border border-line-strong overflow-hidden relative grid-paper">
+            <div class="absolute top-3 left-3 font-mono text-[9px] uppercase tracking-[0.32em] text-fg-faint z-10 hidden sm:block">RT / Spectrum</div>
 
             <!-- Track selector: compact, sits on top of the screen -->
             <div class="absolute top-3 left-3 right-3 sm:left-auto z-20 pointer-events-auto">
               <div class="relative w-full sm:w-80">
-                <select id="track-selector" class="w-full bg-black/65 backdrop-blur-sm border border-accent text-accent pl-3 pr-7 py-2 text-[10px] font-mono font-bold uppercase tracking-wider cursor-pointer outline-none appearance-none rounded-sm shadow-[0_4px_14px_rgba(0,0,0,0.55)]">
+                <select id="track-selector" class="w-full bg-base border border-line-strong text-fg pl-3 pr-8 py-2.5 text-[10px] font-mono font-medium uppercase tracking-[0.12em] cursor-pointer outline-none appearance-none rounded-none hover:border-fg focus:border-accent">
                   <option value="/audio/Wanna Feel.mp3">Wanna Feel — Mix/Master</option>
                   <option value="/audio/some people.mp3">Some People — Full Production</option>
                   <option value="/audio/shake it.mp3">Shake It — Mix/Master</option>
@@ -102,45 +124,45 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
                   <option value="/audio/east.mp3">East — Full Production</option>
                   <option value="/audio/tellmehowtorave-casmalia.mp3">Tell Me How To Rave — Mix/Master</option>
                 </select>
-                <div class="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-accent text-[8px]">&#9660;</div>
+                <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-fg-dim text-[8px]">&#9660;</div>
               </div>
             </div>
 
             <!-- Overlay controls: sit on top of the visualiser screen -->
             <div class="absolute bottom-3 left-3 right-3 z-20 flex items-end justify-between gap-3 pointer-events-none">
 
-              <!-- Volume knob -->
-              <div class="flex items-center gap-2 bg-black/45 backdrop-blur-sm border border-line-strong/70 px-2.5 py-1.5 pointer-events-auto">
-                <span class="text-[8px] font-mono uppercase tracking-[0.2em] text-fg-faint">Vol</span>
-                <div class="relative flex items-center justify-center w-10 h-10 shrink-0">
-                  <div id="knob-glow-core" class="absolute w-full h-full rounded-full pointer-events-none opacity-50 mix-blend-screen z-2"></div>
-                  <div class="absolute w-9 h-9 rounded-full bg-[#090b0d] shadow-[0_4px_10px_rgba(0,0,0,0.6)] z-1"></div>
-                  <div id="knob-volume" class="w-8 h-8 rounded-full cursor-ns-resize relative z-10 shadow-[inset_0_2px_2px_rgba(255,255,255,0.2),inset_0_-3px_8px_rgba(0,0,0,0.9)] border border-[#0a0a0a]" style="background: radial-gradient(circle at 50% 10%, #2a313c, #0a0c0f 80%);">
-                    <div class="knob-knurl absolute inset-0 rounded-full opacity-25 mix-blend-overlay"></div>
-                    <div class="absolute inset-1 rounded-full bg-linear-to-b from-[#1c222b] to-[#0a0c0f] shadow-[inset_0_1px_2px_rgba(255,255,255,0.1)] border border-[#050505]"></div>
-                    <div class="knob-rotation-wrapper w-full h-full absolute top-0 left-0 pointer-events-none rounded-full">
-                      <div class="knob-indicator w-0.5 h-3 mx-auto mt-1 rounded-full bg-linear-to-b from-[#f1f5f9] to-[#94a3b8] shadow-[inset_0_1px_2px_rgba(255,255,255,1),inset_0_-1px_2px_rgba(0,0,0,0.5)]"></div>
+              <!-- Volume encoder: square hardware knob + 8-step level meter -->
+              <div class="flex items-center gap-3 bg-base border border-line-strong px-3 py-2 pointer-events-auto">
+                <span class="font-mono text-[9px] uppercase tracking-[0.18em] text-fg-dim">Vol</span>
+                <div class="relative w-10 h-10 shrink-0">
+                  <div id="knob-volume" class="w-full h-full relative border border-fg-dim bg-inset cursor-ns-resize">
+                    <div class="knob-rotation-wrapper w-full h-full absolute top-0 left-0 pointer-events-none">
+                      <div class="knob-indicator w-0.5 h-3 mx-auto mt-0.5 bg-fg"></div>
                     </div>
-                    <div id="knob-hit-area" class="absolute inset-0 z-20 rounded-full cursor-grab active:cursor-grabbing"></div>
+                    <div id="knob-hit-area" class="absolute inset-0 z-20 cursor-grab active:cursor-grabbing"></div>
                   </div>
+                </div>
+                <div id="knob-meter" class="grid grid-cols-4 gap-0.5" aria-hidden="true">
+                  {Array.from({ length: 8 }).map(() => <span class="block w-1.5 h-1.5 border border-cell-line"></span>)}
                 </div>
               </div>
 
               <!-- Play / pause -->
-              <button id="play-btn" class="pointer-events-auto px-5 py-2.5 bg-accent-dim text-white font-mono font-black text-[11px] uppercase tracking-[0.2em] border border-accent-dim active:translate-y-px transition-transform shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
-                <span class="relative z-10">Play/Pause</span>
+              <button id="play-btn" class="key pointer-events-auto bg-base !border-fg">
+                <span>Play/Pause</span>
               </button>
             </div>
           </div>
 
-          <!-- Scrub bar -->
-          <div class="p-2.5 bg-[#050505] border border-black">
-            <div id="scrub-container" class="w-full h-2 bg-black cursor-pointer relative overflow-hidden">
-              <div id="scrub-progress" class="h-full bg-accent w-0 shadow-[0_0_10px_rgba(47,111,237,0.7)] relative"></div>
+          <!-- Scrub bar: 32 step segments; the filled steps follow playback -->
+          <div class="border border-line-strong bg-inset p-2.5">
+            <div id="scrub-container" class="w-full h-3 bg-line cursor-pointer relative overflow-hidden">
+              <div id="scrub-progress" class="h-full bg-fg w-0 relative"></div>
+              <div class="scrub-steps absolute inset-0 pointer-events-none"></div>
             </div>
           </div>
 
-          <p class="font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint text-center">
+          <p class="font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">
             Real releases we mixed, mastered &amp; produced &mdash; switch tracks to hear more.
           </p>
         </div>
@@ -148,15 +170,11 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
 
       <!-- ===================== 02 // SERVICES ===================== -->
       <section class="border-b border-line-strong">
-        <div class="flex items-center justify-between px-4 md:px-5 py-3 border-b border-line-strong bg-panel">
-          <div class="flex items-center gap-3">
-            <span class="text-accent font-mono text-xs font-bold">02</span>
-            <span class="text-fg-faint font-mono text-[10px] uppercase tracking-[0.35em]">Services / Signal Chain</span>
-          </div>
-          <span class="text-fg-faint font-mono text-[9px] uppercase tracking-[0.2em]">Tap a card</span>
-        </div>
+        <SectionHeader num="02" label="Services / Signal Chain">
+          <span slot="meta" class="font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">Tap a card</span>
+        </SectionHeader>
 
-        <div id="services" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 p-3 md:p-4">
+        <div id="services" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 p-4 md:p-6">
           {services.map((service) => (
             <ServiceCard service={service} compact />
           ))}
@@ -165,29 +183,26 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
 
       <!-- ===================== 03 // ENQUIRE ===================== -->
       <section class="border-b border-line-strong">
-        <div class="flex items-center gap-3 px-4 md:px-5 py-3 border-b border-line-strong bg-panel">
-          <span class="text-accent font-mono text-xs font-bold">03</span>
-          <span class="text-fg-faint font-mono text-[10px] uppercase tracking-[0.35em]">Enquire / There Are No Stupid Questions</span>
-        </div>
+        <SectionHeader num="03" label="Enquire / There Are No Stupid Questions" />
 
-        <form name="enquiry" method="POST" enctype="multipart/form-data" data-netlify="true" data-netlify-honeypot="bot-field" action="/?success=true" class="grid grid-cols-1 md:grid-cols-2 gap-px bg-line-strong">
+        <form name="enquiry" method="POST" enctype="multipart/form-data" data-netlify="true" data-netlify-honeypot="bot-field" action="/?success=true" class="grid grid-cols-1 md:grid-cols-2 gap-5 p-4 md:p-6">
           <!-- Netlify Forms: hidden name field + honeypot (bots fill it, humans don't) -->
           <input type="hidden" name="form-name" value="enquiry" />
           <p class="hidden"><label>Don't fill this out: <input name="bot-field" /></label></p>
-          <div class="bg-panel p-5">
-            <label for="name" class="block font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint mb-2">Name / Artist</label>
-            <input type="text" id="name" name="name" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors" />
+          <div>
+            <label for="name" class="field-label">Name / Artist</label>
+            <input type="text" id="name" name="name" required class="field" />
           </div>
-          <div class="bg-panel p-5">
-            <label for="email" class="block font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint mb-2">Email</label>
-            <input type="email" id="email" name="email" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors" />
+          <div>
+            <label for="email" class="field-label">Email</label>
+            <input type="email" id="email" name="email" required class="field" />
           </div>
-          <div class="bg-panel p-5 md:col-span-2">
-            <label for="message" class="block font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint mb-2">Project Details</label>
-            <textarea id="message" name="message" rows="5" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors"></textarea>
-            <p class="font-mono text-[10px] leading-relaxed text-fg-faint mt-2">Feel free to attach any rough mix files here. We don&rsquo;t need your stems yet &mdash; you&rsquo;ll be sent a link to upload these when you receive your confirmation email.</p>
+          <div class="md:col-span-2">
+            <label for="message" class="field-label">Project Details</label>
+            <textarea id="message" name="message" rows="5" required class="field"></textarea>
+            <p class="font-mono text-[10px] leading-relaxed text-fg-dim mt-2.5 max-w-2xl">Feel free to attach any rough mix files here. We don&rsquo;t need your stems yet &mdash; you&rsquo;ll be sent a link to upload these when you receive your confirmation email.</p>
           </div>
-          <button type="submit" class="md:col-span-2 w-full py-4 bg-accent-dim text-white font-mono font-black text-[13px] uppercase tracking-[0.3em] hover:bg-accent active:translate-y-px transition-all">
+          <button type="submit" class="key key-primary md:col-span-2 w-full py-4 text-[12px]">
             Send Enquiry
           </button>
         </form>
@@ -195,17 +210,14 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
 
       <!-- ===================== TRUSTED BY ===================== -->
       <section class="border-b border-line-strong">
-        <div class="flex items-center gap-3 px-4 md:px-5 py-3 border-b border-line-strong bg-panel">
-          <span class="text-fg-faint font-mono text-[10px] uppercase tracking-[0.35em]">Trusted By</span>
-        </div>
-        <div class="flex flex-wrap items-center justify-center gap-10 md:gap-14 p-8 md:p-10 opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500">
-          <img src="/logos/3000.jpg" class="h-10 md:h-11" alt="3000" />
-          <img src="/logos/awd.jpg" class="h-10 md:h-11" alt="AWD" />
-          <img src="/logos/ukf.jpg" class="h-10 md:h-11" alt="UKF" />
-          <img src="/logos/gs.jpg" class="h-10 md:h-11" alt="GS" />
-          <img src="/logos/gd.jpg" class="h-10 md:h-11" alt="GD" />
-          <img src="/logos/uv.jpg" class="h-10 md:h-11" alt="UV" />
-          <img src="/logos/motive.jpg" class="h-10 md:h-11" alt="Motive" />
+        <SectionHeader label="Trusted By" />
+        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-px bg-line-strong">
+          {trusted.map((logo) => (
+            <div class="bg-base p-5 md:p-6 flex items-center justify-center">
+              <img src={logo.src} class="h-10 md:h-11 w-auto max-w-full object-contain opacity-60 grayscale hover:opacity-100 hover:grayscale-0" alt={logo.alt} loading="lazy" />
+            </div>
+          ))}
+          <div class="bg-base lg:hidden" aria-hidden="true"></div>
         </div>
       </section>
 
@@ -213,7 +225,7 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
       <ReviewsCarousel />
 
     </div>
-  </main>
+  </div>
 
   <ServiceModal />
   <SuccessPopup />
@@ -242,7 +254,7 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
     const trackSelector = document.getElementById('track-selector') as HTMLSelectElement;
     const knobHitArea = document.getElementById('knob-hit-area');
     const wrapper = document.querySelector('.knob-rotation-wrapper');
-    const glowCore = document.getElementById('knob-glow-core');
+    const meter = document.getElementById('knob-meter');
 
     if (!playBtn || !scrubContainer || !knobHitArea) return;
 
@@ -360,7 +372,7 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
 
       const geometry = new THREE.BufferGeometry();
       geometry.setAttribute('position', new THREE.BufferAttribute(shapePositions[0].slice(), 3));
-      const material = new THREE.PointsMaterial({ size: 0.055, color: 0x2f6fed, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending });
+      const material = new THREE.PointsMaterial({ size: 0.055, color: 0xe8552a, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending });
       const points = new THREE.Points(geometry, material);
       points.position.y = 0; // centred in the screen; transport controls overlay the bottom
       scene.add(points);
@@ -369,7 +381,7 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
       // modulates brightness/hue around whatever base colour is chosen here.
       const colorInput = document.getElementById('particle-color') as HTMLInputElement | null;
       const hslTarget = { h: 0, s: 0, l: 0 };
-      new THREE.Color(colorInput?.value || '#2f6fed').getHSL(hslTarget);
+      new THREE.Color(colorInput?.value || '#e8552a').getHSL(hslTarget);
       let baseHue = hslTarget.h;
       let baseSaturation = hslTarget.s;
 
@@ -523,8 +535,14 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
       if (wrapper) {
         (wrapper as HTMLElement).style.transform = `rotate(${rotation - 135}deg)`;
       }
-      if (glowCore) {
-        (glowCore as HTMLElement).style.background = `conic-gradient(from -135deg, rgba(47,111,237,0.35) 0deg ${rotation}deg, transparent 0deg)`;
+      // 8-step level meter beside the encoder: cells fill as volume rises.
+      if (meter) {
+        const lit = Math.round((rotation / 270) * 8);
+        Array.from(meter.children).forEach((cell, idx) => {
+          cell.classList.toggle('bg-fg', idx < lit);
+          cell.classList.toggle('border-fg', idx < lit);
+          cell.classList.toggle('border-cell-line', idx >= lit);
+        });
       }
     }
 

@@ -1,4 +1,6 @@
 ---
+import Logo from './Logo.astro';
+
 const navItems = [
   { label: 'About', href: '/about' },
   { label: 'Services', href: '/services' },
@@ -7,49 +9,74 @@ const navItems = [
   { label: 'Contact', href: '/contact' },
 ];
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
-const leftItems = navItems.slice(0, 3);
-const rightItems = navItems.slice(3);
 ---
 
-<header class="w-full px-3 sm:px-6 md:px-10 py-3 sm:py-4 font-mono border-b border-line">
-  <div class="max-w-4xl mx-auto relative flex items-center justify-between gap-2 sm:gap-4">
+<header class="w-full border-b border-line-strong bg-page relative z-30">
+  <div class="max-w-6xl mx-auto flex items-stretch justify-between">
 
-    <a href="/" class="absolute left-1/2 -translate-x-1/2 flex items-center no-underline">
-      <span class="text-lg sm:text-xl md:text-2xl font-display font-bold tracking-[0.18em] text-fg uppercase">Node</span>
-      <span class="absolute left-full ml-2.5 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_6px_rgba(47,111,237,0.8)]"></span>
+    <a href="/" class="flex items-center gap-3 px-4 sm:px-6 py-3 no-underline border-r border-line-strong" aria-label="Node Production, home">
+      <Logo variant="mark" class="w-8 h-8 shrink-0" />
+      <Logo sub class="hidden sm:inline-flex" />
     </a>
 
-    <nav aria-label="Site navigation" class="flex items-center justify-start gap-3 sm:gap-6 md:gap-9">
-      {leftItems.map((item) => {
+    <!-- Desktop / tablet: a row of step cells. The active page is the armed (orange) step. -->
+    <nav aria-label="Site navigation" class="hidden md:flex items-stretch">
+      {navItems.map((item, i) => {
         const isActive = currentPath === item.href;
         return (
-          <a href={item.href} class="group flex flex-col items-center gap-1.5 no-underline">
-            <span class={`relative w-10 h-4 sm:h-5 rounded-full border flex items-center px-0.5 transition-colors duration-200 ${isActive ? 'border-accent/50 bg-[#12233f]' : 'border-[#2a2f37] bg-[#14181d] group-hover:border-[#3d4550]'}`}>
-              <span class={`block w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-200 ${isActive
-                ? 'translate-x-5.5 sm:translate-x-4.5 bg-accent shadow-[0_0_6px_rgba(47,111,237,0.7)]'
-                : 'translate-x-0 bg-[#5a6472] group-hover:translate-x-5.5 sm:group-hover:translate-x-4.5 group-hover:bg-accent group-hover:shadow-[0_0_6px_rgba(47,111,237,0.7)]'}`}></span>
-            </span>
-            <span class={`text-[9px] sm:text-[11px] font-medium uppercase tracking-wider sm:tracking-[0.25em] whitespace-nowrap transition-colors duration-200 ${isActive ? 'text-fg' : 'text-fg-faint group-hover:text-fg'}`}>{item.label}</span>
+          <a
+            href={item.href}
+            aria-current={isActive ? 'page' : undefined}
+            class:list={[
+              'group flex items-center gap-3 px-5 lg:px-7 no-underline border-l border-line-strong font-mono text-[11px] font-medium uppercase tracking-[0.18em]',
+              isActive ? 'bg-accent text-accent-ink' : 'text-fg-dim hover:text-fg hover:bg-panel',
+            ]}
+          >
+            <span class={isActive ? 'opacity-70' : 'text-fg-faint group-hover:text-fg-dim'}>{String(i + 1).padStart(2, '0')}</span>
+            {item.label}
           </a>
         );
       })}
     </nav>
 
-    <nav aria-label="Site navigation" class="flex items-center justify-end gap-3 sm:gap-6 md:gap-9">
-      {rightItems.map((item) => {
-        const isActive = currentPath === item.href;
-        return (
-          <a href={item.href} class="group flex flex-col items-center gap-1.5 no-underline">
-            <span class={`relative w-10 h-4 sm:h-5 rounded-full border flex items-center px-0.5 transition-colors duration-200 ${isActive ? 'border-accent/50 bg-[#12233f]' : 'border-[#2a2f37] bg-[#14181d] group-hover:border-[#3d4550]'}`}>
-              <span class={`block w-3 h-3 sm:w-4 sm:h-4 rounded-full transition-all duration-200 ${isActive
-                ? 'translate-x-5.5 sm:translate-x-4.5 bg-accent shadow-[0_0_6px_rgba(47,111,237,0.7)]'
-                : 'translate-x-0 bg-[#5a6472] group-hover:translate-x-5.5 sm:group-hover:translate-x-4.5 group-hover:bg-accent group-hover:shadow-[0_0_6px_rgba(47,111,237,0.7)]'}`}></span>
-            </span>
-            <span class={`text-[9px] sm:text-[11px] font-medium uppercase tracking-wider sm:tracking-[0.25em] whitespace-nowrap transition-colors duration-200 ${isActive ? 'text-fg' : 'text-fg-faint group-hover:text-fg'}`}>{item.label}</span>
-          </a>
-        );
-      })}
-    </nav>
-
+    <!-- Mobile: menu key -->
+    <button id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-mobile" class="md:hidden flex items-center gap-3 px-4 border-l border-line-strong font-mono text-[11px] font-medium uppercase tracking-[0.18em] text-fg">
+      <span id="nav-toggle-label">Menu</span>
+      <span class="grid grid-cols-2 gap-0.5" aria-hidden="true">
+        <span class="w-1.5 h-1.5 bg-accent"></span><span class="w-1.5 h-1.5 border border-cell-line"></span>
+        <span class="w-1.5 h-1.5 border border-cell-line"></span><span class="w-1.5 h-1.5 bg-fg"></span>
+      </span>
+    </button>
   </div>
+
+  <nav id="nav-mobile" aria-label="Mobile navigation" class="hidden md:hidden border-t border-line-strong bg-page absolute left-0 right-0 top-full">
+    {navItems.map((item, i) => {
+      const isActive = currentPath === item.href;
+      return (
+        <a
+          href={item.href}
+          aria-current={isActive ? 'page' : undefined}
+          class:list={[
+            'flex items-center justify-between px-5 py-4 border-b border-line-strong no-underline font-mono text-xs font-medium uppercase tracking-[0.18em]',
+            isActive ? 'bg-accent text-accent-ink' : 'text-fg-muted',
+          ]}
+        >
+          <span>{item.label}</span>
+          <span class={isActive ? 'opacity-70' : 'text-fg-faint'}>{String(i + 1).padStart(2, '0')}</span>
+        </a>
+      );
+    })}
+  </nav>
 </header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('nav-mobile');
+  const label = document.getElementById('nav-toggle-label');
+  toggle?.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!open));
+    menu?.classList.toggle('hidden', open);
+    if (label) label.textContent = open ? 'Menu' : 'Close';
+  });
+</script>

@@ -2,6 +2,7 @@
 import Layout from '../layouts/Layout.astro';
 import SectionFrame from '../components/SectionFrame.astro';
 import SectionHeader from '../components/SectionHeader.astro';
+import PageHero from '../components/PageHero.astro';
 import ProductModal from '../components/ProductModal.astro';
 import { products, categories } from '../data/products';
 
@@ -14,30 +15,19 @@ const tabs = [{ id: 'all', label: 'All' }, ...categories.map((c) => ({ id: c.id,
   description="Digital goods from the Node Production studio: VSTs, FX racks, Ableton templates and sample packs for dance music producers."
 >
   <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-mono">
-    <SectionFrame max="max-w-4xl">
+    <SectionFrame>
 
-      <!-- Masthead -->
-      <header class="border-b border-line-strong">
-        <div class="flex items-center justify-between px-4 md:px-5 py-2.5 border-b border-line">
-          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Node // Shop</span>
-          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Digital goods</span>
-        </div>
-        <div class="px-4 md:px-8 py-8 md:py-11">
-          <h1 class="font-display font-bold uppercase leading-[0.9] tracking-tight text-fg text-[11vw] md:text-[3.75rem]">
-            The<br /><span class="text-accent">store.</span>
-          </h1>
-          <p class="mt-5 font-body text-sm text-fg-muted max-w-md leading-relaxed">
-            VSTs, racks, templates and sample packs from the studio. Instant downloads coming soon &mdash; browse the shelf below.
-          </p>
-        </div>
-      </header>
+      <PageHero left="Node // Shop" right="Digital goods">
+        <Fragment slot="title">The<br />store.</Fragment>
+        VSTs, racks, templates and sample packs from the studio. Instant downloads coming soon &mdash; browse the shelf below.
+      </PageHero>
 
-      <!-- Filter tabs -->
-      <div class="flex flex-wrap gap-px bg-line-strong border-b border-line-strong">
+      <!-- Filter tabs: a row of step keys. The selected filter is the armed step. -->
+      <div class="flex flex-wrap gap-px bg-line-strong border-b border-line-strong" role="group" aria-label="Filter products">
         {tabs.map((tab, i) => (
           <button
             type="button"
-            class={`shop-tab flex-1 min-w-[33%] sm:min-w-0 px-4 py-3 bg-panel font-mono text-[10px] uppercase tracking-[0.2em] transition-colors hover:text-accent ${i === 0 ? 'text-accent' : 'text-fg-faint'}`}
+            class={`shop-tab flex-1 min-w-[33%] sm:min-w-0 px-4 py-3.5 font-mono text-[11px] font-medium uppercase tracking-[0.18em] hover:text-fg ${i === 0 ? 'bg-accent text-accent-ink hover:text-accent-ink' : 'bg-base text-fg-dim hover:bg-panel'}`}
             data-tab={tab.id}
             aria-pressed={i === 0 ? 'true' : 'false'}
           >
@@ -49,7 +39,7 @@ const tabs = [{ id: 'all', label: 'All' }, ...categories.map((c) => ({ id: c.id,
       <!-- Product grid -->
       <section class="border-b border-line-strong">
         <SectionHeader num="01" label="Shop / Catalogue">
-          <span slot="meta" class="text-fg-faint font-mono text-[9px] uppercase tracking-[0.2em]">Tap a card</span>
+          <span slot="meta" class="font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">Tap a card</span>
         </SectionHeader>
         <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 gap-px bg-line-strong">
           {products.map((product) => {
@@ -57,7 +47,8 @@ const tabs = [{ id: 'all', label: 'All' }, ...categories.map((c) => ({ id: c.id,
             return (
               <button
                 type="button"
-                class="product-card group bg-panel p-6 flex flex-col gap-4 text-left cursor-pointer outline-none focus-visible:ring-1 focus-visible:ring-accent hover:bg-inset transition-colors"
+                class="product-card group bg-base p-6 md:p-7 flex flex-col gap-5 text-left cursor-pointer outline-none focus-visible:outline-accent hover:bg-panel relative"
+                style={`--ch:${cat?.hex}`}
                 data-category={product.category}
                 data-num={product.num}
                 data-title={product.title}
@@ -72,47 +63,45 @@ const tabs = [{ id: 'all', label: 'All' }, ...categories.map((c) => ({ id: c.id,
                 data-meta={JSON.stringify(product.meta)}
                 aria-haspopup="dialog"
               >
-                <div class="aspect-[16/10] w-full bg-inset border border-line grain-overlay-dark relative overflow-hidden flex items-center justify-center">
+                <div class="aspect-[16/10] w-full bg-inset border border-line dot-matrix relative overflow-hidden flex items-center justify-center">
                   {product.image
                     ? <img src={product.image} alt={product.title} class="w-full h-full object-contain" loading="lazy" />
-                    : <span class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint/40">Cover art</span>}
+                    : <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-faint">Cover art</span>}
                 </div>
-                <div class="flex items-start justify-between">
-                  <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-full bg-black border border-line-strong shadow-[inset_0_2px_4px_rgba(0,0,0,0.9)] flex items-center justify-center shrink-0">
-                      <div class={`w-2 h-2 rounded-full ${cat?.wire} ${cat?.glow}`}></div>
-                    </div>
+                <div class="flex items-start justify-between gap-4">
+                  <div class="flex items-start gap-3">
+                    <span class="block w-3 h-3 mt-1 shrink-0 border group-hover:bg-(--ch)" style="border-color: var(--ch)" aria-hidden="true"></span>
                     <div>
-                      <h2 class="font-display text-[1rem] font-bold uppercase tracking-tight text-fg leading-none">{product.title}</h2>
-                      <p class="mt-1 font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint">{product.tagline}</p>
+                      <h2 class="font-display text-2xl font-extrabold uppercase tracking-[-0.03em] text-fg leading-[0.95]">{product.title}</h2>
+                      <p class="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">{product.tagline}</p>
                     </div>
                   </div>
                   {product.badge
-                    ? <span class="font-mono text-[8px] uppercase tracking-[0.2em] text-accent border border-accent/40 px-1.5 py-0.5 leading-none">{product.badge}</span>
-                    : <span class="font-display text-lg font-bold text-fg-faint/30 leading-none">{product.num}</span>}
+                    ? <span class="font-mono text-[9px] uppercase tracking-[0.18em] text-fg border border-fg-dim px-2 py-1 leading-none shrink-0">{product.badge}</span>
+                    : <span class="font-mono text-[11px] font-semibold tracking-[0.18em] text-fg-faint leading-none shrink-0">{product.num}</span>}
                 </div>
                 <p class="font-body text-[13px] leading-relaxed text-fg-muted flex-1">{product.detail}</p>
-                <p class="font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint">{cat?.label}</p>
-                <div class="flex items-end justify-between border-t border-line pt-3">
-                  <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint group-hover:text-accent transition-colors">View &rarr;</span>
-                  <span class="font-display text-xl font-bold text-accent leading-none">{product.price}</span>
+                <p class="font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">{cat?.label}</p>
+                <div class="flex items-end justify-between border-t border-line pt-4">
+                  <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim group-hover:text-fg">View &rarr;</span>
+                  <span class="font-display text-2xl font-extrabold tracking-[-0.02em] text-fg leading-none">{product.price}</span>
                 </div>
               </button>
             );
           })}
         </div>
         <!-- Empty state: shown when a filter matches no products -->
-        <div id="shop-empty" class="hidden bg-panel px-6 py-12 text-center">
-          <p class="font-mono text-[11px] uppercase tracking-[0.2em] text-fg-faint">Nothing here yet &mdash; more coming soon.</p>
+        <div id="shop-empty" class="hidden bg-base px-6 py-14 text-center">
+          <p class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-dim">Nothing here yet &mdash; more coming soon.</p>
         </div>
       </section>
 
       <!-- CTA -->
-      <section class="flex flex-col sm:flex-row items-stretch">
-        <a href="/services" class="flex-1 text-center px-6 py-5 bg-panel border-b sm:border-b-0 sm:border-r border-line-strong text-fg-muted font-mono font-bold text-[11px] uppercase tracking-[0.2em] hover:text-accent hover:border-accent transition-colors">
+      <section class="flex flex-col sm:flex-row items-stretch gap-px bg-line-strong">
+        <a href="/services" class="key flex-1 py-5 !border-0 bg-base hover:bg-panel">
           Studio Services
         </a>
-        <a href="/contact" class="flex-1 text-center px-6 py-5 bg-accent-dim text-white font-mono font-bold text-[11px] uppercase tracking-[0.2em] hover:bg-accent transition-colors">
+        <a href="/contact" class="key key-primary flex-1 py-5 !border-0">
           Custom Request
         </a>
       </section>
@@ -144,8 +133,12 @@ const tabs = [{ id: 'all', label: 'All' }, ...categories.map((c) => ({ id: c.id,
         tabs.forEach((t) => {
           const active = t === tab;
           t.setAttribute('aria-pressed', active ? 'true' : 'false');
-          t.classList.toggle('text-accent', active);
-          t.classList.toggle('text-fg-faint', !active);
+          t.classList.toggle('bg-accent', active);
+          t.classList.toggle('text-accent-ink', active);
+          t.classList.toggle('hover:text-accent-ink', active);
+          t.classList.toggle('bg-base', !active);
+          t.classList.toggle('text-fg-dim', !active);
+          t.classList.toggle('hover:bg-panel', !active);
         });
         applyFilter(tab.dataset.tab || 'all');
       });

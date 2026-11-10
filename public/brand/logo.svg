@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 360" width="600" height="360" role="img" aria-labelledby="t d">
+  <title id="t">Node Production</title>
+  <desc id="d">NODE / PRODUCTION lockup with the 2×16 step-sequencer mark and Leeds coordinates 53.80 N 1.55 W.</desc>
+  <rect width="600" height="360" fill="#1c1c1a"/>
+  <g id="wordmark" fill="#f2ede3">
+    <path d="M79 60h30v120H79zM149 60h30v120h-30zM79 60h30l70 120h-30z"/>
+    <path fill-rule="evenodd" d="M233 60h30a40 40 0 0 1 40 40v40a40 40 0 0 1-40 40h-30a40 40 0 0 1-40-40v-40a40 40 0 0 1 40-40zM235 90a12 12 0 0 0-12 12v36a12 12 0 0 0 12 12h26a12 12 0 0 0 12-12v-36a12 12 0 0 0-12-12z"/>
+    <path fill-rule="evenodd" d="M317 60h45a60 60 0 0 1 0 120h-45zM347 90v60h15a30 30 0 0 0 0-60z"/>
+    <path d="M436 60h85v28h-55v18h45v28h-45v18h55v28h-85z"/>
+  </g>
+  <text id="production" x="79" y="222" textLength="442" lengthAdjust="spacing" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace" font-size="18" font-weight="500" fill="#a29d92">PRODUCTION</text>
+  <g id="step-grid">
+      <rect x="79" y="244" width="22" height="22" fill="#e8552a"/>
+      <rect x="107.5" y="244.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="135.5" y="244.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="163.5" y="244.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="191" y="244" width="22" height="22" fill="#f2ede3"/>
+      <rect x="219.5" y="244.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="247.5" y="244.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="275.5" y="244.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="303.5" y="244.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="331.5" y="244.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="359" y="244" width="22" height="22" fill="#f2ede3"/>
+      <rect x="387.5" y="244.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="415" y="244" width="22" height="22" fill="#f2ede3"/>
+      <rect x="443.5" y="244.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="471.5" y="244.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="499.5" y="244.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="79.5" y="272.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="107.5" y="272.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="135" y="272" width="22" height="22" fill="#6b6862"/>
+      <rect x="163.5" y="272.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="191.5" y="272.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="219.5" y="272.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="247" y="272" width="22" height="22" fill="#6b6862"/>
+      <rect x="275.5" y="272.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="303" y="272" width="22" height="22" fill="#6b6862"/>
+      <rect x="331.5" y="272.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="359.5" y="272.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="387" y="272" width="22" height="22" fill="#f2ede3"/>
+      <rect x="415.5" y="272.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="443.5" y="272.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+      <rect x="471" y="272" width="22" height="22" fill="#6b6862"/>
+      <rect x="499.5" y="272.5" width="21" height="21" fill="none" stroke="#4a4844" stroke-width="1"/>
+  </g>
+  <text id="coords" x="300" y="332" text-anchor="middle" xml:space="preserve" font-family="'IBM Plex Mono', ui-monospace, Menlo, monospace" font-size="11" letter-spacing="2" fill="#6f6b63">53.80 N  1.55 W</text>
+</svg>

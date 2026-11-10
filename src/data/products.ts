@@ -29,10 +29,10 @@ export interface Product {
 }
 
 export const categories: Category[] = [
-  { id: 'vst',         label: 'VSTs',         hex: '#a855f7', wire: 'bg-purple-500', glow: 'shadow-[0_0_8px_rgba(168,85,247,0.9)]' },
-  { id: 'rack',        label: 'Racks',        hex: '#2f6fed', wire: 'bg-accent',     glow: 'shadow-[0_0_8px_rgba(47,111,237,0.9)]' },
-  { id: 'template',    label: 'Templates',    hex: '#22c55e', wire: 'bg-green-500',  glow: 'shadow-[0_0_8px_rgba(34,197,94,0.9)]' },
-  { id: 'sample-pack', label: 'Sample Packs', hex: '#f97316', wire: 'bg-orange-500', glow: 'shadow-[0_0_8px_rgba(249,115,22,0.9)]' },
+  { id: 'vst',         label: 'VSTs',         hex: '#a08cb4', wire: 'bg-ch-tools',      glow: '' },
+  { id: 'rack',        label: 'Racks',        hex: '#e3a83b', wire: 'bg-ch-mastering',  glow: '' },
+  { id: 'template',    label: 'Templates',    hex: '#a8b25a', wire: 'bg-ch-education',  glow: '' },
+  { id: 'sample-pack', label: 'Sample Packs', hex: '#d78d5c', wire: 'bg-ch-analysis',   glow: '' },
 ];
 
 export const products: Product[] = [

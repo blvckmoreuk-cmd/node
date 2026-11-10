@@ -1,5 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import StepGrid from '../../components/StepGrid.astro';
 
 export const prerender = false;
 
@@ -18,65 +19,62 @@ if (!linkToken || token !== linkToken) {
   noindex={true}
 >
   <div class="w-full min-h-[70vh] flex flex-col items-center px-3 md:px-4 py-10 md:py-16 font-mono">
-    <div class="w-full max-w-lg border border-line-strong bg-base">
-      <div class="flex items-center justify-between px-4 md:px-5 py-2.5 border-b border-line-strong bg-panel">
-        <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Node // Feedback</span>
-        <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Private</span>
+    <div class="w-full max-w-xl border border-line-strong bg-base crop-marks">
+      <div class="flex items-center justify-between px-4 md:px-6 py-3 border-b border-line-strong bg-panel">
+        <span class="font-mono text-[10px] uppercase tracking-[0.32em] text-fg-dim">Node // Feedback</span>
+        <span class="font-mono text-[10px] uppercase tracking-[0.32em] text-fg-faint">Private</span>
       </div>
 
-      <div class="px-4 md:px-8 py-7 md:py-9">
-        <h1 class="font-display font-bold uppercase leading-[0.95] tracking-tight text-fg text-[9vw] md:text-4xl">
-          Leave a<br /><span class="text-accent">Review.</span>
+      <div class="px-4 md:px-8 py-8 md:py-10">
+        <h1 class="t-display text-[clamp(2.5rem,9vw,3.75rem)]">
+          Leave a<br />Review.
         </h1>
-        <p class="mt-4 font-body text-sm text-fg-muted leading-relaxed">
+        <StepGrid fluid class="mt-6 max-w-xs" rows={['A...C.......C...']} />
+        <p class="mt-6 font-body text-sm text-fg-muted leading-relaxed">
           Thanks for working with Node. A couple of lines on how it went means a lot &mdash; it goes live on the site once approved.
         </p>
 
-        <form id="review-form" class="mt-7 flex flex-col gap-5" data-token={token}>
-          <!-- Rating -->
-          <div class="flex flex-col gap-2">
-            <span class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">Rating</span>
-            <div id="stars" class="flex gap-1.5 text-2xl" role="radiogroup" aria-label="Rating out of 5">
+        <form id="review-form" class="mt-8 flex flex-col gap-5" data-token={token}>
+          <!-- Rating: five step cells -->
+          <div>
+            <span class="field-label">Rating</span>
+            <div id="stars" class="flex gap-2" role="radiogroup" aria-label="Rating out of 5">
               {[1, 2, 3, 4, 5].map((v) => (
                 <button type="button" data-star={v} aria-label={`${v} star${v > 1 ? 's' : ''}`}
-                  class="star text-fg-faint/40 hover:text-accent transition-colors outline-none focus-visible:ring-1 focus-visible:ring-accent leading-none">&#9733;</button>
+                  class="star w-8 h-8 border border-cell-line"></button>
               ))}
             </div>
             <input type="hidden" name="rating" id="rating" value="5" />
           </div>
 
           <!-- Name -->
-          <div class="flex flex-col gap-2">
-            <label for="author" class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">Name / Artist</label>
-            <input id="author" name="author" type="text" maxlength="80" required
-              class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors" />
+          <div>
+            <label for="author" class="field-label">Name / Artist</label>
+            <input id="author" name="author" type="text" maxlength="80" required class="field" />
           </div>
 
           <!-- Source -->
-          <div class="flex flex-col gap-2">
-            <label for="source" class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">Where from (optional)</label>
-            <input id="source" name="source" type="text" maxlength="40" placeholder="Direct"
-              class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors" />
+          <div>
+            <label for="source" class="field-label">Where from (optional)</label>
+            <input id="source" name="source" type="text" maxlength="40" placeholder="Direct" class="field" />
           </div>
 
           <!-- Review -->
-          <div class="flex flex-col gap-2">
-            <label for="quote" class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">Your review</label>
-            <textarea id="quote" name="quote" rows="5" maxlength="600" required
-              class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors resize-y"></textarea>
+          <div>
+            <label for="quote" class="field-label">Your review</label>
+            <textarea id="quote" name="quote" rows="5" maxlength="600" required class="field resize-y"></textarea>
           </div>
 
-          <p id="review-error" class="hidden font-mono text-[10px] text-red-400 leading-relaxed"></p>
+          <p id="review-error" class="hidden font-mono text-[11px] text-ch-production leading-relaxed"></p>
 
-          <button type="submit" id="review-submit"
-            class="w-full py-4 bg-accent-dim text-white font-mono font-black text-[12px] uppercase tracking-[0.3em] hover:bg-accent active:translate-y-px transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+          <button type="submit" id="review-submit" class="key key-primary w-full py-4 text-[12px]">
             Submit Review
           </button>
         </form>
 
-        <div id="review-success" class="hidden mt-7 flex-col items-center text-center gap-3 py-6">
-          <div class="text-4xl text-accent leading-none">&#10003;</div>
-          <p class="font-display text-xl font-bold text-fg">Thank you.</p>
+        <div id="review-success" class="hidden mt-8 flex-col items-start gap-4 py-6">
+          <StepGrid rows={['ACCCCCCC']} arm />
+          <p class="font-display text-3xl font-extrabold uppercase tracking-[-0.03em] text-fg leading-[0.9]">Thank you.</p>
           <p class="font-body text-sm text-fg-muted leading-relaxed max-w-xs">
             Your review has been sent. It will appear on the site once it&rsquo;s approved.
           </p>
@@ -96,10 +94,13 @@ if (!linkToken || token !== linkToken) {
     const submitBtn = document.getElementById('review-submit') as HTMLButtonElement;
     const successEl = document.getElementById('review-success') as HTMLElement;
 
+    // Rating cells fill cream up to the chosen value.
     function paint(value: number) {
       stars.forEach((s, idx) => {
-        s.classList.toggle('text-accent', idx < value);
-        s.classList.toggle('text-fg-faint/40', idx >= value);
+        const on = idx < value;
+        s.classList.toggle('bg-fg', on);
+        s.classList.toggle('border-fg', on);
+        s.classList.toggle('border-cell-line', !on);
       });
     }
     stars.forEach((s) => {

@@ -2,6 +2,8 @@
 import '../styles/global.css';
 import { Font } from 'astro:assets';
 import Header from '../components/Header.astro';
+import Logo from '../components/Logo.astro';
+import StepGrid from '../components/StepGrid.astro';
 
 // Per-page SEO. Every page passes its own title + description; the rest fall
 // back to sensible site-wide defaults so no page ships bare.
@@ -67,34 +69,48 @@ const jsonLd = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <meta name="theme-color" content="#1c1c1a" />
 
-    <!-- Font roles: display (Space Grotesk), mono (JetBrains Mono), body (Inter).
-         Registered in astro.config.mjs; preload the two above-the-fold faces. -->
-    <Font cssVariable="--font-space-grotesk" preload />
-    <Font cssVariable="--font-inter" preload />
-    <Font cssVariable="--font-jetbrains-mono" />
+    <!-- Font roles (Sequencer): display (Archivo 800), mono (IBM Plex Mono), body (IBM Plex Sans).
+         Registered in astro.config.mjs; preload the above-the-fold faces. -->
+    <Font cssVariable="--font-archivo" preload />
+    <Font cssVariable="--font-plex-mono" preload />
+    <Font cssVariable="--font-plex-sans" />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
   </head>
 
   <body class="min-h-screen flex flex-col relative">
 
-    <!-- Grain overlay: subtle texture across the whole page, sits behind everything.
-         Same noise recipe used inside the card on the homepage, so the grain matches
-         site-wide instead of using an external asset. -->
-    <div class="page-grain fixed inset-0 pointer-events-none z-0" aria-hidden="true"></div>
-
     <Header />
 
-    <!-- Main Content: z-10 keeps it above the grain overlay -->
     <main class="w-full grow flex flex-col items-center z-10 relative">
       <slot />
     </main>
 
-    <!-- Footer -->
-    <footer class="w-full py-8 mt-12 text-center text-[10px] font-mono tracking-[0.3em] uppercase text-fg-faint border-t border-line-strong z-10 relative">
-      &copy; {new Date().getFullYear()} Node Leeds. All Rights Reserved.
+    <footer class="w-full mt-12 border-t border-line-strong bg-page z-10 relative">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <div class="flex flex-col gap-4">
+          <StepGrid rows={['A...C.....C.C...', '..G...G.G..C..G.']} />
+          <Logo sub />
+        </div>
+        <nav aria-label="Footer navigation" class="flex flex-wrap gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-[0.18em]">
+          <a href="/about" class="text-fg-dim hover:text-fg no-underline">About</a>
+          <a href="/services" class="text-fg-dim hover:text-fg no-underline">Services</a>
+          <a href="/prices" class="text-fg-dim hover:text-fg no-underline">Rates</a>
+          <a href="/shop" class="text-fg-dim hover:text-fg no-underline">Shop</a>
+          <a href="/portfolio" class="text-fg-dim hover:text-fg no-underline">Portfolio</a>
+          <a href="/contact" class="text-fg-dim hover:text-fg no-underline">Contact</a>
+        </nav>
+      </div>
+      <div class="border-t border-line">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-col gap-1 sm:flex-row sm:justify-between font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">
+          <span>&copy; {new Date().getFullYear()} Node Leeds. All Rights Reserved.</span>
+          <span>53.80 N&nbsp;&nbsp;1.55 W</span>
+        </div>
+      </div>
     </footer>
 
   </body>

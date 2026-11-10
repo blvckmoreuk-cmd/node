@@ -1,0 +1,25 @@
+---
+// Shared page masthead: a mono status strip, a big Archivo 800 headline in
+// cream, optional intro copy, and a 2×16 step grid whose armed step is the
+// single orange element in the region.
+import StepGrid from './StepGrid.astro';
+
+interface Props {
+  left: string;   // top-left strip label
+  right: string;  // top-right strip label
+}
+const { left, right } = Astro.props;
+---
+<header class="border-b border-line-strong">
+  <div class="flex items-center justify-between gap-3 px-4 md:px-6 py-2.5 border-b border-line">
+    <span class="font-mono text-[10px] uppercase tracking-[0.32em] text-fg-dim">{left}</span>
+    <span class="font-mono text-[10px] uppercase tracking-[0.32em] text-fg-faint text-right">{right}</span>
+  </div>
+  <div class="px-4 md:px-8 pt-10 md:pt-16 pb-8 md:pb-12">
+    <h1 class="t-display text-[clamp(2.75rem,10.5vw,5.75rem)]"><slot name="title" /></h1>
+    <div class="mt-6 md:mt-8 max-w-xl font-body text-sm md:text-base leading-relaxed text-fg-muted"><slot /></div>
+  </div>
+  <div class="px-4 md:px-8 pb-6 md:pb-8">
+    <StepGrid fluid class="max-w-xl" />
+  </div>
+</header>
