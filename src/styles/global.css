@@ -274,6 +274,29 @@
   }
   .marquee-track:hover { animation-play-state: paused; }
 
+  /* ---- Key credits strip: three step cells, hairline dividers ---- */
+  .credits-strip { display: grid; grid-template-columns: 1fr; list-style: none; margin: 0; padding: 0; }
+  .credits-cell { display: flex; align-items: center; padding: 0.7rem 1rem; line-height: 1.3; }
+  .credits-cell + .credits-cell { border-top: 1px solid var(--color-line-strong); }
+  .credits-pip { flex: none; width: 6px; height: 6px; margin-right: 0.75rem; border: 1px solid var(--color-cell-line); }
+  @media (min-width: 768px) {
+    .credits-strip { grid-template-columns: repeat(3, 1fr); }
+    .credits-cell { padding: 0.8rem 1.25rem; letter-spacing: 0.1em; white-space: nowrap; }
+    .credits-cell + .credits-cell { border-top: 0; border-left: 1px solid var(--color-line-strong); }
+  }
+
+  /* ---- Trusted-by logo marquee: two identical lists; -50% loops seamlessly ---- */
+  .logo-marquee { display: flex; align-items: stretch; height: 56px; overflow: hidden; }
+  .logo-marquee-label { display: none; align-items: center; padding: 0 1.5rem; border-right: 1px solid var(--color-line-strong); white-space: nowrap; }
+  @media (min-width: 768px) { .logo-marquee-label { display: flex; } }
+  .logo-marquee-viewport { flex: 1; min-width: 0; overflow: hidden; display: flex; align-items: center; }
+  .logo-marquee-track { display: flex; width: max-content; animation: marquee 40s linear infinite; }
+  .logo-marquee-track:hover { animation-play-state: paused; }
+  .logo-marquee-list { display: flex; align-items: center; list-style: none; margin: 0; padding: 0; }
+  .logo-marquee-item { display: flex; align-items: center; height: 56px; padding: 0 1.75rem; }
+  .logo-marquee-item img { height: 28px; width: auto; max-width: 96px; object-fit: contain; filter: grayscale(1); opacity: 0.8; }
+  .logo-marquee-item img:hover { opacity: 1; }
+
   /* ---- Fluid grid: cells scale with the container (hero lockup) ---- */
   .seq-fluid {
     grid-template-columns: repeat(var(--steps, 16), minmax(0, 1fr));
@@ -301,6 +324,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .logo-marquee { height: auto; }
+  .logo-marquee-track { width: auto; animation: none; }
+  .logo-marquee-list[data-copy="1"] { display: none; }
+  .logo-marquee-list { flex-wrap: wrap; }
+  .logo-marquee-item { height: 48px; padding: 0 1.25rem; }
   .marquee-track,
   .seq.is-playing::after,
   .seq-arm .seq-cell { animation: none; }

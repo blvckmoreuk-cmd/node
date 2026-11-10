@@ -18,6 +18,12 @@ const clientNames = [
 ];
 const clients = [...clientNames].sort(() => Math.random() - 0.5);
 
+const credits = [
+  'Hybrid analogue / digital signal chain',
+  'Beatport Minimal No.1',
+  'Releases on UKF & Garageshared',
+];
+
 const trusted = [
   { src: '/logos/3000.jpg', alt: '3000', width: 272, height: 281 },
   { src: '/logos/awd.jpg', alt: 'AWD', width: 348, height: 189 },
@@ -80,6 +86,15 @@ const trusted = [
           </div>
         </div>
       </header>
+
+      <!-- ===================== KEY CREDITS ===================== -->
+      <ul class="credits-strip border-b border-line-strong" aria-label="Key credits">
+        {credits.map((c) => (
+          <li class="credits-cell font-mono text-[10px] md:text-[11px] uppercase tracking-[0.18em] text-fg-muted">
+            <span class="credits-pip" aria-hidden="true"></span>{c}
+          </li>
+        ))}
+      </ul>
 
       <!-- ===================== CLIENTS MARQUEE ===================== -->
       <div class="border-b border-line-strong bg-inset overflow-hidden relative" aria-label="Clients">
@@ -168,6 +183,24 @@ const trusted = [
         </div>
       </section>
 
+      <!-- ===================== TRUSTED BY (logo marquee) ===================== -->
+      <div class="logo-marquee border-b border-line-strong bg-ground" aria-label="Trusted by">
+        <span class="logo-marquee-label font-mono text-[10px] uppercase tracking-[0.32em] text-fg-dim">Trusted By</span>
+        <div class="logo-marquee-viewport">
+          <div class="logo-marquee-track">
+            {[0, 1].map((copy) => (
+              <ul class="logo-marquee-list" aria-hidden={copy === 1 ? 'true' : undefined} data-copy={copy}>
+                {trusted.map((logo) => (
+                  <li class="logo-marquee-item">
+                    <img src={logo.src} alt={copy === 1 ? '' : logo.alt} width={logo.width} height={logo.height} loading="lazy" />
+                  </li>
+                ))}
+              </ul>
+            ))}
+          </div>
+        </div>
+      </div>
+
       <!-- ===================== 02 // SERVICES ===================== -->
       <section class="border-b border-line-strong">
         <SectionHeader num="02" label="Services / Signal Chain">
@@ -219,19 +252,6 @@ const trusted = [
             Send Enquiry
           </button>
         </form>
-      </section>
-
-      <!-- ===================== TRUSTED BY ===================== -->
-      <section class="border-b border-line-strong">
-        <SectionHeader label="Trusted By" />
-        <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-px bg-line-strong">
-          {trusted.map((logo) => (
-            <div class="bg-ground p-5 md:p-6 flex items-center justify-center">
-              <img src={logo.src} class="h-10 md:h-11 w-auto max-w-full object-contain opacity-80 grayscale hover:opacity-100 hover:grayscale-0" alt={logo.alt} width={logo.width} height={logo.height} loading="lazy" />
-            </div>
-          ))}
-          <div class="bg-ground lg:hidden" aria-hidden="true"></div>
-        </div>
       </section>
 
       <!-- ===================== REVIEWS ===================== -->
