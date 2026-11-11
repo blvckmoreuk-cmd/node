@@ -227,15 +227,15 @@
   input[type="color"]::-moz-color-swatch { border: none; border-radius: 0; }
 
   /* ---- Hero service line, credits strip, marquees (home) ---- */
-  .svc-line { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--color-line-strong); }
-  .svc-line li { padding: 0.7rem 0.85rem; display: flex; flex-direction: column; gap: 0.15rem; border-top: 1px solid var(--color-line-strong); }
+  .svc-line { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--color-line-strong); text-align: center; margin-inline: auto; max-width: 52rem; }
+  .svc-line li { padding: 0.75rem 0.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.15rem; border-top: 1px solid var(--color-line-strong); }
   .svc-line li:nth-child(-n+2) { border-top: 0; }
   .svc-line li:nth-child(even) { border-left: 1px solid var(--color-line-strong); }
   .svc-line .n { font-size: 0.875rem; color: var(--color-fg-dim); line-height: 1.3; }
   .svc-line .p { font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; letter-spacing: -0.01em; color: var(--color-fg); line-height: 1.2; }
   @media (min-width: 768px) {
-    .svc-line { grid-template-columns: repeat(4, auto); justify-content: start; max-width: 44rem; }
-    .svc-line li { border-top: 0 !important; border-left: 1px solid var(--color-line-strong); padding: 0.8rem 1.25rem; }
+    .svc-line { grid-template-columns: repeat(4, 1fr); }
+    .svc-line li { border-top: 0 !important; border-left: 1px solid var(--color-line-strong); padding: 0.9rem 1rem; }
     .svc-line li:first-child { border-left: 0; }
     .svc-line .p { font-size: 1.375rem; }
   }
@@ -289,6 +289,17 @@
   }
   .seq-fluid .seq-cell { width: auto; height: auto; aspect-ratio: 1; }
 
+  /* ---- Hero sequencer band: full-width fluid grid + CSS-only stepping playhead ---- */
+  .hero-band { --g: clamp(3px, 0.9vw, 8px); position: relative; }
+  .hero-playhead {
+    position: absolute; top: -4px; bottom: -4px; left: 0;
+    width: calc((100% - 15 * var(--g)) / 16);
+    border: 1px solid var(--color-accent);
+    background: rgb(232 85 42 / 0.1);
+    pointer-events: none;
+    animation: hero-step 4s steps(16, jump-end) infinite;
+  }
+
   /* ---- Scrub bar: 32 step segments ---- */
   .scrub-steps {
     background-image: repeating-linear-gradient(to right, transparent 0, transparent calc(100% / 32 - 2px), var(--color-inset) calc(100% / 32 - 2px), var(--color-inset) calc(100% / 32));
@@ -308,8 +319,12 @@
 @keyframes seq-arm {
   from { background: transparent; border-color: var(--color-cell-line); }
 }
+@keyframes hero-step {
+  to { transform: translateX(calc(16 * (100% + var(--g)))); }
+}
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-playhead { animation: none; }
   .seq.is-playing::after,
   .seq-arm .seq-cell { animation: none; }
 }
