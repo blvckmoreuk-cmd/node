@@ -1,0 +1,22 @@
+---
+// The one how-it-works block on the site (home page). Three real steps, numbered.
+const steps = [
+  { num: '01', title: 'Upload', detail: 'Add your track below, pick a service and see the price as you choose.' },
+  { num: '02', title: 'We master it', detail: 'Mastering is back with you in 48 hours. Mixing is quoted per project.' },
+  { num: '03', title: 'Download and revise', detail: 'Download your master. Two revisions are included on every order.' },
+];
+---
+<section class="border-b border-line-strong" aria-labelledby="how-title">
+  <div class="px-4 md:px-6 py-3 border-b border-line-strong bg-panel">
+    <h2 id="how-title" class="font-body text-base font-medium text-fg">How it works</h2>
+  </div>
+  <ol class="grid grid-cols-1 md:grid-cols-3 gap-px bg-line-strong">
+    {steps.map((step) => (
+      <li class="bg-ground p-5 md:p-6">
+        <span class="font-body text-sm font-medium text-fg-dim">{step.num}</span>
+        <h3 class="mt-1 t-h3">{step.title}</h3>
+        <p class="mt-2 font-body text-base leading-relaxed text-fg-muted">{step.detail}</p>
+      </li>
+    ))}
+  </ol>
+</section>

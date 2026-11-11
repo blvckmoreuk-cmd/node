@@ -1,0 +1,28 @@
+---
+// Live price line for the service <select id="service">. Server-renders the empty
+// state; the script fills it as the visitor chooses. Figures are the confirmed
+// rates only (see prices.astro). Anything not confirmed says we confirm on reply.
+interface Props { class?: string }
+const { class: cls = '' } = Astro.props;
+---
+<p id="price-readout" aria-live="polite" class:list={[cls, 'font-body text-base text-fg border-l-2 border-accent pl-3 min-h-6 empty:hidden']}></p>
+
+<script>
+  const prices: Record<string, string> = {
+    mastering: '£30 for a single track, back in 48 hours. £20 per track on EPs (2+ tracks). £10 for an additional version. Two revisions included.',
+    'mixing-mastering': 'Quoted per project, and it takes longer than 48 hours. As a starting guide, stem rates are £50 (10 stems), £85 (20) and £100 (30), plus £2 per extra stem.',
+    production: 'Ghost production starts from £250.',
+    finishing: 'Track finishing starts from £120.',
+    education: 'We confirm the price when we reply.',
+    'sound-design': 'We confirm the price when we reply.',
+    other: 'We confirm the price when we reply.',
+  };
+  const select = document.getElementById('service') as HTMLSelectElement | null;
+  const out = document.getElementById('price-readout');
+  const update = () => {
+    if (out && select) out.textContent = prices[select.value] ?? '';
+  };
+  select?.addEventListener('change', update);
+  window.addEventListener('pageshow', update);
+  update();
+</script>

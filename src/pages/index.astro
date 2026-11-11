@@ -6,25 +6,19 @@ import ReviewsCarousel from '../components/ReviewsCarousel.astro';
 import SuccessPopup from '../components/SuccessPopup.astro';
 import EnquiryUpload from '../components/EnquiryUpload.astro';
 import SectionHeader from '../components/SectionHeader.astro';
+import PriceReadout from '../components/PriceReadout.astro';
+import HowItWorks from '../components/HowItWorks.astro';
 import StepGrid from '../components/StepGrid.astro';
 import { services } from '../data/services';
 
-// Clients scroll continuously under the masthead. Shuffled at build time so the
-// order reads as unranked rather than a leaderboard.
-const clientNames = [
-  'Casmalia', 'Solara', 'Morry', 'Akonite', 'Covert', 'HiFeelings', 'Dankstreet',
-  'Denno', 'Slinki', 'UKF', 'Unique Vibes', 'Motive', 'Teks LV', 'Joe Allen',
-  'TerryBoy', 'Sohl', 'ElTacoFiesta', 'Gold Digger', '3000 Bass',
-  'DMC', 'Mwangi', 'Karellos', 'Wilmore',
-];
-const clients = [...clientNames].sort(() => Math.random() - 0.5);
+// Home leads with mastering; mixing is secondary; the rest sit behind one link.
+const leadServices = services.filter((x) => x.slug === 'mastering' || x.slug === 'mixing');
 
-const credits = [
-  'Hybrid analogue / digital signal chain',
+// One static row of releases and clients already credited on the site.
+const releases = [
+  'Releases on UKF, Disciple & All Ways Dance',
   'Beatport Minimal No.1',
   '3M+ combined streams across our engineers',
-  'Releases on UKF, Disciple & All Ways Dance',
-  'No AI — real engineers',
 ];
 
 const trusted = [
@@ -66,7 +60,7 @@ const trusted = [
         <div class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-6 md:gap-16 items-start px-4 md:px-8 py-8 md:py-16">
           <div class="min-w-0">
             <h1 class="t-display text-[2rem] md:text-5xl max-w-md md:max-w-xl">
-              Electronic music engineering made simple
+              Dance music mastering by real engineers
             </h1>
             <div class="hidden md:block mt-6 max-w-xl lg:max-w-none" aria-hidden="true">
               <StepGrid fluid />
@@ -74,41 +68,20 @@ const trusted = [
           </div>
           <div class="flex flex-col gap-5">
             <p class="font-body text-base md:text-lg text-fg-muted max-w-sm md:max-w-none leading-relaxed">
-              Mix, master and ghost production for electronic music. Based in Leeds, working worldwide.
+              Mastering is £30 per track with a 48-hour turnaround. No AI, real engineers.
             </p>
             <p class="font-body text-base text-fg-dim max-w-sm md:max-w-none leading-relaxed">
-              Specialist genres: House, Techno, Trance, Grime, Garage, Dubstep, DnB, Drill, Trap
+              We also mix and produce House, Techno, Trance, Grime, Garage, Dubstep, DnB, Drill and Trap, from Leeds to the world.
             </p>
             <div class="flex flex-wrap gap-3">
-              <a href="/contact/" class="key key-primary">Start a Project</a>
+              <a href="#upload" class="key key-primary">Upload your track</a>
               <a href="/prices/" class="key">Prices</a>
             </div>
           </div>
         </div>
       </header>
 
-      <!-- ===================== KEY CREDITS ===================== -->
-      <ul class="credits-strip border-b border-line-strong" aria-label="Key credits">
-        {credits.map((c) => (
-          <li class="credits-cell font-body text-sm text-fg-muted">
-            <span class="credits-pip" aria-hidden="true"></span>{c}
-          </li>
-        ))}
-      </ul>
-
-      <!-- ===================== CLIENTS MARQUEE ===================== -->
-      <div class="border-b border-line-strong bg-inset overflow-hidden relative" aria-label="Clients">
-        <div class="marquee-track py-3.5">
-          {[...clients, ...clients].map((client) => (
-            <span class="flex items-center whitespace-nowrap px-5 md:px-7 font-body text-sm text-fg-muted">
-              <span class="w-1.5 h-1.5 border border-cell-line mr-5 md:mr-7"></span>
-              {client}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <!-- ===================== 01 // VISUALISER ===================== -->
+      <!-- ===================== PLAYER ===================== -->
       <section class="border-b border-line-strong">
         <SectionHeader label="Our work">
           <label slot="meta" class="flex items-center gap-2 cursor-pointer">
@@ -182,38 +155,24 @@ const trusted = [
         </div>
       </section>
 
-      <!-- ===================== TRUSTED BY (logo marquee) ===================== -->
-      <div class="logo-marquee border-b border-line-strong bg-ground" aria-label="Trusted by">
-        <span class="logo-marquee-label font-body text-sm text-fg-muted">Trusted by</span>
-        <div class="logo-marquee-viewport">
-          <div class="logo-marquee-track">
-            {[0, 1].map((copy) => (
-              <ul class="logo-marquee-list" aria-hidden={copy === 1 ? 'true' : undefined} data-copy={copy}>
-                {trusted.map((logo) => (
-                  <li class="logo-marquee-item">
-                    <img src={logo.src} alt={copy === 1 ? '' : logo.alt} width={logo.width} height={logo.height} loading="lazy" />
-                  </li>
-                ))}
-              </ul>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <!-- ===================== 02 // SERVICES ===================== -->
-      <section class="border-b border-line-strong">
-        <SectionHeader label="Services" />
-
-        <div id="services" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 p-4 md:p-6">
-          {services.map((service) => (
-            <ServiceCard service={service} compact />
+      <!-- ===================== RELEASES + CLIENTS (static) ===================== -->
+      <section class="border-b border-line-strong bg-ground" aria-label="Releases and clients">
+        <ul class="flex flex-wrap items-center gap-x-8 gap-y-4 px-4 md:px-6 py-5">
+          {trusted.map((logo) => (
+            <li class="release-logo"><img src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} loading="lazy" /></li>
           ))}
-        </div>
+        </ul>
+        <ul class="flex flex-wrap gap-x-8 gap-y-1 px-4 md:px-6 pb-5 font-body text-sm text-fg-muted">
+          {releases.map((r) => <li>{r}</li>)}
+        </ul>
       </section>
 
-      <!-- ===================== 03 // ENQUIRE ===================== -->
-      <section class="border-b border-line-strong">
-        <SectionHeader label="Ask a question" />
+      <!-- ===================== HOW IT WORKS (once, site-wide) ===================== -->
+      <HowItWorks />
+
+      <!-- ===================== UPLOAD ===================== -->
+      <section id="upload" class="scroll-mt-4 border-b border-line-strong">
+        <SectionHeader label="Upload your track" />
 
         <form name="enquiry" method="POST" enctype="multipart/form-data" data-netlify="true" data-netlify-honeypot="bot-field" action="/?success=true" class="grid grid-cols-1 md:grid-cols-2 gap-5 p-4 md:p-6">
           <!-- Netlify Forms: hidden name field + honeypot (bots fill it, humans don't) -->
@@ -240,6 +199,7 @@ const trusted = [
               <option value="other">Other or not sure</option>
             </select>
           </div>
+          <PriceReadout class="md:col-span-2" />
           <div class="md:col-span-2">
             <label for="message" class="field-label">Project details</label>
             <textarea id="message" name="message" rows="5" required class="field"></textarea>
@@ -247,9 +207,23 @@ const trusted = [
           <EnquiryUpload class="md:col-span-2" columns="two" />
           <p class="md:col-span-2 font-body text-base font-medium text-fg">This is an enquiry, not an order. Nothing is booked or charged until we confirm.</p>
           <button type="submit" class="key key-primary md:col-span-2 w-full py-4">
-            Send enquiry
+            Send your track
           </button>
         </form>
+      </section>
+
+      <!-- ===================== SERVICES ===================== -->
+      <section class="border-b border-line-strong">
+        <SectionHeader label="Services" />
+
+        <div id="services" class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 p-4 md:p-6">
+          {leadServices.map((service) => (
+            <ServiceCard service={service} compact />
+          ))}
+        </div>
+        <p class="px-4 md:px-6 pb-5 md:pb-6 font-body text-base text-fg-muted">
+          Ghost production, track finishing, education and tools are on the <a href="/services/" class="underline underline-offset-4 hover:text-fg">More services</a> page.
+        </p>
       </section>
 
       <!-- ===================== REVIEWS ===================== -->

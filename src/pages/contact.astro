@@ -4,19 +4,20 @@ import SectionFrame from '../components/SectionFrame.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import PageHero from '../components/PageHero.astro';
 import SuccessPopup from '../components/SuccessPopup.astro';
+import PriceReadout from '../components/PriceReadout.astro';
 import EnquiryUpload from '../components/EnquiryUpload.astro';
 ---
 
 <Layout
-  title="Contact | Start a Project — Node Production"
-  description="Send your dance music project details for a same-day reply. Mixing, mastering and production enquiries welcome."
+  title="Upload your track | Contact — Node Production"
+  description="Upload your dance music track. Mastering is £30 with a 48-hour turnaround. Mixing is quoted per project, ghost production from £250, track finishing from £120."
 >
   <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-body">
     <SectionFrame>
 
       <PageHero>
-        <Fragment slot="title">Initiate a<br />project.</Fragment>
-        Send your project details, questions and turnaround. We guarantee a same-day response.
+        <Fragment slot="title">Upload<br />your track.</Fragment>
+        Add your track, pick a service and see the price as you choose. We reply the same day.
       </PageHero>
 
       <!-- Form + info -->
@@ -54,6 +55,8 @@ import EnquiryUpload from '../components/EnquiryUpload.astro';
               </select>
             </div>
 
+            <PriceReadout />
+
             <div>
               <label for="message" class="field-label">Project details</label>
               <textarea id="message" name="message" rows="6" required class="field resize-y"></textarea>
@@ -64,7 +67,7 @@ import EnquiryUpload from '../components/EnquiryUpload.astro';
             <p class="font-body text-base font-medium text-fg">This is an enquiry, not an order. Nothing is booked or charged until we confirm.</p>
 
             <button type="submit" id="contact-submit" class="key key-primary key-sending w-full py-4">
-              <span data-label>Send enquiry</span>
+              <span data-label>Send your track</span>
             </button>
           </form>
 
@@ -78,15 +81,6 @@ import EnquiryUpload from '../components/EnquiryUpload.astro';
               <span class="font-body text-sm font-medium text-fg-muted block mb-2">Based in</span>
               <span class="t-h3">Leeds, UK</span>
               <p class="mt-2 t-note">Working worldwide</p>
-            </div>
-            <div class="mt-auto pt-6 border-t border-line">
-              <span class="font-body text-sm font-medium text-fg-muted block mb-4">How it works</span>
-              <ol class="space-y-3 font-body text-base text-fg-muted leading-snug">
-                <li class="flex gap-3"><span class="text-fg-dim font-body text-sm font-medium shrink-0 pt-0.5">01</span><span>Send your enquiry. Add a short WAV or a share link if you have one.</span></li>
-                <li class="flex gap-3"><span class="text-fg-dim font-body text-sm font-medium shrink-0 pt-0.5">02</span><span>We confirm scope, rate and timeframe. Nothing is booked or charged until then.</span></li>
-                <li class="flex gap-3"><span class="text-fg-dim font-body text-sm font-medium shrink-0 pt-0.5">03</span><span>If we need stems or a full session, we ask for them after confirmation.</span></li>
-                <li class="flex gap-3"><span class="text-fg-dim font-body text-sm font-medium shrink-0 pt-0.5">04</span><span>Your project is delivered within the agreed timeframe.</span></li>
-              </ol>
             </div>
           </aside>
 
@@ -120,6 +114,6 @@ import EnquiryUpload from '../components/EnquiryUpload.astro';
     if (!e.persisted || !btn) return;
     btn.classList.remove('is-sending');
     btn.removeAttribute('aria-busy');
-    setLabel('Send enquiry');
+    setLabel('Send your track');
   });
 </script>

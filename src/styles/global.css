@@ -124,10 +124,10 @@
     background: transparent;
     color: var(--color-fg);
     text-decoration: none;
-    transition: background-color 0s steps(1), color 0s steps(1), border-color 0s steps(1);
+    transition: background-color 0s steps(1), color 0s steps(1), border-color 0s steps(1), transform 120ms ease-out;
   }
-  .key:hover { border-color: var(--color-fg); }
-  .key:active { transform: translateY(1px); }
+  @media (hover: hover) { .key:hover { border-color: var(--color-fg); } }
+  .key:active { transform: scale(0.97); }
   .key-primary {
     background: var(--color-accent);
     border-color: var(--color-accent);
@@ -226,46 +226,8 @@
   input[type="color"]::-webkit-color-swatch { border: none; border-radius: 0; }
   input[type="color"]::-moz-color-swatch { border: none; border-radius: 0; }
 
-  /* ---- Client marquee: track holds the list twice; -50% loops seamlessly ---- */
-  .marquee-track {
-    display: flex;
-    width: max-content;
-    animation: marquee 84s linear infinite;
-  }
-  .marquee-track:hover { animation-play-state: paused; }
-
-  /* ---- Key credits strip: three step cells, hairline dividers ---- */
-  .credits-strip { display: grid; grid-template-columns: 1fr; list-style: none; margin: 0; padding: 0; }
-  .credits-cell { display: flex; align-items: start; padding: 0.7rem 1rem; line-height: 1.3; }
-  .credits-cell + .credits-cell { border-top: 1px solid var(--color-line-strong); }
-  .credits-pip { flex: none; width: 6px; height: 6px; margin-top: calc((1.3em - 6px) / 2); margin-right: 0.75rem; border: 1px solid var(--color-cell-line); }
-  @media (min-width: 768px) {
-    .credits-strip { grid-template-columns: repeat(3, 1fr); }
-    .credits-cell { padding: 0.8rem 1.25rem; }
-    .credits-cell + .credits-cell { border-top: 0; }
-    .credits-cell:nth-child(3n+2), .credits-cell:nth-child(3n) { border-left: 1px solid var(--color-line-strong); }
-    .credits-cell:nth-child(n+4) { border-top: 0; }
-    /* Divider drawn under row 1 so it spans all 3 columns (column 3 has no cell beneath it) */
-    .credits-cell:nth-child(-n+3) { border-bottom: 1px solid var(--color-line-strong); }
-  }
-  @media (min-width: 1024px) {
-    .credits-strip { grid-template-columns: repeat(5, 1fr); }
-    .credits-cell { padding: 0.8rem 1rem; }
-    .credits-cell:nth-child(-n+3) { border-bottom: 0; }
-    .credits-cell + .credits-cell { border-left: 1px solid var(--color-line-strong); }
-  }
-
-  /* ---- Trusted-by logo marquee: two identical lists; -50% loops seamlessly ---- */
-  .logo-marquee { display: flex; align-items: stretch; height: 56px; overflow: hidden; }
-  .logo-marquee-label { display: none; align-items: center; padding: 0 1.5rem; border-right: 1px solid var(--color-line-strong); white-space: nowrap; }
-  @media (min-width: 768px) { .logo-marquee-label { display: flex; } }
-  .logo-marquee-viewport { flex: 1; min-width: 0; overflow: hidden; display: flex; align-items: center; }
-  .logo-marquee-track { display: flex; width: max-content; animation: marquee 40s linear infinite; }
-  .logo-marquee-track:hover { animation-play-state: paused; }
-  .logo-marquee-list { display: flex; align-items: center; list-style: none; margin: 0; padding: 0; }
-  .logo-marquee-item { display: flex; align-items: center; height: 56px; padding: 0 1.75rem; }
-  .logo-marquee-item img { height: 28px; width: auto; max-width: 96px; object-fit: contain; filter: grayscale(1); opacity: 0.8; }
-  .logo-marquee-item img:hover { opacity: 1; }
+  /* ---- Static release/client logo row ---- */
+  .release-logo img { height: 28px; width: auto; max-width: 96px; object-fit: contain; filter: grayscale(1); opacity: 0.8; }
 
   /* ---- Fluid grid: cells scale with the container (hero lockup) ---- */
   .seq-fluid {
@@ -281,10 +243,6 @@
   }
 }
 
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
 @keyframes seq-playhead {
   from { left: 0; }
   to   { left: calc(var(--steps, 16) * (var(--cell) + var(--cell-gap))); }
@@ -294,12 +252,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .logo-marquee { height: auto; }
-  .logo-marquee-track { width: auto; animation: none; }
-  .logo-marquee-list[data-copy="1"] { display: none; }
-  .logo-marquee-list { flex-wrap: wrap; }
-  .logo-marquee-item { height: 48px; padding: 0 1.25rem; }
-  .marquee-track,
   .seq.is-playing::after,
   .seq-arm .seq-cell { animation: none; }
 }
@@ -310,11 +262,11 @@
 
   ::view-transition-old(root) { animation: none; }
   ::view-transition-new(root) {
-    animation: seq-wipe 240ms steps(6, end) both;
+    animation: page-fade 140ms ease-out both;
   }
-  @keyframes seq-wipe {
-    from { clip-path: inset(0 100% 0 0); }
-    to   { clip-path: inset(0 0 0 0); }
+  @keyframes page-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
   }
 }
 
@@ -328,14 +280,13 @@
 /* ---- Phase 2: scroll reveals (JS marks only below-the-fold items as pending;
    with JS off or reduced motion nothing is ever hidden) ---- */
 @media (prefers-reduced-motion: no-preference) {
-  [data-reveal-pending] { opacity: 0; translate: 0 8px; }
+  [data-reveal-pending] { opacity: 0; }
   [data-reveal-in] {
-    transition: opacity 220ms steps(4, end) var(--reveal-delay, 0ms),
-                translate 220ms steps(4, end) var(--reveal-delay, 0ms);
+    transition: opacity 180ms ease-out;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  [data-reveal-pending] { opacity: 1; translate: none; }
+  [data-reveal-pending] { opacity: 1; }
 }
 
 /* ---- Phase 3: modals, success popup, form submit (stepped, no bounce) ---- */
@@ -370,4 +321,14 @@
     animation: send-fill 400ms steps(16, end) forwards;
   }
   @keyframes send-fill { to { clip-path: inset(0 0 0 0); } }
+}
+
+/* ---- Mobile menu toggle (phones only). Without JS the nav stays visible. ---- */
+@media (max-width: 639px) {
+  .nav-toggle { display: none; }
+  [data-nav-js] .nav-toggle { display: inline-flex; grid-column: 1 / -1; grid-row: 2; justify-self: center; }
+  [data-nav-js]:not([data-nav-open]) .nav-group { display: none; }
+}
+@media (min-width: 640px) {
+  .nav-toggle { display: none; }
 }

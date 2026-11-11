@@ -1,6 +1,6 @@
 // Scroll reveals. Content is visible by default (no-JS safe): only elements that
 // start below the fold are marked pending, then released as they scroll in.
-// Opacity + translate only, stepped timing. Skipped entirely for reduced motion
+// Opacity-only fade. Skipped entirely for reduced motion
 // and on the home page (audio player / canvas / knob are never touched).
 const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const isHome = !!document.getElementById('canvas-container');
@@ -21,12 +21,10 @@ if (!reduce && !isHome && 'IntersectionObserver' in window) {
   if (pending.length) {
     const io = new IntersectionObserver(
       (entries) => {
-        let n = 0;
         for (const e of entries) {
           if (!e.isIntersecting) continue;
           const el = e.target as HTMLElement;
           io.unobserve(el);
-          el.style.setProperty('--reveal-delay', `${Math.min(n++, 5) * 40}ms`);
           el.setAttribute('data-reveal-in', '');
           el.removeAttribute('data-reveal-pending');
         }

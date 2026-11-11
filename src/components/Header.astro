@@ -18,7 +18,7 @@ const groups = [
 ];
 ---
 
-<header class="w-full px-3 sm:px-6 md:px-10 py-3 sm:py-4 font-body border-b border-line-strong bg-page">
+<header id="site-header" class="w-full px-3 sm:px-6 md:px-10 py-3 sm:py-4 font-body border-b border-line-strong bg-page">
   <div class="max-w-4xl mx-auto grid grid-cols-6 max-[399px]:grid-cols-3 max-[399px]:gap-x-3 sm:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-x-0 gap-y-3 sm:gap-4 md:gap-6">
 
     <a href="/" class="col-span-6 max-[399px]:col-span-3 sm:col-span-1 sm:col-start-2 row-start-1 justify-self-center flex items-center gap-2 sm:gap-3 shrink-0 no-underline" aria-label="Node Production, home">
@@ -26,14 +26,16 @@ const groups = [
       <Logo />
     </a>
 
-    {groups.map((group) => (
-      <nav aria-label="Site navigation" class={`${group.col} ${group.align} contents sm:grid sm:grid-flow-col sm:auto-cols-[5rem] lg:auto-cols-[6rem] sm:items-center`}>
+    <button type="button" id="nav-toggle" class="nav-toggle key min-h-11 !py-2" aria-expanded="false" aria-controls="nav-left nav-right">Menu</button>
+
+    {groups.map((group, i) => (
+      <nav id={i === 0 ? 'nav-left' : 'nav-right'} aria-label={i === 0 ? 'Site navigation' : 'Site navigation, more'} class={`nav-group ${group.col} ${group.align} contents sm:grid sm:grid-flow-col sm:auto-cols-[5rem] lg:auto-cols-[6rem] sm:items-center`}>
         {group.items.map((item) => {
           const isActive = currentPath === item.href.replace(/\/$/, '');
           return (
             <a href={item.href} aria-current={isActive ? 'page' : undefined} class="group flex flex-col items-center gap-1.5 min-w-0 max-[399px]:min-h-11 max-[399px]:justify-center no-underline">
               <span class={`relative w-10 h-4 sm:h-5 border flex items-center px-0.5 transition-colors duration-200 ${isActive ? 'border-accent bg-raised' : 'border-line-strong bg-inset group-hover:border-cell-line'}`}>
-                <span class={`block w-3 h-3 sm:w-4 sm:h-4 transition-all duration-200 ${isActive
+                <span class={`block w-3 h-3 sm:w-4 sm:h-4 transition-[transform,background-color] duration-200 ${isActive
                   ? 'translate-x-5.5 sm:translate-x-4.5 bg-accent'
                   : 'translate-x-0 bg-cell-grey group-hover:translate-x-5.5 sm:group-hover:translate-x-4.5 group-hover:bg-accent'}`}></span>
               </span>
@@ -46,3 +48,22 @@ const groups = [
 
   </div>
 </header>
+
+<script>
+  const header = document.getElementById('site-header');
+  const toggle = document.getElementById('nav-toggle');
+  if (header && toggle) {
+    header.setAttribute('data-nav-js', '');
+    const set = (open: boolean) => {
+      header.toggleAttribute('data-nav-open', open);
+      toggle.setAttribute('aria-expanded', String(open));
+      toggle.textContent = open ? 'Close' : 'Menu';
+    };
+    toggle.addEventListener('click', () => set(!header.hasAttribute('data-nav-open')));
+    header.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && header.hasAttribute('data-nav-open')) { set(false); toggle.focus(); }
+    });
+    // Back/forward cache restore: start closed.
+    window.addEventListener('pageshow', () => set(false));
+  }
+</script>
