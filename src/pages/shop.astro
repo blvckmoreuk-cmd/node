@@ -66,7 +66,7 @@ const tabs = [{ id: 'all', label: 'All' }, ...usedCategories.map((c) => ({ id: c
               >
                 <div class="aspect-square w-full bg-inset border border-cell-line relative overflow-hidden">
                   {product.image
-                    ? <img src={product.image} alt={`${product.title} cover art`} class="w-full h-full object-cover grayscale" width="900" height="900" loading="lazy" />
+                    ? <img src={product.image} alt={`${product.title} cover art`} class="w-full h-full object-cover" width="900" height="900" loading="lazy" />
                     : <ProductCover slug={product.slug} title={product.title} class="w-full h-full" />}
                 </div>
                 <div class="flex items-start justify-between gap-4">

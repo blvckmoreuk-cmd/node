@@ -75,7 +75,7 @@ export const products: Product[] = [
       { label: 'Licence', value: 'Royalty-free' },
       { label: 'DAW', value: 'Any' },
     ],
-    image: '/products/nodepack001.png',
+    image: '/products/nodepack001-palette.png',
     preview: '', // add embed URL, e.g. 'https://w.soundcloud.com/player/?url=...' or Spotify track embed
   },
   {
