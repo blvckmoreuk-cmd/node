@@ -60,7 +60,7 @@ export const products: Product[] = [
   {
     num: '02', title: 'Node Pack 001', slug: 'node-pack-001', category: 'sample-pack',
     tagline: 'Sample pack, volume 1',
-    price: '£10', priceNote: 'royalty-free, one-time',
+    price: 'TBA', priceNote: 'price to be confirmed',
     badge: 'New',
     detail: 'The first Node sample pack: drums, one-shots and loops pulled from the same sessions behind our releases. Mixed and tagged, ready to drop straight into a project.',
     features: [

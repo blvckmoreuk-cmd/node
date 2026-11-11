@@ -4,10 +4,13 @@ import SectionFrame from '../components/SectionFrame.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import PageHero from '../components/PageHero.astro';
 import ProductModal from '../components/ProductModal.astro';
+import ProductCover from '../components/ProductCover.astro';
 import { products, categories } from '../data/products';
 
 const catById = Object.fromEntries(categories.map((c) => [c.id, c]));
-const tabs = [{ id: 'all', label: 'All' }, ...categories.map((c) => ({ id: c.id, label: c.label }))];
+// Tabs only for categories that actually have products.
+const usedCategories = categories.filter((c) => products.some((p) => p.category === c.id));
+const tabs = [{ id: 'all', label: 'All' }, ...usedCategories.map((c) => ({ id: c.id, label: c.label }))];
 ---
 
 <Layout
@@ -18,8 +21,8 @@ const tabs = [{ id: 'all', label: 'All' }, ...categories.map((c) => ({ id: c.id,
     <SectionFrame>
 
       <PageHero>
-        <Fragment slot="title">The<br />store.</Fragment>
-        VSTs, racks, templates and sample packs from the studio. Instant downloads coming soon &mdash; browse the shelf below.
+        <Fragment slot="title">Shop</Fragment>
+        VSTs and sample packs from the studio.
       </PageHero>
 
       <!-- Filter tabs: a row of step keys. The selected filter is the armed step. -->
@@ -61,10 +64,10 @@ const tabs = [{ id: 'all', label: 'All' }, ...categories.map((c) => ({ id: c.id,
                 data-meta={JSON.stringify(product.meta)}
                 aria-haspopup="dialog"
               >
-                <div class="aspect-[16/10] w-full bg-inset border border-cell-line relative overflow-hidden flex items-center justify-center">
+                <div class="aspect-square w-full bg-inset border border-cell-line relative overflow-hidden">
                   {product.image
-                    ? <img src={product.image} alt={product.title} class="w-full h-full object-contain" loading="lazy" />
-                    : <span class="font-body text-sm text-fg-faint">Cover art</span>}
+                    ? <img src={product.image} alt={`${product.title} cover art`} class="w-full h-full object-cover grayscale" width="900" height="900" loading="lazy" />
+                    : <ProductCover slug={product.slug} title={product.title} class="w-full h-full" />}
                 </div>
                 <div class="flex items-start justify-between gap-4">
                   <div class="flex items-start gap-3">
@@ -77,6 +80,7 @@ const tabs = [{ id: 'all', label: 'All' }, ...categories.map((c) => ({ id: c.id,
                   {product.badge && <span class="font-body text-sm font-medium text-fg border border-fg-dim px-2 py-1 leading-none shrink-0">{product.badge}</span>}
                 </div>
                 <p class="font-body text-base leading-relaxed text-fg-muted flex-1">{product.detail}</p>
+                <p class="font-mono text-sm leading-normal text-fg-faint">{product.meta.slice(0, 2).map((m) => <span class="block">{m.value}</span>)}</p>
                 <p class="t-note">{cat?.label}</p>
                 <div class="flex items-end justify-between border-t border-line pt-4">
                   <span class="font-body text-sm text-fg-dim group-hover:text-fg group-hover:underline group-focus-visible:underline underline-offset-4">View</span>
@@ -97,8 +101,8 @@ const tabs = [{ id: 'all', label: 'All' }, ...categories.map((c) => ({ id: c.id,
         <a href="/services/" class="key flex-1 py-5 !border-0 bg-ground hover:bg-panel">
           Studio services
         </a>
-        <a href="/contact/"class="key key-primary flex-1 py-5 !border-0">
-          Custom request
+        <a href="/contact/" class="key key-primary flex-1 py-5 !border-0">
+          Start a project
         </a>
       </section>
 

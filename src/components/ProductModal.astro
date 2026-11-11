@@ -25,6 +25,7 @@
       <div id="pmodal-cover" class="aspect-[16/10] w-full bg-inset border border-cell-line relative overflow-hidden flex items-center justify-center">
         <img id="pmodal-image" alt="" class="w-full h-full object-contain hidden" />
         <span id="pmodal-cover-label" class="font-body text-sm text-fg-faint">Cover art</span>
+        <div id="pmodal-cover-svg" class="hidden h-full aspect-square"></div>
       </div>
 
       <div id="pmodal-preview" class="hidden flex-col gap-3">
@@ -94,8 +95,19 @@
 
       const img = document.getElementById('pmodal-image') as HTMLImageElement | null;
       const coverLabel = document.getElementById('pmodal-cover-label');
+      const coverSvgHost = document.getElementById('pmodal-cover-svg');
+      const cardSvg = card.querySelector('.product-cover svg');
+      if (coverSvgHost) {
+        coverSvgHost.innerHTML = '';
+        if (!d.image && cardSvg) coverSvgHost.appendChild(cardSvg.cloneNode(true));
+        coverSvgHost.classList.toggle('hidden', !(!d.image && cardSvg));
+        coverSvgHost.querySelector('svg')?.setAttribute('class', 'block w-full h-full');
+      }
       if (img && coverLabel) {
-        if (d.image) {
+        if (!d.image && cardSvg) {
+          img.classList.add('hidden');
+          coverLabel.classList.add('hidden');
+        } else if (d.image) {
           img.src = d.image;
           img.alt = d.title || '';
           img.classList.remove('hidden');

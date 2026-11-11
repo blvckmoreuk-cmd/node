@@ -3,7 +3,6 @@ import '../styles/global.css';
 import { Font } from 'astro:assets';
 import Header from '../components/Header.astro';
 import Logo from '../components/Logo.astro';
-import StepGrid from '../components/StepGrid.astro';
 
 // Per-page SEO. Every page passes its own title + description; the rest fall
 // back to sensible site-wide defaults so no page ships bare.
@@ -107,8 +106,6 @@ const jsonLd = {
       <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
         <div class="flex flex-col gap-4">
           <Logo sub />
-          <!-- Quiet sign-off: same pattern, step 1 cream (the hero grid carries the one armed step) -->
-          <StepGrid rows={['C...C.....C.C...', '..G...G.G..C..G.']} />
         </div>
         <nav aria-label="Footer navigation" class="flex flex-wrap gap-x-3 min-[400px]:gap-x-4 sm:gap-x-4 lg:gap-x-6 gap-y-2 font-body text-sm">
           <a href="/about/" class="text-fg-dim hover:text-fg no-underline hover:underline focus-visible:underline underline-offset-4">About</a>

@@ -11,14 +11,19 @@ import HowItWorks from '../components/HowItWorks.astro';
 import StepGrid from '../components/StepGrid.astro';
 import { services } from '../data/services';
 
-// Home leads with mastering; mixing is secondary; the rest sit behind one link.
-const leadServices = services.filter((x) => x.slug === 'mastering' || x.slug === 'mixing');
+// Hero price line: four cells, prices match services.ts and the Prices page.
+const heroServices = [
+  { name: 'Ghost production', price: 'from £250' },
+  { name: 'Mixing', price: 'from £50' },
+  { name: 'Track finishing', price: 'from £120' },
+  { name: 'Mastering', price: '£30 (48h)' },
+];
 
-// One static row of releases and clients already credited on the site.
-const releases = [
-  'Releases on UKF, Disciple & All Ways Dance',
-  'Beatport Minimal No.1',
-  '3M+ combined streams across our engineers',
+// Artist / label names carousel (fixed order, duplicated for the loop).
+const names = [
+  'Casmalia', 'Solara', 'Morry', 'Akonite', 'Covert', 'HiFeelings', 'Dankstreet', 'Denno', 'Slinki', 'UKF',
+  'Unique Vibes', 'Motive', 'Teks LV', 'Joe Allen', 'TerryBoy', 'Sohl', 'ElTacoFiesta', 'Gold Digger',
+  '3000 Bass', 'DMC', 'Mwangi', 'Karellos', 'Wilmore',
 ];
 
 const trusted = [
@@ -41,45 +46,47 @@ const trusted = [
     <div id="home-frame" class="w-full max-w-6xl relative z-10">
 
       <!-- ===================== MASTHEAD ===================== -->
-      <header class="border-b border-line-strong">
-        <!-- Lockup: NODE / PRODUCTION over the 2×16 step grid. The grid carries the single orange step. -->
-        <div class="px-4 md:px-8 pt-10 md:pt-16 md:hidden">
-          <div class="w-full max-w-[520px]">
-          <div class="inline-flex flex-col" aria-hidden="true">
-            <span class="font-display font-extrabold uppercase text-fg leading-[0.78] tracking-[-0.04em] text-[clamp(4.5rem,22vw,7rem)]">Node</span>
-            <span class="mt-3 md:mt-5 flex justify-between font-mono font-medium uppercase text-fg-dim text-[clamp(0.7rem,2.6vw,1.5rem)]">
-              {[...'PRODUCTION'].map((ch) => <span>{ch}</span>)}
-            </span>
-          </div>
-          <div class="mt-6 md:mt-10">
-            <StepGrid fluid />
-          </div>
-          </div>
+      <header class="border-b border-line-strong px-4 md:px-8 pt-6 pb-7 md:pt-12 md:pb-10">
+        <h1 class="t-display text-[clamp(2rem,9vw,2.25rem)] md:text-[3.25rem] max-w-[14ch] md:max-w-[30ch]">
+          Simple, professional audio engineering for dance&nbsp;music.
+        </h1>
+        <p class="mt-2.5 md:mt-4 font-body font-medium text-[1.0625rem] md:text-[1.375rem] leading-snug text-fg-dim">No AI.</p>
+        <ul class="svc-line mt-5 md:mt-6" aria-label="Services and prices">
+          {heroServices.map((s) => (
+            <li><span class="n">{s.name}</span><span class="p">{s.price}</span></li>
+          ))}
+        </ul>
+        <p class="mt-4 max-w-[34rem] font-body text-base md:text-lg text-fg-dim">
+          We ghost produce, mix, finish and master electronic music. Based in Leeds, working worldwide.
+        </p>
+        <div class="mt-5 md:mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
+          <a href="#upload" class="key key-primary">Start a project</a>
+          <a href="/prices/" class="font-body font-medium text-fg-muted hover:text-fg underline underline-offset-4">Prices</a>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-6 md:gap-16 items-start px-4 md:px-8 py-8 md:py-16">
-          <div class="min-w-0">
-            <h1 class="t-display text-[2rem] md:text-5xl max-w-md md:max-w-xl">
-              Dance music mastering by real engineers
-            </h1>
-            <div class="hidden md:block mt-6 max-w-xl lg:max-w-none" aria-hidden="true">
-              <StepGrid fluid />
-            </div>
-          </div>
-          <div class="flex flex-col gap-5">
-            <p class="font-body text-base md:text-lg text-fg-muted max-w-sm md:max-w-none leading-relaxed">
-              Mastering is £30 per track with a 48-hour turnaround. No AI, real engineers.
-            </p>
-            <p class="font-body text-base text-fg-dim max-w-sm md:max-w-none leading-relaxed">
-              We also mix and produce House, Techno, Trance, Grime, Garage, Dubstep, DnB, Drill and Trap, from Leeds to the world.
-            </p>
-            <div class="flex flex-wrap gap-3">
-              <a href="#upload" class="key key-primary">Upload your track</a>
-              <a href="/prices/" class="key">Prices</a>
-            </div>
-          </div>
+        <div class="mt-5 md:mt-7 max-w-[520px]" aria-hidden="true">
+          <StepGrid fluid rows={['C...C.....C.C...', '..G...G.G..C..G.']} />
         </div>
       </header>
+
+      <!-- ===================== CREDITS ===================== -->
+      <ul class="credits" aria-label="Key credits">
+        <li><span>Releases on UKF, Disciple &amp; <span class="nowrap">All Ways Dance</span></span></li>
+        <li><span>Combined 3 million+ streams between our engineers</span></li>
+        <li><span>No AI &mdash; real engineers</span></li>
+        <li><span>Hybrid analogue / digital signal&nbsp;chain</span></li>
+        <li><span>Beatport Minimal No.1</span></li>
+      </ul>
+
+      <!-- ===================== ARTIST NAMES (carousel) ===================== -->
+      <div class="name-marquee" aria-label="Artists and labels we work with">
+        <div class="marquee-track">
+          {[0, 1].map((copy) => (
+            <ul class="name-list" aria-hidden={copy === 1 ? 'true' : undefined}>
+              {names.map((n) => <li><span class="pip"></span>{n}</li>)}
+            </ul>
+          ))}
+        </div>
+      </div>
 
       <!-- ===================== PLAYER ===================== -->
       <section class="border-b border-line-strong">
@@ -156,15 +163,29 @@ const trusted = [
       </section>
 
       <!-- ===================== RELEASES + CLIENTS (static) ===================== -->
-      <section class="border-b border-line-strong bg-ground" aria-label="Releases and clients">
-        <ul class="flex flex-wrap items-center gap-x-8 gap-y-4 px-4 md:px-6 py-5">
-          {trusted.map((logo) => (
-            <li class="release-logo"><img src={logo.src} alt={logo.alt} width={logo.width} height={logo.height} loading="lazy" /></li>
+      <div class="logo-marquee" aria-label="Trusted by">
+        <span class="logo-marquee-label">Trusted by</span>
+        <div class="logo-marquee-viewport">
+          <div class="logo-marquee-track">
+            {[0, 1].map((copy) => (
+              <ul class="logo-marquee-list" data-copy={copy} aria-hidden={copy === 1 ? 'true' : undefined}>
+                {trusted.map((logo) => (
+                  <li class="logo-marquee-item"><img src={logo.src} alt={copy === 0 ? logo.alt : ''} width={logo.width} height={logo.height} loading="lazy" /></li>
+                ))}
+              </ul>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== SERVICES ===================== -->
+      <section class="border-b border-line-strong">
+        <SectionHeader label="Services" />
+        <div id="services" class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 p-4 md:p-6">
+          {services.map((service) => (
+            <ServiceCard service={service} />
           ))}
-        </ul>
-        <ul class="flex flex-wrap gap-x-8 gap-y-1 px-4 md:px-6 pb-5 font-body text-sm text-fg-muted">
-          {releases.map((r) => <li>{r}</li>)}
-        </ul>
+        </div>
       </section>
 
       <!-- ===================== HOW IT WORKS (once, site-wide) ===================== -->
@@ -210,20 +231,6 @@ const trusted = [
             Send your track
           </button>
         </form>
-      </section>
-
-      <!-- ===================== SERVICES ===================== -->
-      <section class="border-b border-line-strong">
-        <SectionHeader label="Services" />
-
-        <div id="services" class="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 p-4 md:p-6">
-          {leadServices.map((service) => (
-            <ServiceCard service={service} compact />
-          ))}
-        </div>
-        <p class="px-4 md:px-6 pb-5 md:pb-6 font-body text-base text-fg-muted">
-          Ghost production, track finishing, education and tools are on the <a href="/services/" class="underline underline-offset-4 hover:text-fg">More services</a> page.
-        </p>
       </section>
 
       <!-- ===================== REVIEWS ===================== -->

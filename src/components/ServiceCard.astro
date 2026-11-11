@@ -9,14 +9,14 @@ import type { Service } from '../data/services';
 
 interface Props {
   service: Service;
-  compact?: boolean; // homepage: hide the detail line, shorter card
 }
-const { service, compact = false } = Astro.props;
+const { service } = Astro.props;
+const footNote = service.cardNote || service.revisions;
 ---
 
 <button
   type="button"
-  class:list={["service-card svc group", { compact }]}
+  class:list={["service-card svc group", `svc-${service.tier}`]}
   style={`--ch:${service.hex}`}
   data-num={service.num}
   data-title={service.title}
@@ -46,8 +46,8 @@ const { service, compact = false } = Astro.props;
   </div>
 
   <div class="svc-foot">
-    {service.revisions
-      ? <span class="svc-rev">{service.revisions}</span>
+    {footNote
+      ? <span class="svc-rev">{footNote}</span>
       : <span aria-hidden="true"></span>}
     <span class="svc-price">{service.price}</span>
   </div>
@@ -70,8 +70,23 @@ const { service, compact = false } = Astro.props;
     border-radius: 0;
     transition: background-color 0s steps(1), border-color 0s steps(1);
   }
-  .svc.compact { min-height: 14rem; }
-  .svc.compact .svc-detail { display: none; }
+  .svc-detail { margin-bottom: 0.25rem; }
+  /* tiers: large (detail shown), standard (short), slim strip */
+  .svc-feat { min-height: 22rem; }
+  .svc-feat .svc-body { margin-top: 0; padding-top: 1.75rem; }
+  .svc-feat .svc-foot { margin-top: auto; }
+  .svc-feat .svc-title, .svc-feat .svc-price { font-size: 1.875rem; }
+  .svc-feat .svc-title { letter-spacing: -0.02em; }
+  .svc-std { min-height: 13rem; }
+  .svc-std .svc-detail, .svc-sml .svc-detail { display: none; }
+  .svc-sml { min-height: 9rem; padding: 1rem 1.25rem; }
+  .svc-sml .svc-title, .svc-sml .svc-price { font-size: 1.125rem; }
+  @media (min-width: 768px) {
+    .svc-sml { grid-column: 1 / -1; min-height: 0; flex-direction: row; align-items: center; gap: 1.5rem; }
+    .svc-sml > div:first-child { order: 3; }
+    .svc-sml .svc-body { margin: 0; padding: 0; flex: 1; }
+    .svc-sml .svc-foot { margin: 0; padding: 0; border: 0; gap: 1.5rem; align-items: center; }
+  }
 
   .svc:hover,
   .svc:focus-visible {

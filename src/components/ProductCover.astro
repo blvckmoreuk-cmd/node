@@ -1,0 +1,76 @@
+---
+// Generated square cover art for products without a photographed cover. Pure
+// inline SVG in the site palette (no external assets). Each cover is a small
+// generative drawing of what the product does: stepped stab bars for the synth,
+// a graticule with a waveform trace for the analyser, sample-slice blocks for a
+// pack. Unknown slugs fall back to a step-grid pattern so a new product never
+// shows an empty box.
+interface Props { slug: string; title: string; class?: string }
+const { slug, title, class: cls = '' } = Astro.props;
+
+const INK = '#151513', FG = '#f2ede3', GREY = '#6b6862', LINE = '#4a4844', GRID = '#2c2b28', DIM = '#a29d92';
+
+// Nodegen: 16 steps, a handful armed with stab heights
+const heights: Record<number, number> = { 1: 150, 4: 230, 7: 110, 9: 170, 12: 260, 14: 90 };
+const bars = Array.from({ length: 16 }, (_, i) => {
+  const x = 28 + i * 22;
+  const h = heights[i];
+  return h ? { x, y: 300 - h, h, armed: true } : { x, y: 292, h: 8, armed: false };
+});
+
+// Nodescope: graticule + trace
+const vLines = Array.from({ length: 8 }, (_, i) => 40 + i * 43);
+const hLines = Array.from({ length: 6 }, (_, i) => 70 + i * 44);
+const trace = '40,180 44,178 48,174 52,171 56,166 60,161 64,155 68,150 72,144 76,138 80,134 84,131 88,130 92,132 96,136 100,142 104,150 108,160 112,171 116,181 120,192 124,202 128,211 132,218 136,222 140,224 144,224 148,222 152,219 156,215 160,211 164,206 168,202 172,198 176,194 180,190 184,186 188,182 192,179 196,175 200,170 204,166 208,161 212,157 216,154 220,152 224,150 228,151 232,152 236,155 240,159 244,163 248,167 252,171 256,175 260,178 264,180 268,180 272,180 276,180 280,179 284,177 288,175 292,174 296,172 300,171 304,170 308,170 312,170 316,170 320,170 324,170 328,171 332,173 336,175 340,179 344,182 348,188 352,195 356,203 360,212';
+
+// Sample pack: rows of slice blocks [x, w, kind] where kind f = cream, g = grey, o = outline
+const slices: [number, number, string][][] = [
+  [[40, 120, 'f'], [168, 40, 'g'], [216, 60, 'o']],
+  [[40, 60, 'g'], [108, 150, 'o'], [266, 30, 'f']],
+  [[40, 200, 'o'], [248, 50, 'f']],
+  [[40, 40, 'f'], [88, 40, 'g'], [136, 100, 'o'], [244, 60, 'f']],
+  [[40, 90, 'g'], [138, 120, 'o']],
+  [[40, 160, 'o'], [208, 30, 'f'], [246, 30, 'g']],
+  [[40, 70, 'f'], [118, 70, 'g'], [196, 70, 'o']],
+];
+
+// Fallback: 8x8 step pattern seeded from the title
+const seed = [...title].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7);
+const cells = Array.from({ length: 64 }, (_, i) => ((seed >> (i % 24)) + i * 7) % 5);
+---
+<div class:list={['product-cover', cls]} role="img" aria-label={`${title} cover`}>
+  <svg viewBox="0 0 400 400" shape-rendering="crispEdges" xmlns="http://www.w3.org/2000/svg" class="block w-full h-full" aria-hidden="true">
+    <rect width="400" height="400" fill={INK} />
+    {slug === 'nodegen-vst' && (
+      <>
+        <line x1="28" y1="300.5" x2="372" y2="300.5" stroke={GREY} />
+        {bars.map((b) => (
+          <>
+            {b.armed
+              ? <rect x={b.x} y={b.y} width="16" height={b.h} fill={FG} />
+              : <rect x={b.x} y={b.y} width="16" height={b.h} fill="none" stroke={LINE} />}
+            {b.armed && <rect x={b.x} y={b.y - 14} width="16" height="8" fill="none" stroke={LINE} />}
+          </>
+        ))}
+        <text x="28" y="60" font-family="var(--font-body)" font-weight="500" font-size="16" fill={DIM}>Stab synth</text>
+      </>
+    )}
+    {slug === 'nodescope-vst' && (
+      <>
+        <rect x="40.5" y="70.5" width="320" height="220" fill="none" stroke={LINE} />
+        {vLines.map((x) => <line x1={x} y1="70" x2={x} y2="290" stroke={GRID} />)}
+        {hLines.map((y) => <line x1="40" y1={y} x2="360" y2={y} stroke={GRID} />)}
+        <line x1="40" y1="180.5" x2="360" y2="180.5" stroke={LINE} />
+        <polyline points={trace} fill="none" stroke={FG} stroke-width="2" stroke-linejoin="miter" shape-rendering="auto" />
+        <text x="40" y="52" font-family="var(--font-body)" font-weight="500" font-size="16" fill={DIM}>Visual analyser</text>
+      </>
+    )}
+    {slug === 'node-pack-002' && slices.map((row, r) => row.map(([x, w, k]) => (
+      <rect x={x} y={58 + r * 26} width={w} height="16" fill={k === 'f' ? FG : k === 'g' ? GREY : 'none'} stroke={k === 'o' ? LINE : undefined} />
+    )))}
+    {!['nodegen-vst', 'nodescope-vst', 'node-pack-002'].includes(slug) && cells.map((v, i) => (
+      <rect x={40 + (i % 8) * 40} y={50 + Math.floor(i / 8) * 28} width="30" height="20" fill={v === 0 ? FG : v === 1 ? GREY : 'none'} stroke={v > 1 ? LINE : 'none'} />
+    ))}
+    <text x="28" y="352" font-family="var(--font-display)" font-weight="800" font-size="40" letter-spacing="-1.2" fill={FG}>{title}</text>
+  </svg>
+</div>

@@ -17,12 +17,12 @@ const mixingRows = [
   { label: 'Extra stems', value: '£2/ea', muted: true },
 ];
 const educationRows = [
-  { label: '1:1 tech analysis or call', value: '£40' },
+  { label: 'Track analysis (per track)', value: '£30' },
   { label: 'Ableton tutoring (per hour)', value: '£25' },
 ];
 const toolRows = [
-  { label: 'Nodegen VST', value: '£15' },
-  { label: 'Sample packs', value: '£15' },
+  { label: 'Nodegen VST', value: 'TBA' },
+  { label: 'Sample packs', value: 'TBA' },
   { label: 'Stock FX racks', value: '£5' },
   { label: 'Visualiser', value: '£5' },
 ];
@@ -41,7 +41,7 @@ const priceJsonLd = {
     itemListElement: [
       { name: 'Mastering (per track)', price: '30.00' },
       { name: 'Mixing (10 stems)', price: '50.00' },
-      { name: '1:1 Tech Analysis / Call', price: '40.00' },
+      { name: 'Track analysis (per track)', price: '30.00' },
       { name: 'Ableton Tutoring (per hour)', price: '25.00' },
     ].map((o) => ({
       '@type': 'Offer',
@@ -84,7 +84,7 @@ const priceJsonLd = {
 
           <!-- Mixing & Mastering -->
           <div class="bg-ground p-6 md:p-8" style="--ch: var(--color-ch-mixing)">
-            <h2 class="rate-head"><span class="rate-chip"></span>Mixing &amp; mastering</h2>
+            <h2 class="rate-head"><span class="rate-chip"></span>Mixing (mastering included)</h2>
             <ul>
               {mixingRows.map((row) => (
                 <li class={`rate-row ${row.muted ? 'is-muted' : ''}`}>
@@ -96,15 +96,15 @@ const priceJsonLd = {
 
           <!-- Production & Finishing (wide) -->
           <div class="md:col-span-2 bg-ground p-6 md:p-8" style="--ch: var(--color-ch-production)">
-            <h2 class="rate-head"><span class="rate-chip"></span>Production &amp; finishing</h2>
+            <h2 class="rate-head"><span class="rate-chip"></span>Ghost production &amp; finishing</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-10">
               <div class="rate-row">
                 <span>Ghost production, exclusive &amp; royalty-free</span>
-                <span class="rate-val">£250</span>
+                <span class="rate-val whitespace-nowrap">from £250</span>
               </div>
               <div class="rate-row">
-                <span>Finish your track, analysis included</span>
-                <span class="rate-val whitespace-nowrap">£120-200</span>
+                <span>Track finishing</span>
+                <span class="rate-val whitespace-nowrap">from £120</span>
               </div>
             </div>
             <p class="mt-5 t-note">Price varies with complexity. Enquire for a custom quote.</p>
@@ -112,7 +112,7 @@ const priceJsonLd = {
 
           <!-- Consultation & Education -->
           <div class="bg-ground p-6 md:p-8" style="--ch: var(--color-ch-education)">
-            <h2 class="rate-head"><span class="rate-chip"></span>Consultation &amp; education</h2>
+            <h2 class="rate-head"><span class="rate-chip"></span>Analysis &amp; education</h2>
             <ul>
               {educationRows.map((row) => (
                 <li class="rate-row">
@@ -144,7 +144,7 @@ const priceJsonLd = {
       <!-- CTA -->
       <section>
         <a href="/contact/" class="key key-primary w-full py-5">
-          Upload your track
+          Start a project
         </a>
       </section>
 
