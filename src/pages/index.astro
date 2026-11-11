@@ -4,6 +4,7 @@ import ServiceModal from '../components/ServiceModal.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import ReviewsCarousel from '../components/ReviewsCarousel.astro';
 import SuccessPopup from '../components/SuccessPopup.astro';
+import EnquiryUpload from '../components/EnquiryUpload.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import StepGrid from '../components/StepGrid.astro';
 import { services } from '../data/services';
@@ -236,8 +237,9 @@ const trusted = [
           <div class="md:col-span-2">
             <label for="message" class="field-label">Project details</label>
             <textarea id="message" name="message" rows="5" required class="field"></textarea>
-            <p class="font-body text-base text-fg-dim leading-relaxed mt-2.5 max-w-2xl">Feel free to attach any rough mix files here. We don&rsquo;t need your stems yet &mdash; you&rsquo;ll be sent a link to upload these when you receive your confirmation email.</p>
           </div>
+          <EnquiryUpload class="md:col-span-2" columns="two" />
+          <p class="md:col-span-2 font-body text-base font-medium text-fg">This is an enquiry, not an order. Nothing is booked or charged until we confirm.</p>
           <button type="submit" class="key key-primary md:col-span-2 w-full py-4">
             Send enquiry
           </button>
