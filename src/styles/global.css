@@ -244,12 +244,14 @@
     .credits-cell { padding: 0.8rem 1.25rem; }
     .credits-cell + .credits-cell { border-top: 0; }
     .credits-cell:nth-child(3n+2), .credits-cell:nth-child(3n) { border-left: 1px solid var(--color-line-strong); }
-    .credits-cell:nth-child(n+4) { border-top: 1px solid var(--color-line-strong); }
+    .credits-cell:nth-child(n+4) { border-top: 0; }
+    /* Divider drawn under row 1 so it spans all 3 columns (column 3 has no cell beneath it) */
+    .credits-cell:nth-child(-n+3) { border-bottom: 1px solid var(--color-line-strong); }
   }
   @media (min-width: 1024px) {
     .credits-strip { grid-template-columns: repeat(5, 1fr); }
     .credits-cell { padding: 0.8rem 1rem; }
-    .credits-cell:nth-child(n+4) { border-top: 0; }
+    .credits-cell:nth-child(-n+3) { border-bottom: 0; }
     .credits-cell + .credits-cell { border-left: 1px solid var(--color-line-strong); }
   }
 
