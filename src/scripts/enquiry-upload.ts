@@ -6,8 +6,15 @@ export const MAX_BYTES = 7_000_000;
 
 const WRONG_TYPE = 'Please choose a single .wav file.';
 const TOO_BIG =
-  'That file is over 7 MB, which is the limit for a direct upload. Please upload it to WeTransfer, Google Drive or Dropbox and paste the link below.';
+  'That file is over 7 MB, which is the limit for a direct upload. Please upload it to WeTransfer, Google Drive or Dropbox and paste the link in "Link to your files".';
 const BAD_LINK = 'Please enter a full link that starts with https:// or http://.';
+
+// Over-limit files round UP so they never read as "7.0 MB"; in-limit files round normally, capped at 7.0.
+export function formatSize(bytes: number) {
+  const mb = bytes / 1_000_000;
+  const value = bytes > MAX_BYTES ? Math.ceil(Math.round(mb * 1e6) / 1e5) / 10 : Math.min(mb, 7);
+  return value.toFixed(1);
+}
 
 export function initEnquiryUpload(form: HTMLFormElement) {
   const fileInput = form.querySelector<HTMLInputElement>('#attachment');
@@ -44,7 +51,7 @@ export function initEnquiryUpload(form: HTMLFormElement) {
       if (clearBtn) clearBtn.hidden = true;
       return setState(fileInput, fileError, '');
     }
-    if (status) status.textContent = `Selected: ${file.name} (${(file.size / 1_000_000).toFixed(1)} MB)`;
+    if (status) status.textContent = `Selected: ${file.name} (${formatSize(file.size)} MB)`;
     if (clearBtn) clearBtn.hidden = false;
     // Filename first, then size. MIME is ignored: real WAVs often report an empty or octet-stream type.
     if (!file.name.toLowerCase().endsWith('.wav')) return setState(fileInput, fileError, WRONG_TYPE);
