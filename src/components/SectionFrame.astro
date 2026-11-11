@@ -1,6 +1,6 @@
 ---
-// The shared panel shell. One hairline-outlined, square frame that every page
-// lives inside, so the whole site reads as one printed hardware panel.
+// The shared page shell: a plain width-constrained wrapper that every page
+// lives inside. Section dividers inside it provide the structure.
 interface Props {
   max?: string;
   class?: string;
@@ -8,6 +8,6 @@ interface Props {
 }
 const { max = 'max-w-5xl', class: cls = '', id } = Astro.props;
 ---
-<div id={id} data-reveal="children" class:list={["w-full border border-line-strong bg-ground relative z-10 crop-marks", max, cls]}>
+<div id={id} data-reveal="children" class:list={["w-full relative z-10", max, cls]}>
   <slot />
 </div>

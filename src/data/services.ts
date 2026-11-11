@@ -20,7 +20,7 @@ export interface Service {
 
 export const services: Service[] = [
   {
-    num: '01', title: 'Mastering', slug: 'mastering', tagline: 'Loudness / Translation',
+    num: '01', title: 'Mastering', slug: 'mastering', tagline: 'Loud, clear and translating on any system',
     price: '£30', note: 'single track, £20/track on EPs (2+)', revisions: '2 revisions included on every order',
     detail: 'A final master on an already-mixed track: commercial loudness, tonal balance and translation across systems via an analogue chain. Discounted per-track rate for EPs.',
     wire: 'bg-ch-mastering', glow: '', hex: '#e3a83b',
@@ -33,7 +33,7 @@ export const services: Service[] = [
     ],
   },
   {
-    num: '02', title: 'Mixing', slug: 'mixing', tagline: 'Balance / Width / Depth',
+    num: '02', title: 'Mixing', slug: 'mixing', tagline: 'Balance, width and depth',
     price: '£50', note: 'Mastering included, 10 stems, scales to 30+', revisions: '2 revisions included on every order',
     detail: 'Stems mixed and balanced into a cohesive, club-ready record: gain staging, EQ, dynamics and spatial placement. Mastering is included, so the track leaves release-ready. Priced by stem count.',
     wire: 'bg-ch-mixing', glow: '', hex: '#8aa69a',
@@ -47,7 +47,7 @@ export const services: Service[] = [
     ],
   },
   {
-    num: '03', title: 'Production', slug: 'production', tagline: 'Ghost / Finish Your Track',
+    num: '03', title: 'Production', slug: 'production', tagline: 'Ghost production and track finishing',
     price: '£120', note: 'Ghost Production from £250', revisions: 'Revision count set per project',
     detail: 'Bring a half-finished idea or a blank session. We handle composition, arrangement and sound selection to a mix-ready stage, from Finish Your Track up to a fully exclusive, royalty-free Ghost Production.',
     wire: 'bg-ch-production', glow: '', hex: '#d0483a',
@@ -58,7 +58,7 @@ export const services: Service[] = [
     ],
   },
   {
-    num: '04', title: 'Education', slug: 'education', tagline: '1-on-1 Ableton',
+    num: '04', title: 'Education', slug: 'education', tagline: 'One-to-one Ableton sessions',
     price: '£25', note: 'per hour, analysis call from £40', revisions: '',
     detail: 'One-to-one sessions on Ableton workflow, sound design fundamentals, or a technical breakdown of your own session. Book a single call or an ongoing run of lessons.',
     wire: 'bg-ch-education', glow: '', hex: '#a8b25a',
@@ -69,7 +69,7 @@ export const services: Service[] = [
     ],
   },
   {
-    num: '05', title: 'Tools & Samples', slug: 'sounddesign', tagline: 'Custom Patches',
+    num: '05', title: 'Tools & Samples', slug: 'sounddesign', tagline: 'Custom patches',
     price: 'From £5', note: 'tools from £5, custom on enquiry', revisions: '',
     detail: 'Bespoke patches, racks and one-shots built around your reference. Prefer something off-the-shelf? Sample packs, stock FX racks and the Nodegen VST are fixed-price tools.',
     wire: 'bg-ch-tools', glow: '', hex: '#a08cb4', shopHref: '/shop/',
@@ -77,7 +77,7 @@ export const services: Service[] = [
     reqs: [],
   },
   {
-    num: '06', title: 'Track Analysis', slug: 'consulting', tagline: 'Feedback / Breakdown',
+    num: '06', title: 'Track Analysis', slug: 'consulting', tagline: 'Feedback and breakdown',
     price: '£15', note: 'per track', revisions: '',
     detail: 'A detailed listen-through of your track with honest technical and creative feedback: mix balance, arrangement, sound selection and where it stands next to reference records. Includes technical analysis with annotated screenshots (metering, EQ, spectrum) and clear explanations of what each one shows and how to fix it. Delivered as written notes or a call.',
     wire: 'bg-ch-analysis', glow: '', hex: '#d78d5c',

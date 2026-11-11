@@ -10,17 +10,17 @@ import SuccessPopup from '../components/SuccessPopup.astro';
   title="Contact | Start a Project — Node Production"
   description="Send your dance music project details for a same-day reply. Mixing, mastering and production enquiries welcome."
 >
-  <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-mono">
+  <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-body">
     <SectionFrame>
 
-      <PageHero left="Node // Enquire" right="Same-day reply">
+      <PageHero>
         <Fragment slot="title">Initiate a<br />project.</Fragment>
         Send your project details, questions and turnaround. We guarantee a same-day response.
       </PageHero>
 
       <!-- Form + info -->
       <section>
-        <SectionHeader num="03" label="Enquire / There Are No Stupid Questions" />
+        <SectionHeader label="Ask a question" />
         <div class="grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-px bg-line-strong">
 
           <!-- Form -->
@@ -30,7 +30,7 @@ import SuccessPopup from '../components/SuccessPopup.astro';
             <p class="hidden"><label>Don't fill this out: <input name="bot-field" /></label></p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
-                <label for="name" class="field-label">Name / Artist</label>
+                <label for="name" class="field-label">Name or artist</label>
                 <input type="text" id="name" name="name" required class="field" />
               </div>
               <div>
@@ -40,48 +40,48 @@ import SuccessPopup from '../components/SuccessPopup.astro';
             </div>
 
             <div>
-              <label for="service" class="field-label">Service Required</label>
+              <label for="service" class="field-label">Service</label>
               <select id="service" name="service" required class="field">
-                <option value="" disabled selected>Select a service...</option>
+                <option value="" disabled selected>Select a service</option>
                 <option value="mastering">Mastering</option>
-                <option value="mixing-mastering">Mixing &amp; Mastering</option>
-                <option value="production">Ghost Production</option>
-                <option value="finishing">Finish Your Track</option>
-                <option value="education">Consultation &amp; Education</option>
-                <option value="sound-design">Sound Design</option>
-                <option value="other">Other / Not sure</option>
+                <option value="mixing-mastering">Mixing &amp; mastering</option>
+                <option value="production">Ghost production</option>
+                <option value="finishing">Finish your track</option>
+                <option value="education">Consultation &amp; education</option>
+                <option value="sound-design">Sound design</option>
+                <option value="other">Other or not sure</option>
               </select>
             </div>
 
             <div>
-              <label for="message" class="field-label">Project Details</label>
+              <label for="message" class="field-label">Project details</label>
               <textarea id="message" name="message" rows="6" required class="field resize-y"></textarea>
-              <p class="mt-2.5 font-mono text-[10px] leading-relaxed text-fg-dim">Feel free to attach any rough mix files here. We don&rsquo;t need your stems yet &mdash; you&rsquo;ll be sent a link to upload these when you receive your confirmation email.</p>
+              <p class="mt-2.5 font-body text-base leading-relaxed text-fg-dim">Feel free to attach any rough mix files here. We don&rsquo;t need your stems yet &mdash; you&rsquo;ll be sent a link to upload these when you receive your confirmation email.</p>
             </div>
 
-            <button type="submit" id="contact-submit" class="key key-primary key-sending w-full py-4 text-[12px]">
-              <span data-label>Send Enquiry</span>
+            <button type="submit" id="contact-submit" class="key key-primary key-sending w-full py-4">
+              <span data-label>Send enquiry</span>
             </button>
           </form>
 
           <!-- Info -->
           <aside class="bg-ground p-6 md:p-8 flex flex-col gap-7">
             <div>
-              <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim block mb-2">Response</span>
-              <span class="font-display text-2xl font-extrabold uppercase tracking-[-0.025em] text-fg leading-none">Same-day</span>
+              <span class="font-body text-sm font-medium text-fg-muted block mb-2">Response</span>
+              <span class="t-h3">Same-day</span>
             </div>
             <div>
-              <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim block mb-2">Based in</span>
-              <span class="font-display text-2xl font-extrabold uppercase tracking-[-0.025em] text-fg leading-none">Leeds, UK</span>
-              <p class="mt-2 font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">Working worldwide &middot; 53.80 N&nbsp;&nbsp;1.55 W</p>
+              <span class="font-body text-sm font-medium text-fg-muted block mb-2">Based in</span>
+              <span class="t-h3">Leeds, UK</span>
+              <p class="mt-2 t-note">Working worldwide</p>
             </div>
             <div class="mt-auto pt-6 border-t border-line">
-              <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim block mb-4">How it works</span>
-              <ol class="space-y-3 font-body text-[13px] text-fg-muted leading-snug">
-                <li class="flex gap-3"><span class="text-fg-dim font-mono text-[11px] font-semibold shrink-0">01</span><span>Send your request.</span></li>
-                <li class="flex gap-3"><span class="text-fg-dim font-mono text-[11px] font-semibold shrink-0">02</span><span>We confirm scope, rate and timeframe.</span></li>
-                <li class="flex gap-3"><span class="text-fg-dim font-mono text-[11px] font-semibold shrink-0">03</span><span>Get a link to upload your files.</span></li>
-                <li class="flex gap-3"><span class="text-fg-dim font-mono text-[11px] font-semibold shrink-0">04</span><span>Files uploaded &mdash; project delivered within the agreed timeframe.</span></li>
+              <span class="font-body text-sm font-medium text-fg-muted block mb-4">How it works</span>
+              <ol class="space-y-3 font-body text-base text-fg-muted leading-snug">
+                <li class="flex gap-3"><span class="text-fg-dim font-body text-sm font-medium shrink-0 pt-0.5">01</span><span>Send your request.</span></li>
+                <li class="flex gap-3"><span class="text-fg-dim font-body text-sm font-medium shrink-0 pt-0.5">02</span><span>We confirm scope, rate and timeframe.</span></li>
+                <li class="flex gap-3"><span class="text-fg-dim font-body text-sm font-medium shrink-0 pt-0.5">03</span><span>Get a link to upload your files.</span></li>
+                <li class="flex gap-3"><span class="text-fg-dim font-body text-sm font-medium shrink-0 pt-0.5">04</span><span>Files uploaded &mdash; project delivered within the agreed timeframe.</span></li>
               </ol>
             </div>
           </aside>
@@ -115,6 +115,6 @@ import SuccessPopup from '../components/SuccessPopup.astro';
     if (!e.persisted || !btn) return;
     btn.classList.remove('is-sending');
     btn.removeAttribute('aria-busy');
-    setLabel('Send Enquiry');
+    setLabel('Send enquiry');
   });
 </script>

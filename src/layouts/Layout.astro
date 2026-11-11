@@ -85,10 +85,11 @@ const jsonLd = {
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
     <meta name="theme-color" content="#1c1c1a" />
 
-    <!-- Font roles (Sequencer): display (Archivo 800), mono (IBM Plex Mono), body (IBM Plex Sans).
+    <!-- Font roles: display (Archivo 700, 800 for the logo), body (IBM Plex Sans),
+         mono (IBM Plex Mono, real data only; not preloaded).
          Registered in astro.config.mjs; preload the above-the-fold faces. -->
     <Font cssVariable="--font-archivo" preload />
-    <Font cssVariable="--font-plex-mono" preload />
+    <Font cssVariable="--font-plex-mono" />
     <Font cssVariable="--font-plex-sans" />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
@@ -109,19 +110,19 @@ const jsonLd = {
           <!-- Quiet sign-off: same pattern, step 1 cream (the hero grid carries the one armed step) -->
           <StepGrid rows={['C...C.....C.C...', '..G...G.G..C..G.']} />
         </div>
-        <nav aria-label="Footer navigation" class="flex flex-wrap gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-[0.18em]">
-          <a href="/about/" class="text-fg-dim hover:text-fg no-underline">About</a>
-          <a href="/services/" class="text-fg-dim hover:text-fg no-underline">Services</a>
-          <a href="/prices/" class="text-fg-dim hover:text-fg no-underline">Rates</a>
-          <a href="/shop/" class="text-fg-dim hover:text-fg no-underline">Shop</a>
-          <a href="/portfolio/" class="text-fg-dim hover:text-fg no-underline">Portfolio</a>
-          <a href="/contact/" class="text-fg-dim hover:text-fg no-underline">Contact</a>
+        <nav aria-label="Footer navigation" class="flex flex-wrap gap-x-6 gap-y-2 font-body text-sm">
+          <a href="/about/" class="text-fg-dim hover:text-fg no-underline hover:underline focus-visible:underline underline-offset-4">About</a>
+          <a href="/services/" class="text-fg-dim hover:text-fg no-underline hover:underline focus-visible:underline underline-offset-4">Services</a>
+          <a href="/prices/" class="text-fg-dim hover:text-fg no-underline hover:underline focus-visible:underline underline-offset-4">Rates</a>
+          <a href="/shop/" class="text-fg-dim hover:text-fg no-underline hover:underline focus-visible:underline underline-offset-4">Shop</a>
+          <a href="/portfolio/" class="text-fg-dim hover:text-fg no-underline hover:underline focus-visible:underline underline-offset-4">Portfolio</a>
+          <a href="/contact/" class="text-fg-dim hover:text-fg no-underline hover:underline focus-visible:underline underline-offset-4">Contact</a>
         </nav>
       </div>
       <div class="border-t border-line">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-col gap-1 sm:flex-row sm:justify-between font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">
-          <span>&copy; {new Date().getFullYear()} Node Leeds. All Rights Reserved.</span>
-          <span>53.80 N&nbsp;&nbsp;1.55 W</span>
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-col gap-1 sm:flex-row sm:justify-between font-body text-sm text-fg-dim">
+          <span>&copy; {new Date().getFullYear()} Node Leeds. All rights reserved.</span>
+          <span>Leeds, UK (53.80 N, 1.55 W)</span>
         </div>
       </div>
     </footer>

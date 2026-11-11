@@ -3,7 +3,7 @@
 // page (full, with the detail line). Carries the data-* attributes the shared
 // ServiceModal reads, plus the `.service-card` hook its script binds to.
 // Sequencer styling: flat square cell, hairline edge, a small channel-coloured
-// square beside the index, and a 2px channel rule that draws across the base on
+// square, and a 2px channel rule that draws across the base on
 // hover. No lifts, glows or shadows.
 import type { Service } from '../data/services';
 
@@ -35,9 +35,8 @@ const { service, compact = false } = Astro.props;
   <div class="flex items-start justify-between gap-3">
     <span class="flex items-center gap-2.5">
       <span class="svc-chip" aria-hidden="true"></span>
-      <span class="svc-num">{service.num}</span>
     </span>
-    <span class="svc-open">Open &rarr;</span>
+    <span class="svc-open">Open</span>
   </div>
 
   <div class="svc-body">
@@ -48,7 +47,7 @@ const { service, compact = false } = Astro.props;
 
   <div class="svc-foot">
     {service.revisions
-      ? <span class="svc-rev">&#8635; {service.revisions}</span>
+      ? <span class="svc-rev">{service.revisions}</span>
       : <span aria-hidden="true"></span>}
     <span class="svc-price">{service.price}</span>
   </div>
@@ -81,22 +80,6 @@ const { service, compact = false } = Astro.props;
   }
   .svc:active { transform: scale(0.99); }
 
-  /* corner tick that appears on hover (cream, not orange) */
-  .svc::before {
-    content: "";
-    position: absolute;
-    top: -1px;
-    left: -1px;
-    width: 10px;
-    height: 10px;
-    border-top: 1px solid var(--color-fg);
-    border-left: 1px solid var(--color-fg);
-    opacity: 0;
-    transition: opacity 0.12s steps(2);
-    pointer-events: none;
-  }
-  .svc:hover::before,
-  .svc:focus-visible::before { opacity: 1; }
   .svc:focus-visible { outline: 1px solid var(--color-accent); outline-offset: 3px; }
 
   /* channel chip: a hollow square that fills on hover, like an armed step */
@@ -111,49 +94,38 @@ const { service, compact = false } = Astro.props;
   .svc:hover .svc-chip,
   .svc:focus-visible .svc-chip { background: var(--ch); }
 
-  .svc-num {
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: var(--tracking-label);
-    color: var(--color-fg);
-  }
-
   .svc-open {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-label);
-    color: var(--color-fg-faint);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    color: var(--color-fg-dim);
+    text-underline-offset: 4px;
   }
   .svc:hover .svc-open,
-  .svc:focus-visible .svc-open { color: var(--color-fg); }
+  .svc:focus-visible .svc-open { color: var(--color-fg); text-decoration: underline; }
 
   /* body sits low so the index gets breathing room above it */
   .svc-body { margin-top: auto; padding-top: 1.75rem; }
 
   .svc-title {
     font-family: var(--font-display);
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-display, -0.03em);
-    line-height: 1.03;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
     font-size: 1.375rem;
     color: var(--color-fg);
   }
   .svc-tagline {
     margin-top: 0.6rem;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-label);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.5;
     color: var(--color-fg-dim);
   }
   .svc-detail {
     margin-top: 0.85rem;
     font-family: var(--font-body);
-    font-size: 13px;
-    line-height: 1.55;
+    font-size: 1rem;
+    line-height: 1.5;
     color: var(--color-fg-muted);
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -171,17 +143,16 @@ const { service, compact = false } = Astro.props;
     gap: 0.75rem;
   }
   .svc-rev {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-caption);
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.5;
     color: var(--color-fg-dim);
   }
   /* prices are cream, not orange */
   .svc-price {
     font-family: var(--font-display);
     font-size: 1.375rem;
-    font-weight: 800;
+    font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1;
     color: var(--color-fg);
@@ -204,7 +175,7 @@ const { service, compact = false } = Astro.props;
   .svc:focus-visible .svc-rule { transform: scaleX(1); }
 
   @media (prefers-reduced-motion: reduce) {
-    .svc-rule, .svc::before { transition: none; }
+    .svc-rule { transition: none; }
     .svc:active { transform: none; }
   }
 </style>

@@ -4,8 +4,8 @@ import { testimonials } from '../data/testimonials';
 ---
 
 <section class="reviews-carousel border-b border-line-strong">
-  <SectionHeader label="Reviews / What Clients Say">
-    <span slot="meta" data-count class="text-fg-faint font-mono text-[10px] uppercase tracking-[0.12em]">{testimonials.length} reviews</span>
+  <SectionHeader label="What clients say">
+    <span slot="meta" data-count class="font-body text-sm text-fg-dim">{testimonials.length} reviews</span>
   </SectionHeader>
 
   <div class="relative">
@@ -19,9 +19,9 @@ import { testimonials } from '../data/testimonials';
                 <span class={`block w-3 h-3 border ${s < t.rating ? 'bg-fg border-fg' : 'border-cell-line'}`}></span>
               ))}
             </div>
-            <blockquote class={`font-body text-fg leading-relaxed max-w-2xl ${t.quote.length > 200 ? 'text-sm md:text-[0.95rem]' : 'text-base md:text-lg'}`}>&ldquo;{t.quote}&rdquo;</blockquote>
-            <figcaption class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">
-              {t.author} <span class="text-fg-faint">&middot; via {t.source}</span>
+            <blockquote class={`font-body text-fg leading-relaxed max-w-2xl ${t.quote.length > 200 ? 'text-base' : 'text-base md:text-lg'}`}>&ldquo;{t.quote}&rdquo;</blockquote>
+            <figcaption class="font-body text-sm text-fg-dim">
+              {t.author}, via {t.source}
             </figcaption>
           </figure>
         ))}
@@ -66,16 +66,12 @@ import { testimonials } from '../data/testimonials';
 
     const quote = document.createElement('blockquote');
     quote.className = 'font-body text-fg leading-relaxed max-w-2xl ' +
-      (r.quote.length > 200 ? 'text-sm md:text-[0.95rem]' : 'text-base md:text-lg');
+      (r.quote.length > 200 ? 'text-base' : 'text-base md:text-lg');
     quote.textContent = `“${r.quote}”`;
 
     const cap = document.createElement('figcaption');
-    cap.className = 'font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim';
-    cap.textContent = r.author + ' ';
-    const via = document.createElement('span');
-    via.className = 'text-fg-faint';
-    via.textContent = `· via ${r.source}`;
-    cap.appendChild(via);
+    cap.className = 'font-body text-sm text-fg-dim';
+    cap.textContent = `${r.author}, via ${r.source}`;
 
     fig.append(stars, quote, cap);
     return fig;

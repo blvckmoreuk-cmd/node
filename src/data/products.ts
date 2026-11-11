@@ -38,9 +38,9 @@ export const categories: Category[] = [
 export const products: Product[] = [
   {
     num: '01', title: 'Nodegen', slug: 'nodegen-vst', category: 'vst',
-    tagline: 'Analog-Style Stab Synth',
+    tagline: 'Analog-style stab synth',
     price: 'TBA', priceNote: 'coming soon',
-    badge: 'Coming Soon',
+    badge: 'Coming soon',
     detail: 'A stab synth built around an analog synth workflow. Outputs audio straight from a sample-based oscillator, with the option to save MIDI. Perfect for making classic minimal house stabs.',
     features: [
       'Analog synth workflow, tuned for stab writing.',
@@ -59,7 +59,7 @@ export const products: Product[] = [
   },
   {
     num: '02', title: 'Node Pack 001', slug: 'node-pack-001', category: 'sample-pack',
-    tagline: 'Sample Pack / Vol. 1',
+    tagline: 'Sample pack, volume 1',
     price: '£10', priceNote: 'royalty-free, one-time',
     badge: 'New',
     detail: 'The first Node sample pack: drums, one-shots and loops pulled from the same sessions behind our releases. Mixed and tagged, ready to drop straight into a project.',
@@ -80,9 +80,9 @@ export const products: Product[] = [
   },
   {
     num: '03', title: 'Nodescope', slug: 'nodescope-vst', category: 'vst',
-    tagline: 'Analog-Style Visual Analyser',
+    tagline: 'Analog-style visual analyser',
     price: 'TBA', priceNote: 'coming soon',
-    badge: 'Coming Soon',
+    badge: 'Coming soon',
     detail: 'Nodescope is on the way. A new Node VST built to sit in the same workflow as Nodegen. Full details, pricing and preview land at launch.',
     features: [
       'Details revealed at launch.',
@@ -98,9 +98,9 @@ export const products: Product[] = [
   },
   {
     num: '04', title: 'Node Pack 002', slug: 'node-pack-002', category: 'sample-pack',
-    tagline: 'Sample Pack / Vol. 2',
+    tagline: 'Sample pack, volume 2',
     price: 'TBA', priceNote: 'coming soon',
-    badge: 'Coming Soon',
+    badge: 'Coming soon',
     detail: 'The second Node sample pack. More drums, one-shots and loops from the same sessions behind our releases. Full contents and pricing land at launch.',
     features: [
       'Contents revealed at launch.',

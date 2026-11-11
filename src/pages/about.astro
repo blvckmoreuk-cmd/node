@@ -18,16 +18,16 @@ const supporters = ['BBC Radio 1', 'BBC Radio 1Xtra', 'Shiba San', 'MPH', 'Oppid
   title="About | Node Production — Leeds Dance Music Studio"
   description="Node Production are Leeds-based dance music specialists. Work supported by BBC Radio 1, 1Xtra and Shiba San."
 >
-  <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-mono">
+  <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-body">
     <SectionFrame>
 
-      <PageHero left="Node // Studio Profile" right="Leeds, UK">
+      <PageHero>
         <Fragment slot="title">Every track,<br />treated as ours.</Fragment>
       </PageHero>
 
       <!-- Who we are -->
       <section class="border-b border-line-strong">
-        <SectionHeader num="01" label="Who We Are" />
+        <SectionHeader label="Who we are" />
         <div class="grid grid-cols-1 md:grid-cols-3 gap-px bg-line-strong">
           <div class="md:col-span-3 bg-ground p-6 md:p-10">
             <p class="font-body text-base md:text-lg text-fg-muted leading-relaxed max-w-3xl">
@@ -39,23 +39,23 @@ const supporters = ['BBC Radio 1', 'BBC Radio 1Xtra', 'Shiba San', 'MPH', 'Oppid
             </p>
           </div>
           <div class="bg-ground p-6 md:p-8 flex flex-col justify-center gap-2">
-            <span class="font-display text-2xl font-extrabold uppercase tracking-[-0.025em] text-fg leading-none">Leeds, UK</span>
-            <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">Studio base</span>
+            <span class="t-h3">Leeds, UK</span>
+            <span class="font-body text-sm font-medium text-fg-muted">Studio base</span>
           </div>
           <div class="bg-ground p-6 md:p-8 flex flex-col justify-center gap-2">
-            <span class="font-display text-2xl font-extrabold uppercase tracking-[-0.025em] text-fg leading-none">Same-day</span>
-            <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">Reply, guaranteed</span>
+            <span class="t-h3">Same-day</span>
+            <span class="font-body text-sm font-medium text-fg-muted">Reply, guaranteed</span>
           </div>
           <div class="bg-ground p-6 md:p-8 flex flex-col justify-center gap-2">
-            <span class="font-display text-2xl font-extrabold uppercase tracking-[-0.025em] text-fg leading-none">Worldwide</span>
-            <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">Working remotely</span>
+            <span class="t-h3">Worldwide</span>
+            <span class="font-body text-sm font-medium text-fg-muted">Working remotely</span>
           </div>
         </div>
       </section>
 
       <!-- How it works -->
       <section class="border-b border-line-strong">
-        <SectionHeader num="02" label="How It Works / Signal Chain" />
+        <SectionHeader label="How it works" />
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-px bg-line-strong">
           {steps.map((step) => (
             <div class="bg-ground p-6 flex flex-col gap-6 min-h-52">
@@ -63,9 +63,9 @@ const supporters = ['BBC Radio 1', 'BBC Radio 1Xtra', 'Shiba San', 'MPH', 'Oppid
                 {[1, 2, 3, 4].map((n) => <span class={`seq-cell ${n === Number(step.num) ? 'is-cream' : ''}`}></span>)}
               </span>
               <div class="mt-auto">
-                <span class="font-mono text-[11px] font-semibold tracking-[0.18em] text-fg-dim">{step.num}</span>
-                <h2 class="mt-1 font-display text-xl font-extrabold uppercase tracking-[-0.025em] text-fg leading-[1.05]">{step.title}</h2>
-                <p class="mt-3 font-body text-[13px] leading-relaxed text-fg-muted">{step.detail}</p>
+                <span class="font-body text-sm font-medium text-fg-dim">{step.num}</span>
+                <h2 class="mt-1 t-h3">{step.title}</h2>
+                <p class="mt-3 font-body text-base leading-relaxed text-fg-muted">{step.detail}</p>
               </div>
             </div>
           ))}
@@ -74,10 +74,10 @@ const supporters = ['BBC Radio 1', 'BBC Radio 1Xtra', 'Shiba San', 'MPH', 'Oppid
 
       <!-- Supported by -->
       <section class="border-b border-line-strong">
-        <SectionHeader label="Supported By" />
+        <SectionHeader label="Supported by" />
         <div class="flex flex-wrap gap-3 px-4 md:px-6 py-6 md:py-8">
           {supporters.map((name) => (
-            <span class="font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted border border-line-strong px-4 py-2.5">{name}</span>
+            <span class="font-body text-sm text-fg-muted border border-line-strong px-4 py-2.5">{name}</span>
           ))}
         </div>
       </section>
@@ -85,7 +85,7 @@ const supporters = ['BBC Radio 1', 'BBC Radio 1Xtra', 'Shiba San', 'MPH', 'Oppid
       <!-- CTA -->
       <section class="flex flex-col sm:flex-row items-stretch gap-px bg-line-strong">
         <a href="/prices/" class="key flex-1 py-5 !border-0 bg-ground hover:bg-panel">
-          View Rates
+          View rates
         </a>
         <a href="/contact/"class="key key-primary flex-1 py-5 !border-0">
           Start a Project

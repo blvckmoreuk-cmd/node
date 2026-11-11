@@ -5,25 +5,25 @@ import SectionHeader from '../components/SectionHeader.astro';
 import PageHero from '../components/PageHero.astro';
 
 const masteringRows = [
-  { label: 'Per Track', value: '£30' },
-  { label: 'Additional Version', value: '£10', muted: true },
-  { label: 'EP (2+ Tracks)', value: '£20/tr' },
-  { label: 'Additional Version', value: '£5/tr', muted: true },
+  { label: 'Per track', value: '£30' },
+  { label: 'Additional version', value: '£10', muted: true },
+  { label: 'EP (2+ tracks)', value: '£20/tr' },
+  { label: 'Additional version', value: '£5/tr', muted: true },
 ];
 const mixingRows = [
-  { label: '10 Stems', value: '£50' },
-  { label: '20 Stems', value: '£85' },
-  { label: '30 Stems', value: '£100' },
-  { label: 'Extra Stems', value: '£2/ea', muted: true },
+  { label: '10 stems', value: '£50' },
+  { label: '20 stems', value: '£85' },
+  { label: '30 stems', value: '£100' },
+  { label: 'Extra stems', value: '£2/ea', muted: true },
 ];
 const educationRows = [
-  { label: '1:1 Tech Analysis / Call', value: '£40' },
-  { label: 'Ableton Tutoring (p/h)', value: '£25' },
+  { label: '1:1 tech analysis or call', value: '£40' },
+  { label: 'Ableton tutoring (per hour)', value: '£25' },
 ];
 const toolRows = [
   { label: 'Nodegen VST', value: '£15' },
-  { label: 'Sample Packs', value: '£15' },
-  { label: 'Stock FX Racks', value: '£5' },
+  { label: 'Sample packs', value: '£15' },
+  { label: 'Stock FX racks', value: '£5' },
   { label: 'Visualiser', value: '£5' },
 ];
 
@@ -57,17 +57,17 @@ const priceJsonLd = {
   description="Transparent rates for electronic music producers. Mastering from £30, mixing from £50. No deposit needed."
 >
   <script type="application/ld+json" set:html={JSON.stringify(priceJsonLd)} is:inline />
-  <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-mono">
+  <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-body">
     <SectionFrame>
 
-      <PageHero left="Node // Rate Card" right="GBP">
+      <PageHero>
         <Fragment slot="title">Rates &amp;<br />services.</Fragment>
         Transparent pricing for electronic music producers. No deposit needed.
       </PageHero>
 
       <!-- Rate card -->
       <section class="border-b border-line-strong">
-        <SectionHeader num="01" label="Price List" />
+        <SectionHeader label="Price list" />
         <div class="grid grid-cols-1 md:grid-cols-2 gap-px bg-line-strong">
 
           <!-- Mastering -->
@@ -84,7 +84,7 @@ const priceJsonLd = {
 
           <!-- Mixing & Mastering -->
           <div class="bg-ground p-6 md:p-8" style="--ch: var(--color-ch-mixing)">
-            <h2 class="rate-head"><span class="rate-chip"></span>Mixing &amp; Mastering</h2>
+            <h2 class="rate-head"><span class="rate-chip"></span>Mixing &amp; mastering</h2>
             <ul>
               {mixingRows.map((row) => (
                 <li class={`rate-row ${row.muted ? 'is-muted' : ''}`}>
@@ -96,23 +96,23 @@ const priceJsonLd = {
 
           <!-- Production & Finishing (wide) -->
           <div class="md:col-span-2 bg-ground p-6 md:p-8" style="--ch: var(--color-ch-production)">
-            <h2 class="rate-head"><span class="rate-chip"></span>Production &amp; Finishing</h2>
+            <h2 class="rate-head"><span class="rate-chip"></span>Production &amp; finishing</h2>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-10">
               <div class="rate-row">
-                <span>Ghost Production, exclusive &amp; royalty-free</span>
+                <span>Ghost production, exclusive &amp; royalty-free</span>
                 <span class="rate-val">£250</span>
               </div>
               <div class="rate-row">
-                <span>Finish Your Track, analysis included</span>
+                <span>Finish your track, analysis included</span>
                 <span class="rate-val whitespace-nowrap">£120-200</span>
               </div>
             </div>
-            <p class="mt-5 font-body text-[12px] italic text-fg-dim">Price varies with complexity. Enquire for a custom quote.</p>
+            <p class="mt-5 t-note">Price varies with complexity. Enquire for a custom quote.</p>
           </div>
 
           <!-- Consultation & Education -->
           <div class="bg-ground p-6 md:p-8" style="--ch: var(--color-ch-education)">
-            <h2 class="rate-head"><span class="rate-chip"></span>Consultation &amp; Education</h2>
+            <h2 class="rate-head"><span class="rate-chip"></span>Consultation &amp; education</h2>
             <ul>
               {educationRows.map((row) => (
                 <li class="rate-row">
@@ -120,14 +120,14 @@ const priceJsonLd = {
                 </li>
               ))}
             </ul>
-            <p class="mt-5 font-mono text-[10px] uppercase tracking-[0.12em] text-fg-dim">Hosted on Muse or Discord</p>
+            <p class="mt-5 t-note">Hosted on Muse or Discord</p>
           </div>
 
           <!-- Digital Tools (links to the shop) -->
           <a href="/shop/" class="group bg-ground p-6 md:p-8 block hover:bg-panel no-underline" style="--ch: var(--color-ch-tools)">
             <h2 class="rate-head justify-between">
-              <span class="flex items-center gap-3"><span class="rate-chip"></span>Digital Tools</span>
-              <span class="font-mono text-[10px] tracking-[0.18em] text-fg-dim group-hover:text-fg">Shop &rarr;</span>
+              <span class="flex items-center gap-3"><span class="rate-chip"></span>Digital tools</span>
+              <span class="font-body text-sm font-normal text-fg-dim group-hover:text-fg group-hover:underline group-focus-visible:underline underline-offset-4">Shop</span>
             </h2>
             <ul>
               {toolRows.map((row) => (
@@ -160,11 +160,11 @@ const priceJsonLd = {
     margin-bottom: 0.5rem;
     padding-bottom: 1rem;
     border-bottom: 1px solid var(--color-line-strong);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-eyebrow);
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
     color: var(--color-fg);
   }
   .rate-chip {
@@ -182,21 +182,19 @@ const priceJsonLd = {
     gap: 1.5rem;
     padding: 0.85rem 0;
     border-bottom: 1px solid var(--color-line);
-    font-family: var(--font-mono);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    font-family: var(--font-body);
+    font-size: 1rem;
     color: var(--color-fg-muted);
   }
   /* prices are cream (never orange) */
   .rate-val {
     font-family: var(--font-display);
-    font-size: 1.3rem;
-    font-weight: 800;
+    font-size: 1.375rem;
+    font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1;
     color: var(--color-fg);
   }
-  .rate-row.is-muted { color: var(--color-fg-faint); }
-  .rate-row.is-muted .rate-val { color: var(--color-fg-dim); font-size: 1.1rem; }
+  .rate-row.is-muted { color: var(--color-fg-dim); }
+  .rate-row.is-muted .rate-val { color: var(--color-fg-dim); font-size: 1.125rem; }
 </style>

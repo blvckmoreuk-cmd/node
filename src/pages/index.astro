@@ -40,17 +40,12 @@ const trusted = [
   title="Node Production | Electronic Music Mixing & Mastering, Leeds"
   description="Mix, master and ghost production for electronic music. Specialist in House, Techno, Trance, Grime, Garage, Dubstep, DnB, Drill and Trap. Leeds studio working worldwide."
 >
-  <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-mono relative">
+  <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-body relative">
 
-    <div id="home-frame" class="w-full max-w-6xl border border-line-strong bg-ground relative z-10 crop-marks">
+    <div id="home-frame" class="w-full max-w-6xl relative z-10">
 
       <!-- ===================== MASTHEAD ===================== -->
       <header class="border-b border-line-strong">
-        <div class="flex items-center justify-between px-4 md:px-6 py-2.5 border-b border-line">
-          <span class="font-mono text-[10px] uppercase tracking-[0.32em] text-fg-dim">Node // Audio Engineering</span>
-          <span class="font-mono text-[10px] uppercase tracking-[0.32em] text-fg-faint">Leeds, UK</span>
-        </div>
-
         <!-- Lockup: NODE / PRODUCTION over the 2×16 step grid. The grid carries the single orange step. -->
         <div class="px-4 md:px-8 pt-10 md:pt-16 md:hidden">
           <div class="w-full max-w-[520px]">
@@ -64,21 +59,18 @@ const trusted = [
             <StepGrid fluid />
           </div>
           </div>
-          <div class="mt-3 flex justify-end">
-            <span class="font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">53.80 N&nbsp;&nbsp;1.55 W</span>
-          </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-6 md:gap-16 items-start px-4 md:px-8 py-8 md:py-12">
-          <h1 class="t-display !font-bold !leading-[1.1] !tracking-[-0.01em] text-3xl md:text-5xl max-w-md md:max-w-xl">
+        <div class="grid grid-cols-1 md:grid-cols-[1.4fr_1fr] gap-6 md:gap-16 items-start px-4 md:px-8 py-8 md:py-16">
+          <h1 class="t-display text-[2rem] md:text-5xl max-w-md md:max-w-xl">
             Electronic music engineering made simple
           </h1>
           <div class="flex flex-col gap-5">
-            <p class="font-body text-sm md:text-base text-fg-muted max-w-sm md:max-w-none leading-relaxed">
+            <p class="font-body text-base md:text-lg text-fg-muted max-w-sm md:max-w-none leading-relaxed">
               Mix, master and ghost production for electronic music. Based in Leeds, working worldwide.
             </p>
-            <p class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim max-w-sm md:max-w-none leading-relaxed">
-              Specialist Genres: House, Techno, Trance, Grime, Garage, Dubstep, DnB, Drill, Trap
+            <p class="font-body text-base text-fg-dim max-w-sm md:max-w-none leading-relaxed">
+              Specialist genres: House, Techno, Trance, Grime, Garage, Dubstep, DnB, Drill, Trap
             </p>
             <div class="flex flex-wrap gap-3">
               <a href="/contact/" class="key key-primary">Start a Project</a>
@@ -91,7 +83,7 @@ const trusted = [
       <!-- ===================== KEY CREDITS ===================== -->
       <ul class="credits-strip border-b border-line-strong" aria-label="Key credits">
         {credits.map((c) => (
-          <li class="credits-cell font-mono text-[10px] md:text-[11px] uppercase tracking-[0.18em] text-fg-muted">
+          <li class="credits-cell font-body text-sm text-fg-muted">
             <span class="credits-pip" aria-hidden="true"></span>{c}
           </li>
         ))}
@@ -101,7 +93,7 @@ const trusted = [
       <div class="border-b border-line-strong bg-inset overflow-hidden relative" aria-label="Clients">
         <div class="marquee-track py-3.5">
           {[...clients, ...clients].map((client) => (
-            <span class="flex items-center whitespace-nowrap px-5 md:px-7 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">
+            <span class="flex items-center whitespace-nowrap px-5 md:px-7 font-body text-sm text-fg-muted">
               <span class="w-1.5 h-1.5 border border-cell-line mr-5 md:mr-7"></span>
               {client}
             </span>
@@ -111,9 +103,9 @@ const trusted = [
 
       <!-- ===================== 01 // VISUALISER ===================== -->
       <section class="border-b border-line-strong">
-        <SectionHeader num="01" label="Our Work / Press Play">
+        <SectionHeader label="Our work">
           <label slot="meta" class="flex items-center gap-2 cursor-pointer">
-            <span class="font-mono text-[10px] uppercase tracking-[0.18em] text-fg-dim">Particle</span>
+            <span class="font-body text-sm text-fg-dim">Particle</span>
             <input id="particle-color" type="color" value="#f2ede3" class="w-6 h-6 bg-transparent cursor-pointer" />
           </label>
         </SectionHeader>
@@ -121,13 +113,12 @@ const trusted = [
         <div class="p-4 md:p-6 flex flex-col gap-4">
 
           <!-- Visualiser: full module width, transport controls overlaid on screen -->
-          <div id="canvas-container" class="w-full h-72 bg-inset border border-line-strong overflow-hidden relative grid-paper">
-            <div class="absolute top-3 left-3 font-mono text-[9px] uppercase tracking-[0.32em] text-fg-faint z-10 hidden sm:block">RT / Spectrum</div>
+          <div id="canvas-container" class="w-full h-72 bg-inset border border-line-strong overflow-hidden relative">
 
             <!-- Track selector: compact, sits on top of the screen -->
             <div class="absolute top-3 left-3 right-3 sm:left-auto z-20 pointer-events-auto">
               <div class="relative w-full sm:w-80">
-                <select id="track-selector" aria-label="Select track" class="w-full bg-ground border border-line-strong text-fg pl-3 pr-8 py-2.5 text-[10px] font-mono font-medium uppercase tracking-[0.12em] cursor-pointer outline-none appearance-none rounded-none hover:border-fg focus:border-accent">
+                <select id="track-selector" aria-label="Select track" class="w-full bg-ground border border-line-strong text-fg pl-3 pr-8 py-2.5 text-sm font-body font-medium cursor-pointer outline-none appearance-none rounded-none hover:border-fg focus:border-accent">
                   <option value="/audio/Wanna Feel.mp3">Wanna Feel — Mix/Master</option>
                   <option value="/audio/some people.mp3">Some People — Full Production</option>
                   <option value="/audio/shake it.mp3">Shake It — Mix/Master</option>
@@ -149,7 +140,7 @@ const trusted = [
 
               <!-- Volume encoder: square hardware knob + 8-step level meter -->
               <div class="flex items-center gap-2 sm:gap-3 bg-ground border border-line-strong px-2 sm:px-3 py-2 pointer-events-auto">
-                <span class="font-mono text-[9px] uppercase tracking-[0.18em] text-fg-dim">Vol</span>
+                <span class="font-body text-sm text-fg-dim">Volume</span>
                 <div class="relative w-10 h-10 shrink-0">
                   <div id="knob-volume" class="w-full h-full relative border border-fg-dim bg-inset cursor-ns-resize">
                     <div class="knob-rotation-wrapper w-full h-full absolute top-0 left-0 pointer-events-none">
@@ -178,7 +169,7 @@ const trusted = [
             </div>
           </div>
 
-          <p class="font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">
+          <p class="font-body text-sm text-fg-dim">
             Real releases we mixed, mastered &amp; produced &mdash; switch tracks to hear more.
           </p>
         </div>
@@ -186,7 +177,7 @@ const trusted = [
 
       <!-- ===================== TRUSTED BY (logo marquee) ===================== -->
       <div class="logo-marquee border-b border-line-strong bg-ground" aria-label="Trusted by">
-        <span class="logo-marquee-label font-mono text-[10px] uppercase tracking-[0.32em] text-fg-dim">Trusted By</span>
+        <span class="logo-marquee-label font-body text-sm text-fg-muted">Trusted by</span>
         <div class="logo-marquee-viewport">
           <div class="logo-marquee-track">
             {[0, 1].map((copy) => (
@@ -204,9 +195,7 @@ const trusted = [
 
       <!-- ===================== 02 // SERVICES ===================== -->
       <section class="border-b border-line-strong">
-        <SectionHeader num="02" label="Services / Signal Chain">
-          <span slot="meta" class="font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">Tap a card</span>
-        </SectionHeader>
+        <SectionHeader label="Services" />
 
         <div id="services" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 p-4 md:p-6">
           {services.map((service) => (
@@ -217,14 +206,14 @@ const trusted = [
 
       <!-- ===================== 03 // ENQUIRE ===================== -->
       <section class="border-b border-line-strong">
-        <SectionHeader num="03" label="Enquire / There Are No Stupid Questions" />
+        <SectionHeader label="Ask a question" />
 
         <form name="enquiry" method="POST" enctype="multipart/form-data" data-netlify="true" data-netlify-honeypot="bot-field" action="/?success=true" class="grid grid-cols-1 md:grid-cols-2 gap-5 p-4 md:p-6">
           <!-- Netlify Forms: hidden name field + honeypot (bots fill it, humans don't) -->
           <input type="hidden" name="form-name" value="enquiry" />
           <p class="hidden"><label>Don't fill this out: <input name="bot-field" /></label></p>
           <div>
-            <label for="name" class="field-label">Name / Artist</label>
+            <label for="name" class="field-label">Name or artist</label>
             <input type="text" id="name" name="name" required class="field" />
           </div>
           <div>
@@ -232,25 +221,25 @@ const trusted = [
             <input type="email" id="email" name="email" required class="field" />
           </div>
           <div class="md:col-span-2">
-            <label for="service" class="field-label">Service Required</label>
+            <label for="service" class="field-label">Service</label>
             <select id="service" name="service" required class="field">
-              <option value="" disabled selected>Select a service...</option>
+              <option value="" disabled selected>Select a service</option>
               <option value="mastering">Mastering</option>
-              <option value="mixing-mastering">Mixing &amp; Mastering</option>
-              <option value="production">Ghost Production</option>
-              <option value="finishing">Finish Your Track</option>
-              <option value="education">Consultation &amp; Education</option>
-              <option value="sound-design">Sound Design</option>
-              <option value="other">Other / Not sure</option>
+              <option value="mixing-mastering">Mixing &amp; mastering</option>
+              <option value="production">Ghost production</option>
+              <option value="finishing">Finish your track</option>
+              <option value="education">Consultation &amp; education</option>
+              <option value="sound-design">Sound design</option>
+              <option value="other">Other or not sure</option>
             </select>
           </div>
           <div class="md:col-span-2">
-            <label for="message" class="field-label">Project Details</label>
+            <label for="message" class="field-label">Project details</label>
             <textarea id="message" name="message" rows="5" required class="field"></textarea>
-            <p class="font-mono text-[10px] leading-relaxed text-fg-dim mt-2.5 max-w-2xl">Feel free to attach any rough mix files here. We don&rsquo;t need your stems yet &mdash; you&rsquo;ll be sent a link to upload these when you receive your confirmation email.</p>
+            <p class="font-body text-base text-fg-dim leading-relaxed mt-2.5 max-w-2xl">Feel free to attach any rough mix files here. We don&rsquo;t need your stems yet &mdash; you&rsquo;ll be sent a link to upload these when you receive your confirmation email.</p>
           </div>
-          <button type="submit" class="key key-primary md:col-span-2 w-full py-4 text-[12px]">
-            Send Enquiry
+          <button type="submit" class="key key-primary md:col-span-2 w-full py-4">
+            Send enquiry
           </button>
         </form>
       </section>

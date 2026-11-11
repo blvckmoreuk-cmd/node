@@ -4,7 +4,7 @@
    NODE PRODUCTION — "SEQUENCER" DESIGN SYSTEM
    Warm charcoal ground, cream type, square cells, and a single orange-red
    "armed step" per region. Hardware step-sequencer language: hairline outlines,
-   uppercase tracked IBM Plex Mono labels, Archivo 800 headings.
+   sentence-case IBM Plex Sans labels, Archivo 700 headings.
    Font cssVariables are registered in astro.config.mjs and emitted by the
    Font tags in Layout.astro.
    ========================================= */
@@ -54,9 +54,6 @@
 
   /* Tracking ladder */
   --tracking-lockup: 0.62em;
-  --tracking-eyebrow: 0.32em;
-  --tracking-label: 0.18em;
-  --tracking-caption: 0.12em;
 
   /* Layout */
   --spacing-card: 24px;
@@ -74,6 +71,8 @@
     background-color: var(--color-page);
     color: var(--color-fg-muted);
     font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
   }
   ::selection { background: var(--color-accent); color: var(--color-accent-ink); }
@@ -87,48 +86,40 @@
   /* ---- Typography primitives ---- */
   .t-display {
     font-family: var(--font-display);
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: -0.025em;
-    line-height: 1;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
     color: var(--color-fg);
   }
-  .t-label {
-    font-family: var(--font-mono);
-    font-weight: 500;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-label);
+  .t-h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.375rem;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    color: var(--color-fg);
+  }
+  .t-note {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.5;
     color: var(--color-fg-dim);
   }
-  .t-eyebrow {
-    font-family: var(--font-mono);
-    font-weight: 500;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-eyebrow);
-    color: var(--color-fg-dim);
-  }
-  .t-caption {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-caption);
-    color: var(--color-fg-faint);
-  }
+  .t-data { font-family: var(--font-mono); font-size: 0.875rem; }
 
   /* ---- Keys (buttons). Primary = the armed step. ---- */
   .key {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.6em;
+    gap: 0.5em;
+    min-height: 3rem;
     padding: 0.95rem 1.5rem;
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     font-weight: 500;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-label);
+    font-size: 1rem;
+    text-transform: none;
+    letter-spacing: normal;
     border: 1px solid var(--color-line-strong);
     background: transparent;
     color: var(--color-fg);
@@ -157,9 +148,9 @@
     border: 1px solid var(--color-line-strong);
     padding: 0.8rem 1rem;
     color: var(--color-fg);
-    font-family: var(--font-mono);
-    font-size: 12px;
-    letter-spacing: 0.04em;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    letter-spacing: normal;
     outline: none;
     transition: border-color 0s steps(1);
   }
@@ -168,17 +159,16 @@
   .field-label {
     display: block;
     margin-bottom: 0.5rem;
-    font-family: var(--font-mono);
+    font-family: var(--font-body);
     font-weight: 500;
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: var(--tracking-label);
-    color: var(--color-fg-dim);
+    font-size: 0.875rem;
+    text-transform: none;
+    letter-spacing: normal;
+    color: var(--color-fg-muted);
   }
   select.field {
     appearance: none;
     cursor: pointer;
-    text-transform: uppercase;
     background-image: linear-gradient(45deg, transparent 50%, var(--color-fg-dim) 50%), linear-gradient(135deg, var(--color-fg-dim) 50%, transparent 50%);
     background-position: calc(100% - 18px) 55%, calc(100% - 13px) 55%;
     background-size: 5px 5px;
@@ -224,36 +214,6 @@
   .seq-arm .seq-cell:nth-child(7)  { animation-delay: 0.30s; }
   .seq-arm .seq-cell:nth-child(8)  { animation-delay: 0.35s; }
 
-  /* ---- Panel helpers ---- */
-  .grid-paper {
-    background-image:
-      linear-gradient(to right, var(--color-line) 1px, transparent 1px),
-      linear-gradient(to bottom, var(--color-line) 1px, transparent 1px);
-    background-size: 24px 24px;
-  }
-  .dot-matrix {
-    background-image: radial-gradient(var(--color-line-strong) 1px, transparent 1.5px);
-    background-size: 8px 8px;
-  }
-  .crop-marks { position: relative; }
-  .crop-marks::before,
-  .crop-marks::after {
-    content: "";
-    position: absolute;
-    width: 10px; height: 10px;
-    pointer-events: none;
-  }
-  .crop-marks::before {
-    top: -1px; left: -1px;
-    border-top: 1px solid var(--color-fg-dim);
-    border-left: 1px solid var(--color-fg-dim);
-  }
-  .crop-marks::after {
-    bottom: -1px; right: -1px;
-    border-bottom: 1px solid var(--color-fg-dim);
-    border-right: 1px solid var(--color-fg-dim);
-  }
-
   /* ---- Particle colour picker (visualiser) ---- */
   input[type="color"] {
     -webkit-appearance: none;
@@ -281,7 +241,7 @@
   .credits-pip { flex: none; width: 6px; height: 6px; margin-right: 0.75rem; border: 1px solid var(--color-cell-line); }
   @media (min-width: 768px) {
     .credits-strip { grid-template-columns: repeat(2, 1fr); }
-    .credits-cell { padding: 0.8rem 1.25rem; letter-spacing: 0.1em; }
+    .credits-cell { padding: 0.8rem 1.25rem; }
     .credits-cell + .credits-cell { border-top: 0; }
     .credits-cell:nth-child(even) { border-left: 1px solid var(--color-line-strong); }
     .credits-cell:nth-child(n+3) { border-top: 1px solid var(--color-line-strong); }

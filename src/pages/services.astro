@@ -12,19 +12,17 @@ import { services } from '../data/services';
   title="Services | Mixing, Mastering & Production — Node Production"
   description="Six audio engineering disciplines from a Leeds dance music studio: mixing, mastering, ghost production, tutoring and more."
 >
-  <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-mono">
+  <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-body">
     <SectionFrame>
 
-      <PageHero left="Node // Services" right="Six disciplines">
+      <PageHero>
         <Fragment slot="title">What we<br />offer.</Fragment>
         Six disciplines, one studio. Tap a service for the full brief, or send a track and we will point you to the right one.
       </PageHero>
 
       <!-- Signal chain -->
       <section class="border-b border-line-strong">
-        <SectionHeader num="02" label="Services / Signal Chain">
-          <span slot="meta" class="font-mono text-[10px] uppercase tracking-[0.12em] text-fg-faint">Tap a card</span>
-        </SectionHeader>
+        <SectionHeader label="Services" />
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 p-4 md:p-6">
           {services.map((service) => (
             <ServiceCard service={service} />
@@ -35,7 +33,7 @@ import { services } from '../data/services';
       <!-- CTA -->
       <section class="flex flex-col sm:flex-row items-stretch gap-px bg-line-strong">
         <a href="/prices/" class="key flex-1 py-5 !border-0 bg-ground hover:bg-panel">
-          Full Price List
+          Full price list
         </a>
         <a href="/contact/"class="key key-primary flex-1 py-5 !border-0">
           Start a Project
