@@ -291,13 +291,21 @@
 
   /* ---- Hero sequencer band: full-width fluid grid + CSS-only stepping playhead ---- */
   .hero-band { --g: clamp(3px, 0.9vw, 8px); position: relative; }
+  /* The playhead lives in an overlay grid with the SAME column template and gap as
+     .seq-fluid, so it occupies the exact track of each cell and snaps to the same
+     pixels. It jumps cell to cell via discrete grid-column keyframes (step-end), not a % translate. */
+  .hero-playhead-track {
+    position: absolute; top: -4px; bottom: -4px; left: 0; right: 0;
+    display: grid;
+    grid-template-columns: repeat(16, minmax(0, 1fr));
+    gap: var(--g);
+    pointer-events: none;
+  }
   .hero-playhead {
-    position: absolute; top: -4px; bottom: -4px; left: 0;
-    width: calc((100% - 15 * var(--g)) / 16);
+    grid-column: 1; grid-row: 1;
     border: 1px solid var(--color-accent);
     background: rgb(232 85 42 / 0.1);
-    pointer-events: none;
-    animation: hero-step 4s steps(16, jump-end) infinite;
+    animation: hero-step 4s step-end infinite;
   }
 
   /* ---- Scrub bar: 32 step segments ---- */
@@ -320,7 +328,22 @@
   from { background: transparent; border-color: var(--color-cell-line); }
 }
 @keyframes hero-step {
-  to { transform: translateX(calc(16 * (100% + var(--g)))); }
+  0% { grid-column-start: 1; }
+  6.25% { grid-column-start: 2; }
+  12.5% { grid-column-start: 3; }
+  18.75% { grid-column-start: 4; }
+  25% { grid-column-start: 5; }
+  31.25% { grid-column-start: 6; }
+  37.5% { grid-column-start: 7; }
+  43.75% { grid-column-start: 8; }
+  50% { grid-column-start: 9; }
+  56.25% { grid-column-start: 10; }
+  62.5% { grid-column-start: 11; }
+  68.75% { grid-column-start: 12; }
+  75% { grid-column-start: 13; }
+  81.25% { grid-column-start: 14; }
+  87.5% { grid-column-start: 15; }
+  93.75% { grid-column-start: 16; }
 }
 
 @media (prefers-reduced-motion: reduce) {
