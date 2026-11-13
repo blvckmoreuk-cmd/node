@@ -1,0 +1,30 @@
+---
+// Logo. `mark` = compact 2×4 tile (first four steps of the Node pattern, the
+// brand mark for tight headers). `wordmark` = NODE in Archivo 800 with an
+// optional wide-tracked PRODUCTION line. The full lockup lives in the hero
+// (StepGrid + type), and as a static asset at /brand/logo.svg.
+interface Props {
+  variant?: 'mark' | 'wordmark';
+  sub?: boolean;
+  class?: string;
+}
+const { variant = 'wordmark', sub = false, class: cls = '' } = Astro.props;
+---
+{variant === 'mark' ? (
+  <svg class={cls} viewBox="0 0 64 64" width="32" height="32" role="img" aria-label="Node Production" shape-rendering="crispEdges">
+    <rect width="64" height="64" fill="#1c1c1a"/>
+    <rect x="6" y="20" width="10" height="10" fill="#e8552a"/>
+    <rect x="20.5" y="20.5" width="9" height="9" fill="none" stroke="#4a4844"/>
+    <rect x="34" y="20" width="10" height="10" fill="#f2ede3"/>
+    <rect x="48.5" y="20.5" width="9" height="9" fill="none" stroke="#4a4844"/>
+    <rect x="6.5" y="34.5" width="9" height="9" fill="none" stroke="#4a4844"/>
+    <rect x="20" y="34" width="10" height="10" fill="#6b6862"/>
+    <rect x="34.5" y="34.5" width="9" height="9" fill="none" stroke="#4a4844"/>
+    <rect x="48" y="34" width="10" height="10" fill="#f2ede3"/>
+  </svg>
+) : (
+  <span class:list={['inline-flex flex-col leading-none', cls]}>
+    <span class="font-display font-extrabold uppercase text-fg tracking-[-0.03em] text-xl sm:text-2xl leading-[0.9]">Node</span>
+    {sub && <span class="mt-1 font-mono text-[8px] uppercase tracking-[0.62em] text-fg-dim">Production</span>}
+  </span>
+)}

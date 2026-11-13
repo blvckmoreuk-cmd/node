@@ -13,41 +13,39 @@ if (!adminToken || token !== adminToken) {
 
 const pending = await listPending();
 const approvedCount = (await listApproved()).length;
-
-const stars = (n: number) => '★★★★★☆☆☆☆☆'.slice(5 - n, 10 - n);
 ---
 
 <Layout title="Review Moderation | Node" description="Moderate submitted reviews." noindex={true}>
-  <div class="w-full min-h-[70vh] flex flex-col items-center px-3 md:px-4 py-10 md:py-14 font-mono">
-    <div class="w-full max-w-2xl border border-line-strong bg-base">
-      <div class="flex items-center justify-between px-4 md:px-5 py-2.5 border-b border-line-strong bg-panel">
-        <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Node // Moderation</span>
-        <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">{approvedCount} live · {pending.length} pending</span>
-      </div>
-
-      <div class="px-4 md:px-8 py-7 md:py-9" data-token={token}>
-        <h1 class="font-display font-bold uppercase tracking-tight text-fg text-2xl md:text-3xl">Pending reviews</h1>
+  <div class="w-full min-h-[70vh] flex flex-col items-center px-3 md:px-4 py-10 md:py-14 font-body">
+    <div class="w-full max-w-2xl">
+      <div class="px-4 md:px-8 py-8 md:py-10" data-token={token}>
+        <h1 class="font-display font-bold text-[1.75rem] tracking-[-0.015em] leading-[1.15] text-fg">Pending reviews</h1>
+        <p class="mt-2 font-body text-sm text-fg-dim">{approvedCount} live, {pending.length} pending</p>
 
         {pending.length === 0 && (
           <p class="mt-6 font-body text-sm text-fg-muted">Nothing waiting. New submissions show up here.</p>
         )}
 
-        <ul class="mt-6 flex flex-col gap-4">
+        <ul class="mt-8 flex flex-col gap-4">
           {pending.map((r) => (
-            <li class="review-row border border-line-strong p-4 flex flex-col gap-3" data-id={r.id}>
+            <li class="review-row border border-line-strong p-5 flex flex-col gap-4" data-id={r.id}>
               <div class="flex items-center justify-between gap-3">
-                <span class="text-accent text-sm" aria-label={`${r.rating} out of 5`}>{stars(r.rating)}</span>
-                <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint">{new Date(r.createdAt).toLocaleDateString()}</span>
+                <span class="flex gap-1" role="img" aria-label={`${r.rating} out of 5`}>
+                  {Array.from({ length: 5 }).map((_, s) => (
+                    <span class={`block w-3 h-3 border ${s < r.rating ? 'bg-fg border-fg' : 'border-cell-line'}`}></span>
+                  ))}
+                </span>
+                <span class="font-body text-sm text-fg-dim">{new Date(r.createdAt).toLocaleDateString()}</span>
               </div>
-              <blockquote class="font-body text-sm text-fg leading-relaxed">&ldquo;{r.quote}&rdquo;</blockquote>
-              <figcaption class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">
-                {r.author} <span class="text-accent">· via {r.source}</span>
+              <blockquote class="font-body text-base text-fg leading-relaxed">&ldquo;{r.quote}&rdquo;</blockquote>
+              <figcaption class="font-body text-sm text-fg-dim">
+                {r.author}, via {r.source}
               </figcaption>
               <div class="flex gap-2 pt-1">
-                <button data-action="approve" class="flex-1 py-2.5 bg-accent-dim text-white font-mono font-bold text-[10px] uppercase tracking-[0.2em] hover:bg-accent transition-colors disabled:opacity-40">Approve</button>
-                <button data-action="reject" class="flex-1 py-2.5 bg-panel border border-line-strong text-fg-muted font-mono font-bold text-[10px] uppercase tracking-[0.2em] hover:text-red-400 hover:border-red-400 transition-colors disabled:opacity-40">Reject</button>
+                <button data-action="approve" class="key key-primary flex-1 py-3 disabled:opacity-40">Approve</button>
+                <button data-action="reject" class="key flex-1 py-3 hover:!text-ch-production hover:!border-ch-production disabled:opacity-40">Reject</button>
               </div>
-              <p class="row-msg hidden font-mono text-[10px] text-fg-faint"></p>
+              <p class="row-msg hidden font-body text-sm text-fg-dim"></p>
             </li>
           ))}
         </ul>

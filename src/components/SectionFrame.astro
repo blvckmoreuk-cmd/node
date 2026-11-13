@@ -1,13 +1,13 @@
 ---
-// The shared "rack unit" shell. One bordered frame that every page lives inside,
-// matching the homepage so the whole site reads as one system of modules.
+// The shared page shell: a plain width-constrained wrapper that every page
+// lives inside. Section dividers inside it provide the structure.
 interface Props {
   max?: string;
   class?: string;
   id?: string;
 }
-const { max = 'max-w-4xl', class: cls = '', id } = Astro.props;
+const { max = 'max-w-5xl', class: cls = '', id } = Astro.props;
 ---
-<div id={id} class:list={["w-full border border-line-strong bg-base relative z-10", max, cls]}>
+<div id={id} data-reveal="children" class:list={["w-full relative z-10", max, cls]}>
   <slot />
 </div>

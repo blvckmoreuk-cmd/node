@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { Font } from 'astro:assets';
 import Header from '../components/Header.astro';
+import Logo from '../components/Logo.astro';
 
 // Per-page SEO. Every page passes its own title + description; the rest fall
 // back to sensible site-wide defaults so no page ships bare.
@@ -23,22 +24,31 @@ const {
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const ogImage = new URL(image, Astro.site).href;
 
-// LocalBusiness structured data — one studio, Leeds, so search engines can
-// surface hours-independent rich results and local-pack eligibility.
+// Indexing is opt-out only for non-production Netlify builds (deploy previews,
+// branch deploys). Netlify sets CONTEXT=production solely for the production
+// branch's deploy. Local builds (CONTEXT unset) are also noindexed, which is
+// harmless; production is the only context that stays indexable.
+const isProductionBuild = process.env.CONTEXT === 'production';
+const robotsNoindex = noindex || !isProductionBuild;
+
+// ProfessionalService structured data: a Leeds studio working worldwide.
+// Only facts already on the site (no address/phone published).
+const siteUrl = 'https://nodeproduction.co.uk';
 const jsonLd = {
   '@context': 'https://schema.org',
-  '@type': 'MusicGroup',
+  '@type': 'ProfessionalService',
   name: 'Node Production',
   description,
-  url: Astro.site?.href,
-  image: ogImage,
+  url: siteUrl,
+  logo: new URL('/brand/logo-mark.svg', siteUrl).href,
+  image: new URL('/og.jpg', siteUrl).href,
+  priceRange: '££',
   address: {
     '@type': 'PostalAddress',
     addressLocality: 'Leeds',
     addressCountry: 'GB',
   },
   areaServed: 'Worldwide',
-  genre: 'Dance Music',
 };
 ---
 
@@ -51,7 +61,7 @@ const jsonLd = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {robotsNoindex && <meta name="robots" content="noindex, nofollow" />}
 
     <!-- Open Graph (Facebook, WhatsApp, LinkedIn, Instagram) -->
     <meta property="og:type" content="website" />
@@ -60,6 +70,9 @@ const jsonLd = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content="Node Production — electronic music mixing and mastering, Leeds" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
 
     <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -67,35 +80,53 @@ const jsonLd = {
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
 
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32" />
+    <meta name="theme-color" content="#1c1c1a" />
 
-    <!-- Font roles: display (Space Grotesk), mono (JetBrains Mono), body (Inter).
-         Registered in astro.config.mjs; preload the two above-the-fold faces. -->
-    <Font cssVariable="--font-space-grotesk" preload />
-    <Font cssVariable="--font-inter" preload />
-    <Font cssVariable="--font-jetbrains-mono" />
+    <!-- Font roles: display (Archivo 700, 800 for the logo), body (IBM Plex Sans),
+         mono (IBM Plex Mono, real data only; not preloaded).
+         Registered in astro.config.mjs; preload the above-the-fold faces. -->
+    <Font cssVariable="--font-archivo" preload />
+    <Font cssVariable="--font-plex-mono" />
+    <Font cssVariable="--font-plex-sans" />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />
   </head>
 
   <body class="min-h-screen flex flex-col relative">
 
-    <!-- Grain overlay: subtle texture across the whole page, sits behind everything.
-         Same noise recipe used inside the card on the homepage, so the grain matches
-         site-wide instead of using an external asset. -->
-    <div class="page-grain fixed inset-0 pointer-events-none z-0" aria-hidden="true"></div>
-
     <Header />
 
-    <!-- Main Content: z-10 keeps it above the grain overlay -->
     <main class="w-full grow flex flex-col items-center z-10 relative">
       <slot />
     </main>
 
-    <!-- Footer -->
-    <footer class="w-full py-8 mt-12 text-center text-[10px] font-mono tracking-[0.3em] uppercase text-fg-faint border-t border-line-strong z-10 relative">
-      &copy; {new Date().getFullYear()} Node Leeds. All Rights Reserved.
+    <footer class="w-full mt-12 border-t border-line-strong bg-page z-10 relative">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 py-8 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <div class="flex flex-col gap-4">
+          <Logo sub />
+        </div>
+        <nav aria-label="Footer navigation" class="flex flex-wrap gap-x-3 min-[400px]:gap-x-4 sm:gap-x-4 lg:gap-x-6 gap-y-2 font-body text-sm">
+          <a href="/about/" class="text-fg-dim hover:text-fg no-underline hover:underline focus-visible:underline underline-offset-4">About</a>
+          <a href="/services/" class="text-fg-dim hover:text-fg no-underline hover:underline focus-visible:underline underline-offset-4">Services</a>
+          <a href="/prices/" class="text-fg-dim hover:text-fg no-underline hover:underline focus-visible:underline underline-offset-4">Prices</a>
+          <a href="/shop/" class="text-fg-dim hover:text-fg no-underline hover:underline focus-visible:underline underline-offset-4">Shop</a>
+          <a href="/portfolio/" class="text-fg-dim hover:text-fg no-underline hover:underline focus-visible:underline underline-offset-4">Portfolio</a>
+          <a href="/contact/" class="text-fg-dim hover:text-fg no-underline hover:underline focus-visible:underline underline-offset-4">Contact</a>
+        </nav>
+      </div>
+      <div class="border-t border-line">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-col gap-1 sm:flex-row sm:justify-between font-body text-sm text-fg-dim">
+          <span>&copy; {new Date().getFullYear()} Node Leeds. All rights reserved.</span>
+          <span>Leeds, UK (53.80 N, 1.55 W)</span>
+        </div>
+      </div>
     </footer>
+
+  <script>
+    import '../scripts/reveal.ts';
+  </script>
 
   </body>
 </html>

@@ -2,97 +2,85 @@
 import Layout from '../layouts/Layout.astro';
 import SectionFrame from '../components/SectionFrame.astro';
 import SectionHeader from '../components/SectionHeader.astro';
+import PageHero from '../components/PageHero.astro';
 import SuccessPopup from '../components/SuccessPopup.astro';
+import PriceReadout from '../components/PriceReadout.astro';
+import EnquiryUpload from '../components/EnquiryUpload.astro';
 ---
 
 <Layout
-  title="Contact | Start a Project — Node Production"
-  description="Send your dance music project details for a same-day reply. Mixing, mastering and production enquiries welcome."
+  title="Upload your track | Contact — Node Production"
+  description="Upload your dance music track. Mastering is £30 with a 48-hour turnaround. Mixing is quoted per project, ghost production from £250, track finishing from £120."
 >
-  <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-mono">
-    <SectionFrame max="max-w-4xl">
+  <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-body">
+    <SectionFrame>
 
-      <!-- Masthead -->
-      <header class="border-b border-line-strong">
-        <div class="flex items-center justify-between px-4 md:px-5 py-2.5 border-b border-line">
-          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Node // Enquire</span>
-          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Same-day reply</span>
-        </div>
-        <div class="px-4 md:px-8 py-8 md:py-11">
-          <h1 class="font-display font-bold uppercase leading-[0.9] tracking-tight text-fg text-[11vw] md:text-[3.75rem]">
-            Initiate a<br /><span class="text-accent">project.</span>
-          </h1>
-          <p class="mt-5 font-body text-sm text-fg-muted max-w-md leading-relaxed">
-            Send your project details, questions and turnaround. We guarantee a same-day response.
-          </p>
-        </div>
-      </header>
+      <PageHero>
+        <Fragment slot="title">Upload<br />your track.</Fragment>
+        Add your track, pick a service and see the price as you choose. We reply the same day.
+      </PageHero>
 
       <!-- Form + info -->
       <section>
-        <SectionHeader num="03" label="Enquire / There Are No Stupid Questions" />
+        <SectionHeader label="Ask a question" />
         <div class="grid grid-cols-1 md:grid-cols-[1.5fr_1fr] gap-px bg-line-strong">
 
           <!-- Form -->
-          <form name="contact" method="POST" enctype="multipart/form-data" data-netlify="true" data-netlify-honeypot="bot-field" action="/contact?success=true" class="bg-panel p-6 md:p-7 grid grid-cols-1 gap-5">
+          <form id="contact-form" name="contact" method="POST" enctype="multipart/form-data" data-netlify="true" data-netlify-honeypot="bot-field" action="/contact/?success=true" class="bg-ground p-6 md:p-8 grid grid-cols-1 gap-5">
             <!-- Netlify Forms: hidden name field + honeypot (bots fill it, humans don't) -->
             <input type="hidden" name="form-name" value="contact" />
             <p class="hidden"><label>Don't fill this out: <input name="bot-field" /></label></p>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              <div class="flex flex-col gap-2">
-                <label for="name" class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">Name / Artist</label>
-                <input type="text" id="name" name="name" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors" />
+              <div>
+                <label for="name" class="field-label">Name or artist</label>
+                <input type="text" id="name" name="name" required class="field" />
               </div>
-              <div class="flex flex-col gap-2">
-                <label for="email" class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">Email</label>
-                <input type="email" id="email" name="email" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors" />
+              <div>
+                <label for="email" class="field-label">Email</label>
+                <input type="email" id="email" name="email" required class="field" />
               </div>
             </div>
 
-            <div class="flex flex-col gap-2">
-              <label for="service" class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">Service Required</label>
-              <select id="service" name="service" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs uppercase tracking-wider outline-none focus:border-accent transition-colors appearance-none cursor-pointer">
-                <option value="" disabled selected>Select a service...</option>
+            <div>
+              <label for="service" class="field-label">Service</label>
+              <select id="service" name="service" required class="field">
+                <option value="" disabled selected>Select a service</option>
                 <option value="mastering">Mastering</option>
-                <option value="mixing-mastering">Mixing &amp; Mastering</option>
-                <option value="production">Ghost Production</option>
-                <option value="finishing">Finish Your Track</option>
-                <option value="education">Consultation &amp; Education</option>
-                <option value="sound-design">Sound Design</option>
-                <option value="other">Other / Not sure</option>
+                <option value="mixing-mastering">Mixing &amp; mastering</option>
+                <option value="production">Ghost production</option>
+                <option value="finishing">Finish your track</option>
+                <option value="education">Consultation &amp; education</option>
+                <option value="sound-design">Sound design</option>
+                <option value="other">Other or not sure</option>
               </select>
             </div>
 
-            <div class="flex flex-col gap-2">
-              <label for="message" class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint">Project Details</label>
-              <textarea id="message" name="message" rows="6" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors resize-y"></textarea>
-              <p class="font-mono text-[10px] leading-relaxed text-fg-faint">Feel free to attach any rough mix files here. We don&rsquo;t need your stems yet &mdash; you&rsquo;ll be sent a link to upload these when you receive your confirmation email.</p>
+            <PriceReadout />
+
+            <div>
+              <label for="message" class="field-label">Project details</label>
+              <textarea id="message" name="message" rows="6" required class="field resize-y"></textarea>
             </div>
 
-            <button type="submit" class="w-full py-4 bg-accent-dim text-white font-mono font-black text-[12px] uppercase tracking-[0.3em] hover:bg-accent active:translate-y-px transition-all">
-              Send Enquiry
+            <EnquiryUpload columns="one" />
+
+            <p class="font-body text-base font-medium text-fg">This is an enquiry, not an order. Nothing is booked or charged until we confirm.</p>
+
+            <button type="submit" id="contact-submit" class="key key-primary key-sending w-full py-4">
+              <span data-label>Send your track</span>
             </button>
           </form>
 
           <!-- Info -->
-          <aside class="bg-base p-6 md:p-7 flex flex-col gap-6">
+          <aside class="bg-ground p-6 md:p-8 flex flex-col gap-7">
             <div>
-              <span class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint block mb-1.5">Response</span>
-              <span class="font-display text-xl font-bold text-accent leading-none">Same-day</span>
+              <span class="font-body text-sm font-medium text-fg-muted block mb-2">Response</span>
+              <span class="t-h3">Same-day</span>
             </div>
             <div>
-              <span class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint block mb-1.5">Based in</span>
-              <span class="font-display text-xl font-bold text-fg leading-none">Leeds, UK</span>
-              <p class="mt-1 font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint">Working worldwide</p>
-            </div>
-            <div class="mt-auto pt-6 border-t border-line">
-              <span class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint block mb-3">How it works</span>
-              <ol class="space-y-2 font-body text-[12px] text-fg-muted leading-snug">
-                <li><span class="text-accent font-mono mr-2">01</span>Send your request.</li>
-                <li><span class="text-accent font-mono mr-2">02</span>We confirm scope, rate and timeframe.</li>
-                <li><span class="text-accent font-mono mr-2">03</span>Get a link to upload your files.</li>
-                <li><span class="text-accent font-mono mr-2">04</span>Files uploaded &mdash; project delivered within the agreed timeframe.</li>
-              </ol>
+              <span class="font-body text-sm font-medium text-fg-muted block mb-2">Based in</span>
+              <span class="t-h3">Leeds, UK</span>
+              <p class="mt-2 t-note">Working worldwide</p>
             </div>
           </aside>
 
@@ -104,3 +92,28 @@ import SuccessPopup from '../components/SuccessPopup.astro';
 
   <SuccessPopup />
 </Layout>
+
+<script>
+  // Submit feedback only: the native Netlify POST is untouched. The submit event
+  // fires after browser validation passes, so invalid forms never show "Sending".
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const btn = document.getElementById('contact-submit') as HTMLButtonElement | null;
+  const setLabel = (text: string) => {
+    const label = btn?.querySelector('[data-label]');
+    if (label) label.textContent = text;
+  };
+  form?.addEventListener('submit', (e) => {
+    if (e.defaultPrevented) return;
+    if (!btn || btn.classList.contains('is-sending')) return;
+    setLabel('Sending…');
+    btn.classList.add('is-sending');
+    btn.setAttribute('aria-busy', 'true');
+  });
+  // Back/forward cache restore: reset the button.
+  window.addEventListener('pageshow', (e) => {
+    if (!e.persisted || !btn) return;
+    btn.classList.remove('is-sending');
+    btn.removeAttribute('aria-busy');
+    setLabel('Send your track');
+  });
+</script>

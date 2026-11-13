@@ -29,18 +29,18 @@ export interface Product {
 }
 
 export const categories: Category[] = [
-  { id: 'vst',         label: 'VSTs',         hex: '#a855f7', wire: 'bg-purple-500', glow: 'shadow-[0_0_8px_rgba(168,85,247,0.9)]' },
-  { id: 'rack',        label: 'Racks',        hex: '#2f6fed', wire: 'bg-accent',     glow: 'shadow-[0_0_8px_rgba(47,111,237,0.9)]' },
-  { id: 'template',    label: 'Templates',    hex: '#22c55e', wire: 'bg-green-500',  glow: 'shadow-[0_0_8px_rgba(34,197,94,0.9)]' },
-  { id: 'sample-pack', label: 'Sample Packs', hex: '#f97316', wire: 'bg-orange-500', glow: 'shadow-[0_0_8px_rgba(249,115,22,0.9)]' },
+  { id: 'vst',         label: 'VSTs',         hex: '#a08cb4', wire: 'bg-ch-tools',      glow: '' },
+  { id: 'rack',        label: 'Racks',        hex: '#e3a83b', wire: 'bg-ch-mastering',  glow: '' },
+  { id: 'template',    label: 'Templates',    hex: '#a8b25a', wire: 'bg-ch-education',  glow: '' },
+  { id: 'sample-pack', label: 'Sample Packs', hex: '#d78d5c', wire: 'bg-ch-analysis',   glow: '' },
 ];
 
 export const products: Product[] = [
   {
     num: '01', title: 'Nodegen', slug: 'nodegen-vst', category: 'vst',
-    tagline: 'Analog-Style Stab Synth',
+    tagline: 'Analog-style stab synth',
     price: 'TBA', priceNote: 'coming soon',
-    badge: 'Coming Soon',
+    badge: 'Coming soon',
     detail: 'A stab synth built around an analog synth workflow. Outputs audio straight from a sample-based oscillator, with the option to save MIDI. Perfect for making classic minimal house stabs.',
     features: [
       'Analog synth workflow, tuned for stab writing.',
@@ -59,8 +59,8 @@ export const products: Product[] = [
   },
   {
     num: '02', title: 'Node Pack 001', slug: 'node-pack-001', category: 'sample-pack',
-    tagline: 'Sample Pack / Vol. 1',
-    price: '£10', priceNote: 'royalty-free, one-time',
+    tagline: 'Sample pack, volume 1',
+    price: 'TBA', priceNote: 'price to be confirmed',
     badge: 'New',
     detail: 'The first Node sample pack: drums, one-shots and loops pulled from the same sessions behind our releases. Mixed and tagged, ready to drop straight into a project.',
     features: [
@@ -75,14 +75,14 @@ export const products: Product[] = [
       { label: 'Licence', value: 'Royalty-free' },
       { label: 'DAW', value: 'Any' },
     ],
-    image: '/products/nodepack001.png',
+    image: '/products/nodepack001-palette.png',
     preview: '', // add embed URL, e.g. 'https://w.soundcloud.com/player/?url=...' or Spotify track embed
   },
   {
     num: '03', title: 'Nodescope', slug: 'nodescope-vst', category: 'vst',
-    tagline: 'Analog-Style Visual Analyser',
+    tagline: 'Analog-style visual analyser',
     price: 'TBA', priceNote: 'coming soon',
-    badge: 'Coming Soon',
+    badge: 'Coming soon',
     detail: 'Nodescope is on the way. A new Node VST built to sit in the same workflow as Nodegen. Full details, pricing and preview land at launch.',
     features: [
       'Details revealed at launch.',
@@ -98,9 +98,9 @@ export const products: Product[] = [
   },
   {
     num: '04', title: 'Node Pack 002', slug: 'node-pack-002', category: 'sample-pack',
-    tagline: 'Sample Pack / Vol. 2',
+    tagline: 'Sample pack, volume 2',
     price: 'TBA', priceNote: 'coming soon',
-    badge: 'Coming Soon',
+    badge: 'Coming soon',
     detail: 'The second Node sample pack. More drums, one-shots and loops from the same sessions behind our releases. Full contents and pricing land at launch.',
     features: [
       'Contents revealed at launch.',

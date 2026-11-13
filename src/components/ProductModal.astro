@@ -5,62 +5,59 @@
 // now — Stripe Checkout gets wired to `#modal-buy` later.
 ---
 
-<div id="product-modal" class="fixed inset-0 z-50 hidden items-center justify-center px-4 py-8 font-mono" role="dialog" aria-modal="true" aria-labelledby="pmodal-title">
-  <div id="pmodal-backdrop" class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
+<div id="product-modal" class="fixed inset-0 z-50 hidden items-center justify-center px-4 py-8 font-body" role="dialog" aria-modal="true" aria-labelledby="pmodal-title">
+  <div id="pmodal-backdrop" class="absolute inset-0 anim-backdrop" style="background: rgba(16,16,14,0.86)"></div>
 
-  <div class="relative z-10 w-full max-w-lg bg-base border border-line-strong shadow-[0_20px_60px_rgba(0,0,0,0.7)] max-h-full overflow-y-auto">
-    <div class="flex items-center justify-between px-5 py-3 border-b border-line-strong bg-panel">
-      <div class="flex items-center gap-3">
-        <span id="pmodal-num" class="text-accent font-mono text-xs font-bold">01</span>
-        <span class="text-fg-faint font-mono text-[10px] uppercase tracking-[0.35em]">Product Detail</span>
-      </div>
-      <button id="pmodal-close" type="button" aria-label="Close" class="w-7 h-7 flex items-center justify-center border border-line-strong text-fg-faint hover:text-accent hover:border-accent transition-colors text-sm leading-none">&times;</button>
+  <div class="anim-panel relative z-10 w-full max-w-lg bg-ground border border-line-strong max-h-full overflow-y-auto">
+    <div class="flex items-center justify-end px-5 py-3 border-b border-line-strong bg-panel">
+      <button id="pmodal-close" type="button" aria-label="Close" class="w-8 h-8 flex items-center justify-center border border-line-strong text-fg-dim hover:text-fg hover:border-fg text-sm leading-none">&times;</button>
     </div>
 
-    <div class="p-6 md:p-8 flex flex-col gap-5">
-      <div class="flex items-center gap-3">
-        <span id="pmodal-dot" class="w-3 h-3 rounded-full shrink-0"></span>
+    <div class="p-6 md:p-8 flex flex-col gap-6">
+      <div class="flex items-start gap-3">
+        <span id="pmodal-dot" class="w-3 h-3 mt-1.5 shrink-0 border border-fg-dim"></span>
         <div>
-          <h2 id="pmodal-title" class="font-display text-2xl font-bold uppercase tracking-tight text-fg leading-none">Nodegen</h2>
-          <p id="pmodal-tagline" class="mt-1.5 font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint">Chord Generator / Stab Sequencer</p>
+          <h2 id="pmodal-title" class="font-display text-[1.75rem] font-bold tracking-[-0.015em] text-fg leading-[1.15]">Nodegen</h2>
+          <p id="pmodal-tagline" class="mt-2 font-body text-sm text-fg-dim">Chord generator and stab sequencer</p>
         </div>
       </div>
 
-      <div id="pmodal-cover" class="aspect-[16/10] w-full bg-inset border border-line grain-overlay-dark relative overflow-hidden flex items-center justify-center">
-        <img id="pmodal-image" src="" alt="" class="w-full h-full object-contain hidden" />
-        <span id="pmodal-cover-label" class="font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint/40">Cover art</span>
+      <div id="pmodal-cover" class="aspect-[16/10] w-full bg-inset border border-cell-line relative overflow-hidden flex items-center justify-center">
+        <img id="pmodal-image" alt="" class="w-full h-full object-contain hidden" />
+        <span id="pmodal-cover-label" class="font-body text-sm text-fg-faint">Cover art</span>
+        <div id="pmodal-cover-svg" class="hidden h-full aspect-square"></div>
       </div>
 
       <div id="pmodal-preview" class="hidden flex-col gap-3">
-        <span class="font-mono text-[9px] uppercase tracking-[0.3em] text-accent block">Preview</span>
-        <iframe id="pmodal-preview-frame" title="Audio preview" src="" width="100%" height="152" style="border-radius:12px" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <span class="font-body text-sm font-medium text-fg-muted block">Preview</span>
+        <iframe id="pmodal-preview-frame" title="Audio preview" width="100%" height="152" style="border-radius:0" frameborder="0" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       </div>
 
-      <p id="pmodal-detail" class="font-body text-sm leading-relaxed text-fg-muted"></p>
+      <p id="pmodal-detail" class="font-body text-base leading-relaxed text-fg-muted"></p>
 
-      <div class="flex items-end justify-between border-t border-line pt-4">
+      <div class="flex items-end justify-between gap-4 border-t border-line pt-5">
         <div>
-          <span class="font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint block">Price</span>
-          <span id="pmodal-price" class="font-display text-3xl font-bold text-accent leading-none">£15</span>
+          <span class="font-body text-sm font-medium text-fg-muted block mb-1">Price</span>
+          <span id="pmodal-price" class="font-display text-3xl font-bold tracking-[-0.02em] text-fg leading-none">£15</span>
         </div>
-        <span id="pmodal-note" class="font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint text-right max-w-[50%]"></span>
+        <span id="pmodal-note" class="t-note text-right max-w-[55%]"></span>
       </div>
 
-      <div class="border-t border-line pt-4">
-        <span class="font-mono text-[9px] uppercase tracking-[0.3em] text-accent block mb-3">What's inside</span>
+      <div class="border-t border-line pt-5">
+        <span class="font-body text-sm font-medium text-fg-muted block mb-3">What's inside</span>
         <ul id="pmodal-features" class="flex flex-col gap-2.5"></ul>
       </div>
 
-      <div class="border-t border-line pt-4">
-        <span class="font-mono text-[9px] uppercase tracking-[0.3em] text-accent block mb-3">Specs</span>
+      <div class="border-t border-line pt-5">
+        <span class="font-body text-sm font-medium text-fg-muted block mb-3">Specs</span>
         <ul id="pmodal-meta" class="flex flex-col gap-2"></ul>
       </div>
 
-      <button id="pmodal-buy" type="button" disabled class="w-full text-center py-4 bg-raised text-fg-faint font-mono font-black text-[12px] uppercase tracking-[0.3em] cursor-not-allowed">
-        Buy &mdash; Coming Soon
+      <button id="pmodal-buy" type="button" disabled class="key w-full py-4 text-center">
+        Buy: coming soon
       </button>
-      <a href="/contact" class="w-full text-center font-mono text-[10px] uppercase tracking-[0.25em] text-fg-faint hover:text-accent transition-colors">
-        Questions? Get in touch &rarr;
+      <a href="/contact/" class="w-full text-center font-body text-sm text-fg-muted hover:text-fg no-underline hover:underline focus-visible:underline underline-offset-4">
+        Questions? Get in touch
       </a>
     </div>
   </div>
@@ -89,22 +86,34 @@
       setText('pmodal-price', d.price || '');
       setText('pmodal-note', d.note || '');
 
+      // Category colour shows as a filled square cell (no glow).
       const dot = document.getElementById('pmodal-dot');
       if (dot && d.hex) {
         dot.style.background = d.hex;
-        dot.style.boxShadow = `0 0 8px ${d.hex}`;
+        dot.style.borderColor = d.hex;
       }
 
       const img = document.getElementById('pmodal-image') as HTMLImageElement | null;
       const coverLabel = document.getElementById('pmodal-cover-label');
+      const coverSvgHost = document.getElementById('pmodal-cover-svg');
+      const cardSvg = card.querySelector('.product-cover svg');
+      if (coverSvgHost) {
+        coverSvgHost.innerHTML = '';
+        if (!d.image && cardSvg) coverSvgHost.appendChild(cardSvg.cloneNode(true));
+        coverSvgHost.classList.toggle('hidden', !(!d.image && cardSvg));
+        coverSvgHost.querySelector('svg')?.setAttribute('class', 'block w-full h-full');
+      }
       if (img && coverLabel) {
-        if (d.image) {
+        if (!d.image && cardSvg) {
+          img.classList.add('hidden');
+          coverLabel.classList.add('hidden');
+        } else if (d.image) {
           img.src = d.image;
           img.alt = d.title || '';
           img.classList.remove('hidden');
           coverLabel.classList.add('hidden');
         } else {
-          img.src = '';
+          img.removeAttribute('src');
           img.classList.add('hidden');
           coverLabel.classList.remove('hidden');
         }
@@ -131,9 +140,9 @@
         try { features = JSON.parse(d.features || '[]'); } catch { features = []; }
         for (const feature of features) {
           const li = document.createElement('li');
-          li.className = 'flex gap-2.5 font-body text-[12px] leading-snug text-fg-muted';
+          li.className = 'flex gap-2.5 font-body text-base leading-snug text-fg-muted';
           const mark = document.createElement('span');
-          mark.className = 'text-accent shrink-0 mt-px';
+          mark.className = 'text-fg-dim shrink-0 mt-px font-body';
           mark.textContent = '+';
           const text = document.createElement('span');
           text.textContent = feature;
@@ -149,12 +158,12 @@
         try { meta = JSON.parse(d.meta || '[]'); } catch { meta = []; }
         for (const row of meta) {
           const li = document.createElement('li');
-          li.className = 'flex justify-between font-mono text-[11px] uppercase tracking-wide text-fg-muted';
+          li.className = 'flex justify-between gap-4 border-b border-line pb-2 font-body text-base text-fg-muted';
           const label = document.createElement('span');
-          label.className = 'text-fg-faint';
+          label.className = 'text-fg-dim';
           label.textContent = row.label;
           const value = document.createElement('span');
-          value.className = 'font-bold';
+          value.className = 'font-medium text-fg text-right';
           value.textContent = row.value;
           li.append(label, value);
           metaList.appendChild(li);

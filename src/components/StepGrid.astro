@@ -1,0 +1,24 @@
+---
+// The signature motif: a 2×16 step-sequencer grid carrying the Node pattern.
+// A = armed (orange, always step 1), C = cream, G = grey, . = empty cell.
+// The pattern is the logo grid. Do not alter it.
+const NODE_PATTERN = ['A...C.....C.C...', '..G...G.G..C..G.'];
+
+interface Props {
+  rows?: string[];
+  fluid?: boolean;
+  playing?: boolean;
+  arm?: boolean;
+  class?: string;
+}
+const { rows = NODE_PATTERN, fluid = false, playing = false, arm = false, class: cls = '' } = Astro.props;
+const steps = Math.max(...rows.map((r) => r.length));
+const kind: Record<string, string> = { A: 'is-step', C: 'is-cream', G: 'is-grey' };
+---
+<div data-reveal class:list={['flex flex-col', fluid ? 'seq-rows-fluid' : '', cls]} style="gap: var(--cell-gap)" aria-hidden="true">
+  {rows.map((row) => (
+    <div class:list={['seq', { 'seq-fluid': fluid, 'is-playing': playing, 'seq-arm': arm }]} style={`--steps:${steps}`}>
+      {[...row].map((ch) => <span class:list={['seq-cell', kind[ch]]}></span>)}
+    </div>
+  ))}
+</div>

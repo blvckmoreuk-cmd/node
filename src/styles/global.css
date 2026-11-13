@@ -1,150 +1,433 @@
 @import "tailwindcss";
 
 /* =========================================
-   DESIGN TOKENS
-   Single source of truth for colour, type, spacing and radius.
-   Font cssVariables are registered in astro.config.mjs and emitted
-   by the Font tags in Layout.astro.
+   NODE PRODUCTION — "SEQUENCER" DESIGN SYSTEM
+   Warm charcoal ground, cream type, square cells, and a single orange-red
+   "armed step" per region. Hardware step-sequencer language: hairline outlines,
+   sentence-case IBM Plex Sans labels, Archivo 700 headings.
+   Font cssVariables are registered in astro.config.mjs and emitted by the
+   Font tags in Layout.astro.
    ========================================= */
 @theme {
-  /* Surfaces: obsidian-black studio at night. Page is pure black, modules are
-     near-black plates that lift off it. */
-  --color-page: #0c0e11;
-  --color-base: #171a20;
-  --color-panel: #1b1f26;
-  --color-inset: #121519;
-  --color-raised: #23272f;
-  --color-tint: #191d23;
-  --color-line: #21262e;
-  --color-line-strong: #333a44;
+  /* Surfaces: warm charcoal, deepest -> lifted */
+  --color-page: #1c1c1a;
+  --color-ground: #1c1c1a;
+  --color-panel: #222220;
+  --color-inset: #151513;
+  --color-raised: #2a2a27;
+  --color-line: #2c2b28;
+  --color-line-strong: #3b3a36;
 
-  /* Text: clean white ink down to a light grey and a dim slate */
-  --color-fg: #ffffff;
-  --color-fg-muted: #e0e3e8;
-  --color-fg-faint: #7d8794;
+  /* Foreground: cream tiers */
+  --color-fg: #f2ede3;
+  --color-fg-muted: #cdc7ba;
+  --color-fg-dim: #a29d92;
+  --color-fg-faint: #918c82; /* >=4.5:1 on page, panel and inset (small mono text) */
 
-  /* Accent: cobalt signature. `accent` is the vivid cobalt used for labels,
-     dots, borders and glows so they stay legible on black; `accent-dim` is the
-     deep cobalt CTA fill. */
-  --color-accent: #2f6fed;
-  --color-accent-bright: #5a8ff5;
-  --color-accent-dim: #0d47a1;
+  /* The armed step: the one accent. Text on an orange fill is charcoal (4.8:1);
+     cream on orange fails contrast. */
+  --color-accent: #e8552a;
+  --color-accent-bright: #f26c43;
+  --color-accent-dim: #a83d1e;
+  --color-accent-ink: #1c1c1a;
+
+  /* Sequencer cells */
+  --color-cell-grey: #6b6862;
+  --color-cell-line: #4a4844;
+
+  /* Service channels: warm hues, hairline rules / cells / small squares only */
+  --color-ch-mastering: #e3a83b;
+  --color-ch-mixing: #8aa69a;
+  --color-ch-production: #d0483a;
+  --color-ch-education: #a8b25a;
+  --color-ch-tools: #a08cb4;
+  --color-ch-analysis: #d78d5c;
 
   /* Type roles */
-  --font-display: var(--font-space-grotesk), "Space Grotesk", sans-serif;
-  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
-  --font-body: var(--font-inter), "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-plex-mono), "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-body: var(--font-plex-sans), "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
 
-  /* Radius: one system, 4px controls and 8px panels */
-  --radius-control: 4px;
-  --radius-panel: 8px;
+  /* Square everywhere */
+  --radius-control: 0px;
+  --radius-panel: 0px;
 
-  /* Spacing on an 8pt scale; numeric p-* and gap-* utilities map to the
-     same grid, so p-4 is 16, p-8 is 32 and gap-16 is 64 */
-  --spacing-card: 16px;
-  --spacing-section: 32px;
-  --spacing-gap: 64px;
+  /* Tracking ladder */
+  --tracking-lockup: 0.62em;
+
+  /* Layout */
+  --spacing-card: 24px;
+  --spacing-section: 48px;
+  --spacing-gap: 96px;
+
+  /* Cell geometry */
+  --cell: 14px;
+  --cell-gap: 6px;
 }
 
 @layer base {
+  html { background-color: var(--color-page); }
   body {
     background-color: var(--color-page);
     color: var(--color-fg-muted);
     font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
   }
+  ::selection { background: var(--color-accent); color: var(--color-accent-ink); }
+  :focus-visible { outline: 1px solid var(--color-accent); outline-offset: 3px; }
+  button, a, input, select, textarea { border-radius: 0; }
+  button { cursor: pointer; }
 }
 
-/* =========================================
-   SHARED COMPONENT TEXTURES
-   Used across Header.astro, index.astro, and any future page that needs
-   the same brass/dark-panel look. One copy here so nothing drifts.
-   ========================================= */
 @layer components {
 
-  /* ---- Noise/grain overlays ---- */
-  .grain-overlay,
-  .page-grain {
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 0 0 0 0.5 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-    background-size: 120px 120px;
-    mix-blend-mode: overlay;
+  /* ---- Typography primitives ---- */
+  .t-display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    color: var(--color-fg);
   }
-  .grain-overlay { opacity: 0.05; }
-  .page-grain { opacity: 0.04; }
+  .t-h3 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.375rem;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+    color: var(--color-fg);
+  }
+  .t-note {
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    color: var(--color-fg-dim);
+  }
+  .t-data { font-family: var(--font-mono); font-size: 0.875rem; }
 
-  .grain-overlay-dark {
-    position: relative;
+  /* ---- Keys (buttons). Primary = the armed step. ---- */
+  .key {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    min-height: 3rem;
+    padding: 0.95rem 1.5rem;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 1rem;
+    text-transform: none;
+    letter-spacing: normal;
+    border: 1px solid var(--color-line-strong);
+    background: transparent;
+    color: var(--color-fg);
+    text-decoration: none;
+    transition: background-color 0s steps(1), color 0s steps(1), border-color 0s steps(1), transform 120ms ease-out;
   }
-  .grain-overlay-dark::before {
+  @media (hover: hover) { .key:hover { border-color: var(--color-fg); } }
+  .key:active { transform: scale(0.97); }
+  .key-primary {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-accent-ink);
+  }
+  .key-primary:hover { background: var(--color-accent-bright); border-color: var(--color-accent-bright); }
+  .key:disabled, .key[disabled] {
+    background: var(--color-raised);
+    border-color: var(--color-raised);
+    color: var(--color-fg-faint);
+    cursor: not-allowed;
+  }
+
+  /* ---- Form fields: recessed wells with hairline edges ---- */
+  .field {
+    width: 100%;
+    background: var(--color-inset);
+    border: 1px solid var(--color-line-strong);
+    padding: 0.8rem 1rem;
+    color: var(--color-fg);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    letter-spacing: normal;
+    outline: none;
+    transition: border-color 0s steps(1);
+  }
+  .field:hover { border-color: var(--color-cell-grey); }
+  .field:focus { border-color: var(--color-accent); }
+  .field-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-transform: none;
+    letter-spacing: normal;
+    color: var(--color-fg-muted);
+  }
+  select.field {
+    appearance: none;
+    cursor: pointer;
+    background-image: linear-gradient(45deg, transparent 50%, var(--color-fg-dim) 50%), linear-gradient(135deg, var(--color-fg-dim) 50%, transparent 50%);
+    background-position: calc(100% - 18px) 55%, calc(100% - 13px) 55%;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+    padding-right: 2.5rem;
+  }
+
+  /* ---- Step-sequencer cells (the signature motif) ---- */
+  .seq {
+    display: grid;
+    grid-template-columns: repeat(var(--steps, 16), var(--cell));
+    gap: var(--cell-gap);
+  }
+  .seq-cell {
+    display: block;
+    width: var(--cell);
+    height: var(--cell);
+    box-sizing: border-box;
+    border: 1px solid var(--color-cell-line);
+    background: transparent;
+  }
+  .seq-cell.is-step  { background: var(--color-accent);    border-color: var(--color-accent); }
+  .seq-cell.is-cream { background: var(--color-fg);        border-color: var(--color-fg); }
+  .seq-cell.is-grey  { background: var(--color-cell-grey); border-color: var(--color-cell-grey); }
+
+  .seq.is-playing { position: relative; }
+  .seq.is-playing::after {
     content: "";
     position: absolute;
-    inset: 0;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0, 0 0 0 0 0, 0 0 0 0 0, 0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
-    background-size: 120px 120px;
-    mix-blend-mode: overlay;
-    opacity: 0.06;
+    top: -4px; bottom: -4px;
+    width: var(--cell);
+    border-left: 1px solid var(--color-accent);
+    border-right: 1px solid var(--color-accent);
+    animation: seq-playhead calc(var(--steps, 16) * 0.125s) steps(var(--steps, 16)) infinite;
     pointer-events: none;
   }
-
-  /* ---- Brushed metal: brass header plate + service-card fronts ---- */
-  .brushed-metal::before,
-  .brushed-metal::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-  .brushed-metal::before {
-    background-image: repeating-linear-gradient(91deg, rgba(0,0,0,0.18) 0px, rgba(0,0,0,0.18) 1px, transparent 1px, transparent 3px);
-    mix-blend-mode: multiply;
-  }
-  .brushed-metal::after {
-    background-image: radial-gradient(140% 60% at 30% -10%, rgba(255,255,255,0.35) 0%, transparent 55%);
-  }
-
-  /* ---- Volume knob knurled ring ---- */
-  .knob-knurl {
-    background-image: repeating-conic-gradient(
-      rgba(0,0,0,0.55) 0deg 2deg,
-      rgba(255,255,255,0.18) 2deg 4deg
-    );
-  }
+  .seq-arm .seq-cell { animation: seq-arm 0.24s steps(1) both; }
+  .seq-arm .seq-cell:nth-child(2)  { animation-delay: 0.05s; }
+  .seq-arm .seq-cell:nth-child(3)  { animation-delay: 0.10s; }
+  .seq-arm .seq-cell:nth-child(4)  { animation-delay: 0.15s; }
+  .seq-arm .seq-cell:nth-child(5)  { animation-delay: 0.20s; }
+  .seq-arm .seq-cell:nth-child(6)  { animation-delay: 0.25s; }
+  .seq-arm .seq-cell:nth-child(7)  { animation-delay: 0.30s; }
+  .seq-arm .seq-cell:nth-child(8)  { animation-delay: 0.35s; }
 
   /* ---- Particle colour picker (visualiser) ---- */
   input[type="color"] {
     -webkit-appearance: none;
     appearance: none;
-    border: 1px solid #2b323c;
+    border: 1px solid var(--color-line-strong);
     padding: 0;
+    border-radius: 0;
   }
-  input[type="color"]::-webkit-color-swatch-wrapper {
-    padding: 0;
-  }
-  input[type="color"]::-webkit-color-swatch {
-    border: none;
-    border-radius: 2px;
-  }
-  input[type="color"]::-moz-color-swatch {
-    border: none;
-    border-radius: 2px;
+  input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
+  input[type="color"]::-webkit-color-swatch { border: none; border-radius: 0; }
+  input[type="color"]::-moz-color-swatch { border: none; border-radius: 0; }
+
+  /* ---- Hero service line, credits strip, marquees (home) ---- */
+  .svc-line { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--color-line-strong); text-align: center; margin-inline: auto; max-width: 52rem; }
+  .svc-line li { padding: 0.75rem 0.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.15rem; border-top: 1px solid var(--color-line-strong); }
+  .svc-line li:nth-child(-n+2) { border-top: 0; }
+  .svc-line li:nth-child(even) { border-left: 1px solid var(--color-line-strong); }
+  .svc-line .n { font-size: 0.875rem; color: var(--color-fg-dim); line-height: 1.3; }
+  .svc-line .p { font-family: var(--font-display); font-weight: 700; font-size: 1.125rem; letter-spacing: -0.01em; color: var(--color-fg); line-height: 1.2; }
+  @media (min-width: 768px) {
+    .svc-line { grid-template-columns: repeat(4, 1fr); }
+    .svc-line li { border-top: 0 !important; border-left: 1px solid var(--color-line-strong); padding: 0.9rem 1rem; }
+    .svc-line li:first-child { border-left: 0; }
+    .svc-line .p { font-size: 1.375rem; }
   }
 
-  /* ---- Client marquee (homepage, under the masthead) ----
-     Track holds the client list twice; translating it -50% loops seamlessly. */
-  .marquee-track {
-    display: flex;
-    width: max-content;
-    animation: marquee 84s linear infinite;
+  .credits { display: grid; grid-template-columns: 1fr; border-bottom: 1px solid var(--color-line-strong); }
+  .credits li { display: flex; align-items: center; padding: 0.7rem 1rem; font-size: 0.875rem; line-height: 1.3; color: var(--color-fg-muted); }
+  .credits li + li { border-top: 1px solid var(--color-line-strong); }
+  .nowrap { white-space: nowrap; }
+  @media (min-width: 768px) {
+    .credits { grid-template-columns: repeat(6, 1fr); }
+    .credits li { padding: 0.8rem 1rem; grid-column: span 2; }
+    .credits li:nth-child(n+4) { grid-column: span 3; border-top: 1px solid var(--color-line-strong); }
+    .credits li:nth-child(4) { border-left: 0; }
+    .credits li + li { border-top: 0; border-left: 1px solid var(--color-line-strong); }
+    .credits li:nth-child(n+4) { border-top: 1px solid var(--color-line-strong); }
   }
-  .marquee-track:hover {
-    animation-play-state: paused;
+  @media (min-width: 1100px) {
+    .credits { grid-template-columns: repeat(5, 1fr); }
+    .credits li, .credits li:nth-child(n+4) { grid-column: auto; border-top: 0; padding: 0.8rem 1.25rem; }
+    .credits li + li { border-left: 1px solid var(--color-line-strong); }
   }
+
+  .name-marquee { border-bottom: 1px solid var(--color-line-strong); background: var(--color-inset); overflow: hidden; position: relative; }
+  .marquee-track { display: flex; width: max-content; animation: marquee 84s linear infinite; padding: 0.875rem 0; }
+  .name-list { display: flex; }
+  .name-list li { display: flex; align-items: center; white-space: nowrap; padding: 0 1.25rem; font-size: 0.875rem; line-height: 1.4; color: var(--color-fg-muted); }
+  .name-list .pip { width: 6px; height: 6px; border: 1px solid var(--color-cell-line); margin-right: 1.25rem; }
+  @media (min-width: 768px) { .name-list li { padding: 0 1.75rem; } .name-list .pip { margin-right: 1.75rem; } }
+  .logo-marquee { display: flex; align-items: stretch; height: 56px; overflow: hidden; border-bottom: 1px solid var(--color-line-strong); background: var(--color-page); }
+  .logo-marquee-label { display: none; align-items: center; padding: 0 1.5rem; border-right: 1px solid var(--color-line-strong); white-space: nowrap; font-size: 0.875rem; color: var(--color-fg-muted); }
+  @media (min-width: 768px) { .logo-marquee-label { display: flex; } }
+  .logo-marquee-viewport { flex: 1; min-width: 0; overflow: hidden; display: flex; align-items: center; }
+  .logo-marquee-track { display: flex; width: max-content; animation: marquee 40s linear infinite; }
+  .logo-marquee-list { display: flex; align-items: center; }
+  .logo-marquee-item { display: flex; align-items: center; height: 56px; padding: 0 1.75rem; }
+  .logo-marquee-item img { height: 28px; width: auto; max-width: 96px; object-fit: contain; filter: grayscale(1); opacity: 0.8; }
   @media (prefers-reduced-motion: reduce) {
     .marquee-track { animation: none; }
+    .name-list[aria-hidden="true"] { display: none; }
+    .logo-marquee { height: auto; }
+    .logo-marquee-track { width: auto; animation: none; }
+    .logo-marquee-list[data-copy="1"] { display: none; }
+    .logo-marquee-list { flex-wrap: wrap; }
+    .logo-marquee-item { height: 48px; padding: 0 1.25rem; }
   }
 
+  /* ---- Fluid grid: cells scale with the container (hero lockup) ---- */
+  .seq-fluid {
+    grid-template-columns: repeat(var(--steps, 16), minmax(0, 1fr));
+    gap: clamp(3px, 0.9vw, 8px);
+  }
+  .seq-fluid .seq-cell { width: auto; height: auto; aspect-ratio: 1; }
+
+  /* ---- Hero sequencer band: full-width fluid grid + CSS-only stepping playhead ---- */
+  .hero-band { --g: clamp(3px, 0.9vw, 8px); position: relative; }
+  /* The playhead lives in an overlay grid with the SAME column template and gap as
+     .seq-fluid, so it occupies the exact track of each cell and snaps to the same
+     pixels. It jumps cell to cell via discrete grid-column keyframes (step-end), not a % translate. */
+  .hero-playhead-track {
+    position: absolute; top: 0; bottom: 0; left: 0; right: 0;
+    display: grid;
+    grid-template-columns: repeat(16, minmax(0, 1fr));
+    gap: var(--g);
+    pointer-events: none;
+  }
+  .hero-playhead {
+    grid-column: 1; grid-row: 1;
+    box-sizing: border-box;
+    border: 0;
+    outline: 0;
+    box-shadow: inset 0 0 0 1px var(--color-accent);
+    background: rgb(232 85 42 / 0.1);
+    animation: hero-step 4s step-end infinite;
+  }
+
+  /* ---- Scrub bar: 32 step segments ---- */
+  .scrub-steps {
+    background-image: repeating-linear-gradient(to right, transparent 0, transparent calc(100% / 32 - 2px), var(--color-inset) calc(100% / 32 - 2px), var(--color-inset) calc(100% / 32));
+    background-size: 100% 100%;
+  }
 }
 
 @keyframes marquee {
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes seq-playhead {
+  from { left: 0; }
+  to   { left: calc(var(--steps, 16) * (var(--cell) + var(--cell-gap))); }
+}
+@keyframes seq-arm {
+  from { background: transparent; border-color: var(--color-cell-line); }
+}
+@keyframes hero-step {
+  0% { grid-column-start: 1; }
+  6.25% { grid-column-start: 2; }
+  12.5% { grid-column-start: 3; }
+  18.75% { grid-column-start: 4; }
+  25% { grid-column-start: 5; }
+  31.25% { grid-column-start: 6; }
+  37.5% { grid-column-start: 7; }
+  43.75% { grid-column-start: 8; }
+  50% { grid-column-start: 9; }
+  56.25% { grid-column-start: 10; }
+  62.5% { grid-column-start: 11; }
+  68.75% { grid-column-start: 12; }
+  75% { grid-column-start: 13; }
+  81.25% { grid-column-start: 14; }
+  87.5% { grid-column-start: 15; }
+  93.75% { grid-column-start: 16; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-playhead { animation: none; }
+  .seq.is-playing::after,
+  .seq-arm .seq-cell { animation: none; }
+}
+
+/* ---- Phase 1: page transitions + press feedback (CSS only) ---- */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+
+  ::view-transition-old(root) { animation: none; }
+  ::view-transition-new(root) {
+    animation: page-fade 140ms ease-out both;
+  }
+  @keyframes page-fade {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+}
+
+/* Press states: instant, no shadow */
+.key-primary:active:not(:disabled) { background: #a83d1e; border-color: #a83d1e; }
+.product-card:active { transform: scale(0.99); }
+@media (prefers-reduced-motion: reduce) {
+  .key:active, .product-card:active { transform: none; }
+}
+
+/* ---- Phase 2: scroll reveals (JS marks only below-the-fold items as pending;
+   with JS off or reduced motion nothing is ever hidden) ---- */
+@media (prefers-reduced-motion: no-preference) {
+  [data-reveal-pending] { opacity: 0; }
+  [data-reveal-in] {
+    transition: opacity 180ms ease-out;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal-pending] { opacity: 1; }
+}
+
+/* ---- Phase 3: modals, success popup, form submit (stepped, no bounce) ---- */
+@media (prefers-reduced-motion: no-preference) {
+  /* Open only: the dialogs toggle display:none -> flex, which restarts these.
+     Closing is instant, so it is faster than the 180 ms open. */
+  #service-modal.flex .anim-backdrop,
+  #product-modal.flex .anim-backdrop,
+  #success-popup.flex .anim-backdrop { animation: modal-fade 180ms steps(4, end) both; }
+  #service-modal.flex .anim-panel,
+  #product-modal.flex .anim-panel { animation: modal-rise 180ms steps(4, end) both; }
+  /* Success: rise, then a one-step border flash */
+  #success-popup.flex .anim-panel {
+    animation: modal-rise 180ms steps(4, end) both, modal-flash 120ms steps(1, end) 180ms 1 both;
+  }
+
+  @keyframes modal-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes modal-rise { from { opacity: 0; translate: 0 12px; } to { opacity: 1; translate: 0 0; } }
+  @keyframes modal-flash { from { border-color: var(--color-fg); } to { border-color: var(--color-line-strong); } }
+
+  /* Sending: 16-cell stepped fill along the button base */
+  .key-sending.is-sending { position: relative; overflow: hidden; }
+  .key-sending.is-sending::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 100%;
+    background: repeating-linear-gradient(to right, var(--color-accent-ink) 0, var(--color-accent-ink) calc(100% / 16 - 2px), transparent calc(100% / 16 - 2px), transparent calc(100% / 16));
+    clip-path: inset(0 100% 0 0);
+    animation: send-fill 400ms steps(16, end) forwards;
+  }
+  @keyframes send-fill { to { clip-path: inset(0 0 0 0); } }
+}
+
+/* ---- Mobile menu toggle (phones only). Without JS the nav stays visible. ---- */
+@media (max-width: 639px) {
+  .nav-toggle { display: none; }
+  [data-nav-js] .nav-toggle { display: inline-flex; grid-column: 1 / -1; grid-row: 2; justify-self: center; }
+  [data-nav-js]:not([data-nav-open]) .nav-group { display: none; }
+}
+@media (min-width: 640px) {
+  .nav-toggle { display: none; }
 }

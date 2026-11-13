@@ -4,216 +4,243 @@ import ServiceModal from '../components/ServiceModal.astro';
 import ServiceCard from '../components/ServiceCard.astro';
 import ReviewsCarousel from '../components/ReviewsCarousel.astro';
 import SuccessPopup from '../components/SuccessPopup.astro';
+import EnquiryUpload from '../components/EnquiryUpload.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import PriceReadout from '../components/PriceReadout.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import StepGrid from '../components/StepGrid.astro';
 import { services } from '../data/services';
 
-// Clients scroll continuously under the masthead. Shuffled at build time so the
-// order reads as unranked rather than a leaderboard.
-const clientNames = [
-  'Casmalia', 'Solara', 'Morry', 'Akonite', 'Covert', 'HiFeelings', 'Dankstreet',
-  'Denno', 'Slinki', 'UKF', 'Unique Vibes', 'Motive', 'Teks LV', 'Joe Allen',
-  'TerryBoy', 'Sohl', 'ElTacoFiesta', 'Gold Digger', '3000 Bass',
-  'DMC', 'Mwangi', 'Karellos', 'Wilmore',
+// Hero price line: four cells, prices match services.ts and the Prices page.
+const heroServices = [
+  { name: 'Ghost production', price: 'from £250' },
+  { name: 'Mixing', price: 'from £50' },
+  { name: 'Track finishing', price: 'from £120' },
+  { name: 'Mastering', price: '£30 (48h)' },
 ];
-const clients = [...clientNames].sort(() => Math.random() - 0.5);
+
+// Artist / label names carousel (fixed order, duplicated for the loop).
+const names = [
+  'Casmalia', 'Solara', 'Morry', 'Akonite', 'Covert', 'HiFeelings', 'Dankstreet', 'Denno', 'Slinki', 'UKF',
+  'Unique Vibes', 'Motive', 'Teks LV', 'Joe Allen', 'TerryBoy', 'Sohl', 'ElTacoFiesta', 'Gold Digger',
+  '3000 Bass', 'DMC', 'Mwangi', 'Karellos', 'Wilmore',
+  'JayC', 'Evan Plunkett', 'Doozy', 'Dan Toher', 'DJ Bal-T', 'A-Niche', 'Act On', 'Will Paine', 'Noel Da Costa', 'Blvckmore',
+];
+
+const trusted = [
+  { src: '/logos/3000.jpg', alt: '3000', width: 272, height: 281 },
+  { src: '/logos/awd.jpg', alt: 'AWD', width: 348, height: 189 },
+  { src: '/logos/ukf.jpg', alt: 'UKF', width: 272, height: 281 },
+  { src: '/logos/gs.jpg', alt: 'GS', width: 269, height: 229 },
+  { src: '/logos/gd.jpg', alt: 'GD', width: 328, height: 240 },
+  { src: '/logos/uv.jpg', alt: 'UV', width: 181, height: 243 },
+  { src: '/logos/motive.jpg', alt: 'Motive', width: 423, height: 130 },
+];
 ---
 
 <Layout
   title="Node Production | Electronic Music Mixing & Mastering, Leeds"
   description="Mix, master and ghost production for electronic music. Specialist in House, Techno, Trance, Grime, Garage, Dubstep, DnB, Drill and Trap. Leeds studio working worldwide."
 >
-  <main class="w-full min-h-screen bg-page flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-mono relative overflow-hidden">
+  <div class="w-full flex flex-col items-center px-3 md:px-4 py-6 md:py-12 font-body relative">
 
-    <div id="home-frame" class="w-full max-w-5xl border border-line-strong bg-base relative z-10">
+    <div id="home-frame" class="w-full max-w-6xl relative z-10">
 
       <!-- ===================== MASTHEAD ===================== -->
-      <header class="border-b border-line-strong">
-        <div class="flex items-center justify-between px-4 md:px-5 py-2.5 border-b border-line">
-          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Node // Audio Engineering</span>
-          <span class="font-mono text-[10px] uppercase tracking-[0.3em] text-fg-faint">Leeds, UK</span>
+      <header class="border-b border-line-strong px-4 md:px-8 pt-9 pb-10 md:pt-14 md:pb-14 text-center">
+        <h1 class="t-display text-[clamp(2rem,9vw,2.4rem)] md:text-[3.5rem] max-w-[14ch] md:max-w-[26ch] mx-auto md:text-balance">
+          Simple, professional audio engineering for dance&nbsp;music.
+        </h1>
+        <p class="mt-2.5 md:mt-4 font-body font-medium text-[1.0625rem] md:text-[1.375rem] leading-snug text-fg-dim">No AI.</p>
+        <div class="hero-band mt-7 md:mt-9" aria-hidden="true">
+          <StepGrid fluid rows={['A...C.....C.C...', '..G...G.G..C..G.']} />
+          <div class="hero-playhead-track"><i class="hero-playhead"></i></div>
         </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-5 md:gap-10 items-start px-4 md:px-8 py-5 md:py-8">
-          <h1 class="font-display font-bold uppercase leading-[0.9] tracking-tight text-fg text-[10vw] md:text-[4rem]">
-            Electronic Music<br /><span class="text-accent">Engineering.</span>
-          </h1>
-          <div class="flex flex-col gap-4 md:items-end">
-            <p class="font-body text-sm text-fg-muted max-w-xs md:text-right leading-relaxed">
-              Mix, master and ghost production for electronic music. Based in Leeds, working worldwide.
-            </p>
-            <p class="font-mono text-[10px] uppercase tracking-[0.25em] text-fg-faint max-w-xs md:text-right md:-mr-[0.25em] leading-relaxed">
-              Specialist Genres: House, Techno, Trance, Grime, Garage, Dubstep, DnB, Drill, Trap
-            </p>
-            <div class="flex">
-              <a href="/contact" class="px-6 py-3 bg-accent-dim text-white font-mono font-bold text-[11px] uppercase tracking-[0.2em] hover:bg-accent transition-colors">Start a Project</a>
-              <a href="/prices" class="px-6 py-3 bg-panel border border-line-strong border-l-0 text-fg-muted font-mono font-bold text-[11px] uppercase tracking-[0.2em] hover:text-accent hover:border-accent transition-colors">Rates</a>
-            </div>
-          </div>
+        <ul class="svc-line mt-6 md:mt-8" aria-label="Services and prices">
+          {heroServices.map((s) => (
+            <li><span class="n">{s.name}</span><span class="p">{s.price}</span></li>
+          ))}
+        </ul>
+        <p class="mt-5 md:mt-6 mx-auto max-w-[34rem] font-body text-base md:text-lg text-fg-dim">
+          We ghost produce, mix, finish and master electronic music. Based in Leeds, working worldwide.
+        </p>
+        <div class="mt-5 md:mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-1">
+          <a href="#upload" class="key key-primary">Start a project</a>
+          <a href="/prices/" class="font-body font-medium text-fg-muted hover:text-fg underline underline-offset-4 inline-flex items-center min-h-12">Prices</a>
         </div>
       </header>
 
-      <!-- ===================== CLIENTS MARQUEE ===================== -->
-      <div class="border-b border-line-strong bg-base overflow-hidden relative" aria-label="Clients">
-        <div class="absolute inset-y-0 left-0 w-12 md:w-20 z-10 bg-linear-to-r from-base to-transparent pointer-events-none"></div>
-        <div class="absolute inset-y-0 right-0 w-12 md:w-20 z-10 bg-linear-to-l from-base to-transparent pointer-events-none"></div>
-        <div class="marquee-track py-3">
-          {[...clients, ...clients].map((client) => (
-            <span class="flex items-center whitespace-nowrap px-5 md:px-7 font-mono text-[11px] uppercase tracking-[0.25em] text-fg-muted">
-              <span class="w-1.5 h-1.5 rounded-full bg-accent shadow-[0_0_6px_rgba(47,111,237,0.7)] mr-5 md:mr-7"></span>
-              {client}
-            </span>
-          ))}
+      <!-- ===================== TRUSTED BY (carousel) ===================== -->
+      <div class="logo-marquee" aria-label="Trusted by">
+        <span class="logo-marquee-label">Trusted by</span>
+        <div class="logo-marquee-viewport">
+          <div class="logo-marquee-track">
+            {[0, 1].map((copy) => (
+              <ul class="logo-marquee-list" data-copy={copy} aria-hidden={copy === 1 ? 'true' : undefined}>
+                {trusted.map((logo) => (
+                  <li class="logo-marquee-item"><img src={logo.src} alt={copy === 0 ? logo.alt : ''} width={logo.width} height={logo.height} loading="lazy" /></li>
+                ))}
+              </ul>
+            ))}
+          </div>
         </div>
       </div>
 
-      <!-- ===================== 01 // VISUALISER ===================== -->
+      <!-- ===================== PLAYER ===================== -->
       <section class="border-b border-line-strong">
-        <div class="flex items-center justify-between px-4 md:px-5 py-3 border-b border-line-strong bg-panel">
-          <div class="flex items-center gap-3">
-            <span class="text-accent font-mono text-xs font-bold">01</span>
-            <span class="text-fg-faint font-mono text-[10px] uppercase tracking-[0.35em]">Our Work / Press Play</span>
-          </div>
-          <label class="flex items-center gap-2 cursor-pointer">
-            <span class="text-[9px] font-mono tracking-[0.2em] uppercase text-fg-faint">Particle</span>
-            <input id="particle-color" type="color" value="#2f6fed" class="w-5 h-5 bg-transparent cursor-pointer" />
+        <SectionHeader label="Our work">
+          <label slot="meta" class="flex items-center gap-2 cursor-pointer">
+            <span class="font-body text-sm text-fg-dim">Particle</span>
+            <input id="particle-color" type="color" value="#f2ede3" class="w-6 h-6 bg-transparent cursor-pointer" />
           </label>
-        </div>
+        </SectionHeader>
 
-        <div class="p-4 md:p-5 flex flex-col gap-4">
+        <div class="p-4 md:p-6 flex flex-col gap-4">
 
           <!-- Visualiser: full module width, transport controls overlaid on screen -->
-          <div id="canvas-container" class="w-full h-72 bg-[#030605] border border-black overflow-hidden relative">
-            <div class="absolute inset-0 bg-[radial-gradient(120%_100%_at_50%_0%,rgba(47,111,237,0.07)_0%,transparent_55%)] pointer-events-none z-10"></div>
-            <div class="absolute inset-0 bg-[linear-gradient(rgba(0,0,0,0)_50%,rgba(0,0,0,0.35)_50%)] bg-size-[100%_3px] pointer-events-none z-10 opacity-70"></div>
-            <div class="absolute top-2 left-2 font-mono text-[8px] uppercase tracking-[0.3em] text-accent/70 z-10">RT / Spectrum</div>
+          <div id="canvas-container" class="w-full h-72 bg-inset border border-line-strong overflow-hidden relative">
 
             <!-- Track selector: compact, sits on top of the screen -->
             <div class="absolute top-3 left-3 right-3 sm:left-auto z-20 pointer-events-auto">
               <div class="relative w-full sm:w-80">
-                <select id="track-selector" class="w-full bg-black/65 backdrop-blur-sm border border-accent text-accent pl-3 pr-7 py-2 text-[10px] font-mono font-bold uppercase tracking-wider cursor-pointer outline-none appearance-none rounded-sm shadow-[0_4px_14px_rgba(0,0,0,0.55)]">
+                <select id="track-selector" aria-label="Select track" class="w-full bg-ground border border-line-strong text-fg pl-3 pr-8 py-2.5 text-sm font-body font-medium cursor-pointer outline-none appearance-none rounded-none hover:border-fg focus:border-accent">
                   <option value="/audio/Wanna Feel.mp3">Wanna Feel — Mix/Master</option>
-                  <option value="/audio/some people.mp3">Some People — Full Production</option>
+                  <option value="/audio/be-as-one.mp3">Be As One — Full Production</option>
                   <option value="/audio/shake it.mp3">Shake It — Mix/Master</option>
-                  <option value="/audio/wet-morry.mp3">WET — Master</option>
+                  <option value="/audio/jawani.mp3">Jawani — Full Production</option>
                   <option value="/audio/BE OK.mp3">BE OK — Full Production</option>
+                  <option value="/audio/wet-morry.mp3">WET — Master</option>
                   <option value="/audio/Sure Thing.mp3">Sure Thing — Master</option>
-                  <option value="/audio/playback.mp3">Playback — Full Production</option>
                   <option value="/audio/2HOT.mp3">2HOT — Master</option>
-                  <option value="/audio/soul crush.mp3">Soul Crush — Full Production</option>
-                  <option value="/audio/east.mp3">East — Full Production</option>
+                  <option value="/audio/backroom.mp3">Backroom — Full Production</option>
+                  <option value="/audio/house-demo.mp3">House Demo — Mix/Master</option>
+                  <option value="/audio/heads-will-roll.mp3">Heads Will Roll — Master</option>
                   <option value="/audio/tellmehowtorave-casmalia.mp3">Tell Me How To Rave — Mix/Master</option>
                 </select>
-                <div class="absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none text-accent text-[8px]">&#9660;</div>
+                <div class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-fg-dim text-[8px]">&#9660;</div>
               </div>
             </div>
 
             <!-- Overlay controls: sit on top of the visualiser screen -->
             <div class="absolute bottom-3 left-3 right-3 z-20 flex items-end justify-between gap-3 pointer-events-none">
 
-              <!-- Volume knob -->
-              <div class="flex items-center gap-2 bg-black/45 backdrop-blur-sm border border-line-strong/70 px-2.5 py-1.5 pointer-events-auto">
-                <span class="text-[8px] font-mono uppercase tracking-[0.2em] text-fg-faint">Vol</span>
-                <div class="relative flex items-center justify-center w-10 h-10 shrink-0">
-                  <div id="knob-glow-core" class="absolute w-full h-full rounded-full pointer-events-none opacity-50 mix-blend-screen z-2"></div>
-                  <div class="absolute w-9 h-9 rounded-full bg-[#090b0d] shadow-[0_4px_10px_rgba(0,0,0,0.6)] z-1"></div>
-                  <div id="knob-volume" class="w-8 h-8 rounded-full cursor-ns-resize relative z-10 shadow-[inset_0_2px_2px_rgba(255,255,255,0.2),inset_0_-3px_8px_rgba(0,0,0,0.9)] border border-[#0a0a0a]" style="background: radial-gradient(circle at 50% 10%, #2a313c, #0a0c0f 80%);">
-                    <div class="knob-knurl absolute inset-0 rounded-full opacity-25 mix-blend-overlay"></div>
-                    <div class="absolute inset-1 rounded-full bg-linear-to-b from-[#1c222b] to-[#0a0c0f] shadow-[inset_0_1px_2px_rgba(255,255,255,0.1)] border border-[#050505]"></div>
-                    <div class="knob-rotation-wrapper w-full h-full absolute top-0 left-0 pointer-events-none rounded-full">
-                      <div class="knob-indicator w-0.5 h-3 mx-auto mt-1 rounded-full bg-linear-to-b from-[#f1f5f9] to-[#94a3b8] shadow-[inset_0_1px_2px_rgba(255,255,255,1),inset_0_-1px_2px_rgba(0,0,0,0.5)]"></div>
+              <!-- Volume encoder: square hardware knob + 8-step level meter -->
+              <div class="flex items-center gap-2 sm:gap-3 bg-ground border border-line-strong px-2 sm:px-3 py-2 pointer-events-auto">
+                <span class="font-body text-sm text-fg-dim">Volume</span>
+                <div class="relative w-10 h-10 shrink-0">
+                  <div id="knob-volume" class="w-full h-full relative border border-fg-dim bg-inset cursor-ns-resize">
+                    <div class="knob-rotation-wrapper w-full h-full absolute top-0 left-0 pointer-events-none">
+                      <div class="knob-indicator w-0.5 h-3 mx-auto mt-0.5 bg-fg"></div>
                     </div>
-                    <div id="knob-hit-area" class="absolute inset-0 z-20 rounded-full cursor-grab active:cursor-grabbing"></div>
+                    <div id="knob-hit-area" class="absolute inset-0 z-20 cursor-grab active:cursor-grabbing"></div>
                   </div>
+                </div>
+                <div id="knob-meter" class="grid grid-cols-4 gap-0.5" aria-hidden="true">
+                  {Array.from({ length: 8 }).map(() => <span class="block w-1.5 h-1.5 border border-cell-line"></span>)}
                 </div>
               </div>
 
               <!-- Play / pause -->
-              <button id="play-btn" class="pointer-events-auto px-5 py-2.5 bg-accent-dim text-white font-mono font-black text-[11px] uppercase tracking-[0.2em] border border-accent-dim active:translate-y-px transition-transform shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
-                <span class="relative z-10">Play/Pause</span>
+              <button id="play-btn" aria-label="Play" class="key pointer-events-auto bg-ground !border-fg !px-4 sm:!px-6 shrink-0">
+                <span>Play/Pause</span>
               </button>
             </div>
           </div>
 
-          <!-- Scrub bar -->
-          <div class="p-2.5 bg-[#050505] border border-black">
-            <div id="scrub-container" class="w-full h-2 bg-black cursor-pointer relative overflow-hidden">
-              <div id="scrub-progress" class="h-full bg-accent w-0 shadow-[0_0_10px_rgba(47,111,237,0.7)] relative"></div>
+          <!-- Scrub bar: 32 step segments; the filled steps follow playback -->
+          <div class="border border-line-strong bg-inset p-2.5">
+            <div id="scrub-container" class="w-full h-3 bg-line cursor-pointer relative overflow-hidden">
+              <div id="scrub-progress" class="h-full bg-fg w-0 relative"></div>
+              <div class="scrub-steps absolute inset-0 pointer-events-none"></div>
             </div>
           </div>
 
-          <p class="font-mono text-[9px] uppercase tracking-[0.2em] text-fg-faint text-center">
+          <p class="font-body text-sm text-fg-dim">
             Real releases we mixed, mastered &amp; produced &mdash; switch tracks to hear more.
           </p>
         </div>
       </section>
 
-      <!-- ===================== 02 // SERVICES ===================== -->
-      <section class="border-b border-line-strong">
-        <div class="flex items-center justify-between px-4 md:px-5 py-3 border-b border-line-strong bg-panel">
-          <div class="flex items-center gap-3">
-            <span class="text-accent font-mono text-xs font-bold">02</span>
-            <span class="text-fg-faint font-mono text-[10px] uppercase tracking-[0.35em]">Services / Signal Chain</span>
-          </div>
-          <span class="text-fg-faint font-mono text-[9px] uppercase tracking-[0.2em]">Tap a card</span>
-        </div>
+      <!-- ===================== CREDITS ===================== -->
+      <ul class="credits" aria-label="Key credits">
+        <li><span>Releases on UKF, Disciple &amp; <span class="nowrap">All Ways Dance</span></span></li>
+        <li><span>Combined 3 million+ streams between our engineers</span></li>
+        <li><span>No AI &mdash; real engineers</span></li>
+        <li><span>Hybrid analogue / digital signal&nbsp;chain</span></li>
+        <li><span>Beatport Minimal No.1</span></li>
+      </ul>
 
-        <div id="services" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 p-3 md:p-4">
+      <!-- ===================== ARTIST NAMES (carousel) ===================== -->
+      <div class="name-marquee" aria-label="Artists and labels we work with">
+        <div class="marquee-track">
+          {[0, 1].map((copy) => (
+            <ul class="name-list" aria-hidden={copy === 1 ? 'true' : undefined}>
+              {names.map((n) => <li><span class="pip"></span>{n}</li>)}
+            </ul>
+          ))}
+        </div>
+      </div>
+
+      <!-- ===================== SERVICES ===================== -->
+      <section class="border-b border-line-strong">
+        <SectionHeader label="Services" />
+        <div id="services" class="grid grid-cols-1 md:grid-cols-3 gap-3 md:gap-4 p-4 md:p-6">
           {services.map((service) => (
-            <ServiceCard service={service} compact />
+            <ServiceCard service={service} />
           ))}
         </div>
       </section>
 
-      <!-- ===================== 03 // ENQUIRE ===================== -->
-      <section class="border-b border-line-strong">
-        <div class="flex items-center gap-3 px-4 md:px-5 py-3 border-b border-line-strong bg-panel">
-          <span class="text-accent font-mono text-xs font-bold">03</span>
-          <span class="text-fg-faint font-mono text-[10px] uppercase tracking-[0.35em]">Enquire / There Are No Stupid Questions</span>
-        </div>
+      <!-- ===================== HOW IT WORKS (once, site-wide) ===================== -->
+      <HowItWorks />
 
-        <form name="enquiry" method="POST" enctype="multipart/form-data" data-netlify="true" data-netlify-honeypot="bot-field" action="/?success=true" class="grid grid-cols-1 md:grid-cols-2 gap-px bg-line-strong">
+      <!-- ===================== UPLOAD ===================== -->
+      <section id="upload" class="scroll-mt-4 border-b border-line-strong">
+        <SectionHeader label="Upload your track" />
+
+        <form name="enquiry" method="POST" enctype="multipart/form-data" data-netlify="true" data-netlify-honeypot="bot-field" action="/?success=true" class="grid grid-cols-1 md:grid-cols-2 gap-5 p-4 md:p-6">
           <!-- Netlify Forms: hidden name field + honeypot (bots fill it, humans don't) -->
           <input type="hidden" name="form-name" value="enquiry" />
           <p class="hidden"><label>Don't fill this out: <input name="bot-field" /></label></p>
-          <div class="bg-panel p-5">
-            <label for="name" class="block font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint mb-2">Name / Artist</label>
-            <input type="text" id="name" name="name" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors" />
+          <div>
+            <label for="name" class="field-label">Name or artist</label>
+            <input type="text" id="name" name="name" required class="field" />
           </div>
-          <div class="bg-panel p-5">
-            <label for="email" class="block font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint mb-2">Email</label>
-            <input type="email" id="email" name="email" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors" />
+          <div>
+            <label for="email" class="field-label">Email</label>
+            <input type="email" id="email" name="email" required class="field" />
           </div>
-          <div class="bg-panel p-5 md:col-span-2">
-            <label for="message" class="block font-mono text-[9px] uppercase tracking-[0.25em] text-fg-faint mb-2">Project Details</label>
-            <textarea id="message" name="message" rows="5" required class="w-full bg-base border border-line-strong px-4 py-3 text-accent font-mono text-xs tracking-wider outline-none focus:border-accent transition-colors"></textarea>
-            <p class="font-mono text-[10px] leading-relaxed text-fg-faint mt-2">Feel free to attach any rough mix files here. We don&rsquo;t need your stems yet &mdash; you&rsquo;ll be sent a link to upload these when you receive your confirmation email.</p>
+          <div class="md:col-span-2">
+            <label for="service" class="field-label">Service</label>
+            <select id="service" name="service" required class="field">
+              <option value="" disabled selected>Select a service</option>
+              <option value="mastering">Mastering</option>
+              <option value="mixing-mastering">Mixing &amp; mastering</option>
+              <option value="production">Ghost production</option>
+              <option value="finishing">Finish your track</option>
+              <option value="education">Consultation &amp; education</option>
+              <option value="sound-design">Sound design</option>
+              <option value="other">Other or not sure</option>
+            </select>
           </div>
-          <button type="submit" class="md:col-span-2 w-full py-4 bg-accent-dim text-white font-mono font-black text-[13px] uppercase tracking-[0.3em] hover:bg-accent active:translate-y-px transition-all">
-            Send Enquiry
+          <PriceReadout class="md:col-span-2" />
+          <div class="md:col-span-2">
+            <label for="message" class="field-label">Project details</label>
+            <textarea id="message" name="message" rows="5" required class="field"></textarea>
+          </div>
+          <EnquiryUpload class="md:col-span-2" columns="two" />
+          <p class="md:col-span-2 font-body text-base font-medium text-fg">This is an enquiry, not an order. Nothing is booked or charged until we confirm.</p>
+          <button type="submit" class="key key-primary md:col-span-2 w-full py-4">
+            Send your track
           </button>
         </form>
-      </section>
-
-      <!-- ===================== TRUSTED BY ===================== -->
-      <section class="border-b border-line-strong">
-        <div class="flex items-center gap-3 px-4 md:px-5 py-3 border-b border-line-strong bg-panel">
-          <span class="text-fg-faint font-mono text-[10px] uppercase tracking-[0.35em]">Trusted By</span>
-        </div>
-        <div class="flex flex-wrap items-center justify-center gap-10 md:gap-14 p-8 md:p-10 opacity-50 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500">
-          <img src="/logos/3000.jpg" class="h-10 md:h-11" alt="3000" />
-          <img src="/logos/awd.jpg" class="h-10 md:h-11" alt="AWD" />
-          <img src="/logos/ukf.jpg" class="h-10 md:h-11" alt="UKF" />
-          <img src="/logos/gs.jpg" class="h-10 md:h-11" alt="GS" />
-          <img src="/logos/gd.jpg" class="h-10 md:h-11" alt="GD" />
-          <img src="/logos/uv.jpg" class="h-10 md:h-11" alt="UV" />
-          <img src="/logos/motive.jpg" class="h-10 md:h-11" alt="Motive" />
-        </div>
       </section>
 
       <!-- ===================== REVIEWS ===================== -->
       <ReviewsCarousel />
 
     </div>
-  </main>
+  </div>
 
   <ServiceModal />
   <SuccessPopup />
@@ -231,7 +258,8 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
   document.addEventListener('DOMContentLoaded', () => {
     // Service card click-to-open modal is handled by the shared ServiceModal component.
 
-    let sound = new Howl({ src: ['/audio/Wanna Feel.mp3'], html5: false, volume: 0.5 });
+    // preload: false — no mp3 bytes are fetched until the first play() (or track switch).
+    let sound = new Howl({ src: ['/audio/Wanna Feel.mp3'], html5: false, preload: false, volume: 0.5 });
     let analyser: AnalyserNode | null = null;
     let dataArray: Uint8Array<ArrayBuffer> | null = null;
     let bassEnvelope = 0; // smoothed low-end energy: fast attack, slow decay — see renderLoop
@@ -242,7 +270,7 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
     const trackSelector = document.getElementById('track-selector') as HTMLSelectElement;
     const knobHitArea = document.getElementById('knob-hit-area');
     const wrapper = document.querySelector('.knob-rotation-wrapper');
-    const glowCore = document.getElementById('knob-glow-core');
+    const meter = document.getElementById('knob-meter');
 
     if (!playBtn || !scrubContainer || !knobHitArea) return;
 
@@ -360,7 +388,7 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
 
       const geometry = new THREE.BufferGeometry();
       geometry.setAttribute('position', new THREE.BufferAttribute(shapePositions[0].slice(), 3));
-      const material = new THREE.PointsMaterial({ size: 0.055, color: 0x2f6fed, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending });
+      const material = new THREE.PointsMaterial({ size: 0.055, color: 0xf2ede3, transparent: true, opacity: 0.9, blending: THREE.AdditiveBlending });
       const points = new THREE.Points(geometry, material);
       points.position.y = 0; // centred in the screen; transport controls overlay the bottom
       scene.add(points);
@@ -369,7 +397,7 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
       // modulates brightness/hue around whatever base colour is chosen here.
       const colorInput = document.getElementById('particle-color') as HTMLInputElement | null;
       const hslTarget = { h: 0, s: 0, l: 0 };
-      new THREE.Color(colorInput?.value || '#2f6fed').getHSL(hslTarget);
+      new THREE.Color(colorInput?.value || '#f2ede3').getHSL(hslTarget);
       let baseHue = hslTarget.h;
       let baseSaturation = hslTarget.s;
 
@@ -501,13 +529,17 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
       if (sound.playing()) {
         sound.pause();
         if(btnSpan) btnSpan.textContent = 'Play';
+        playBtn.setAttribute('aria-label', 'Play');
       } else {
+        if (sound.state() === 'unloaded') sound.load(); // first interaction: fetch the track now
         sound.play();
         if(btnSpan) btnSpan.textContent = 'Pause';
+        playBtn.setAttribute('aria-label', 'Pause');
       }
     });
 
     scrubContainer.addEventListener('click', (e: any) => {
+      if (!(sound.duration() > 0)) return; // nothing loaded yet (lazy) — nothing to seek
       const rect = scrubContainer.getBoundingClientRect();
       const pct = (e.clientX - rect.left) / rect.width;
       sound.seek(pct * sound.duration());
@@ -523,8 +555,14 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
       if (wrapper) {
         (wrapper as HTMLElement).style.transform = `rotate(${rotation - 135}deg)`;
       }
-      if (glowCore) {
-        (glowCore as HTMLElement).style.background = `conic-gradient(from -135deg, rgba(47,111,237,0.35) 0deg ${rotation}deg, transparent 0deg)`;
+      // 8-step level meter beside the encoder: cells fill as volume rises.
+      if (meter) {
+        const lit = Math.round((rotation / 270) * 8);
+        Array.from(meter.children).forEach((cell, idx) => {
+          cell.classList.toggle('bg-fg', idx < lit);
+          cell.classList.toggle('border-fg', idx < lit);
+          cell.classList.toggle('border-cell-line', idx >= lit);
+        });
       }
     }
 
@@ -546,6 +584,7 @@ const clients = [...clientNames].sort(() => Math.random() - 0.5);
       sound.play();
       const btnSpan = playBtn.querySelector('span');
       if(btnSpan) btnSpan.textContent = 'Pause';
+      playBtn.setAttribute('aria-label', 'Pause');
     });
   });
 </script>
