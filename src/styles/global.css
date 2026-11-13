@@ -295,7 +295,7 @@
      .seq-fluid, so it occupies the exact track of each cell and snaps to the same
      pixels. It jumps cell to cell via discrete grid-column keyframes (step-end), not a % translate. */
   .hero-playhead-track {
-    position: absolute; top: -4px; bottom: -4px; left: 0; right: 0;
+    position: absolute; top: 0; bottom: 0; left: 0; right: 0;
     display: grid;
     grid-template-columns: repeat(16, minmax(0, 1fr));
     gap: var(--g);
@@ -303,7 +303,10 @@
   }
   .hero-playhead {
     grid-column: 1; grid-row: 1;
-    border: 1px solid var(--color-accent);
+    box-sizing: border-box;
+    border: 0;
+    outline: 0;
+    box-shadow: inset 0 0 0 1px var(--color-accent);
     background: rgb(232 85 42 / 0.1);
     animation: hero-step 4s step-end infinite;
   }
