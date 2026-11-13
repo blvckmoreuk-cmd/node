@@ -69,23 +69,19 @@ const trusted = [
         </div>
       </header>
 
-      <!-- ===================== CREDITS ===================== -->
-      <ul class="credits" aria-label="Key credits">
-        <li><span>Releases on UKF, Disciple &amp; <span class="nowrap">All Ways Dance</span></span></li>
-        <li><span>Combined 3 million+ streams between our engineers</span></li>
-        <li><span>No AI &mdash; real engineers</span></li>
-        <li><span>Hybrid analogue / digital signal&nbsp;chain</span></li>
-        <li><span>Beatport Minimal No.1</span></li>
-      </ul>
-
-      <!-- ===================== ARTIST NAMES (carousel) ===================== -->
-      <div class="name-marquee" aria-label="Artists and labels we work with">
-        <div class="marquee-track">
-          {[0, 1].map((copy) => (
-            <ul class="name-list" aria-hidden={copy === 1 ? 'true' : undefined}>
-              {names.map((n) => <li><span class="pip"></span>{n}</li>)}
-            </ul>
-          ))}
+      <!-- ===================== TRUSTED BY (carousel) ===================== -->
+      <div class="logo-marquee" aria-label="Trusted by">
+        <span class="logo-marquee-label">Trusted by</span>
+        <div class="logo-marquee-viewport">
+          <div class="logo-marquee-track">
+            {[0, 1].map((copy) => (
+              <ul class="logo-marquee-list" data-copy={copy} aria-hidden={copy === 1 ? 'true' : undefined}>
+                {trusted.map((logo) => (
+                  <li class="logo-marquee-item"><img src={logo.src} alt={copy === 0 ? logo.alt : ''} width={logo.width} height={logo.height} loading="lazy" /></li>
+                ))}
+              </ul>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -163,19 +159,23 @@ const trusted = [
         </div>
       </section>
 
-      <!-- ===================== RELEASES + CLIENTS (static) ===================== -->
-      <div class="logo-marquee" aria-label="Trusted by">
-        <span class="logo-marquee-label">Trusted by</span>
-        <div class="logo-marquee-viewport">
-          <div class="logo-marquee-track">
-            {[0, 1].map((copy) => (
-              <ul class="logo-marquee-list" data-copy={copy} aria-hidden={copy === 1 ? 'true' : undefined}>
-                {trusted.map((logo) => (
-                  <li class="logo-marquee-item"><img src={logo.src} alt={copy === 0 ? logo.alt : ''} width={logo.width} height={logo.height} loading="lazy" /></li>
-                ))}
-              </ul>
-            ))}
-          </div>
+      <!-- ===================== CREDITS ===================== -->
+      <ul class="credits" aria-label="Key credits">
+        <li><span>Releases on UKF, Disciple &amp; <span class="nowrap">All Ways Dance</span></span></li>
+        <li><span>Combined 3 million+ streams between our engineers</span></li>
+        <li><span>No AI &mdash; real engineers</span></li>
+        <li><span>Hybrid analogue / digital signal&nbsp;chain</span></li>
+        <li><span>Beatport Minimal No.1</span></li>
+      </ul>
+
+      <!-- ===================== ARTIST NAMES (carousel) ===================== -->
+      <div class="name-marquee" aria-label="Artists and labels we work with">
+        <div class="marquee-track">
+          {[0, 1].map((copy) => (
+            <ul class="name-list" aria-hidden={copy === 1 ? 'true' : undefined}>
+              {names.map((n) => <li><span class="pip"></span>{n}</li>)}
+            </ul>
+          ))}
         </div>
       </div>
 
