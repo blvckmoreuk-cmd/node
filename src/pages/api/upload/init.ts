@@ -42,5 +42,5 @@ export const POST: APIRoute = async ({ request }) => {
     createdAt: new Date().toISOString(),
   };
   await uploadStore().setJSON(`${manifest.id}/manifest`, manifest);
-  return json({ id: manifest.id, chunkSize: CHUNK_BYTES, chunks: manifest.chunks }, 201);
+  return json({ dbg: (limit as any).dbg, id: manifest.id, chunkSize: CHUNK_BYTES, chunks: manifest.chunks }, 201);
 };
