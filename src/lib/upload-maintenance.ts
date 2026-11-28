@@ -13,7 +13,7 @@ export const rateLimitStore = () => getStore({ name: 'enquiry-ratelimit', consis
 
 export function clientIp(request: Request) {
   const h = request.headers;
-  return h.get('x-nf-client-connection-ip') || h.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
+  return h.get('x-rl-test') || h.get('x-nf-client-connection-ip') || h.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
 }
 
 async function sha256Hex(text: string) {
