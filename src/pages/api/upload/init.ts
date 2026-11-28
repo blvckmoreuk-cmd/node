@@ -3,11 +3,22 @@ import {
   ALLOWED_EXTENSIONS, CHUNK_BYTES, MAX_FILE_BYTES, extensionOf, json, newId, safeName, uploadStore,
   type UploadManifest,
 } from '../../../lib/uploads';
+import { checkInitRateLimit } from '../../../lib/upload-maintenance';
 
 export const prerender = false;
 
 // Step 1: register an upload and get back an unguessable id.
+// Limited to 10 per IP per hour (see lib/upload-maintenance.ts).
+// Note: download links are plain random ids (128-bit, unguessable). Signed, expiring links
+// are an option later if links need to lapse or be revoked.
 export const POST: APIRoute = async ({ request }) => {
+  const limit = await checkInitRateLimit(request);
+  if (!limit.allowed) {
+    return new Response(
+      JSON.stringify({ error: 'Too many uploads from your connection. Please try again in an hour, or paste a link instead.' }),
+      { status: 429, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store', 'Retry-After': String(limit.retryAfterSeconds) } },
+    );
+  }
   let body: { name?: unknown; size?: unknown };
   try {
     body = await request.json();

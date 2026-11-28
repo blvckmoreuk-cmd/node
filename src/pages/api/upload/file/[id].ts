@@ -4,7 +4,8 @@ import { getManifest, isValidId, json, uploadStore } from '../../../../lib/uploa
 export const prerender = false;
 
 // The link saved with each enquiry. The 128-bit random id is the access key,
-// so only people who were given the link can download.
+// so only people who were given the link can download. Signed, expiring links are an
+// option later if links ever need to lapse or be revoked.
 export const GET: APIRoute = async ({ params }) => {
   const id = params.id;
   if (!isValidId(id)) return json({ error: 'Not found.' }, 404);

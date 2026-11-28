@@ -22,7 +22,9 @@ async function post(url: string, body: BodyInit, headers?: Record<string, string
   const res = await fetch(url, { method: 'POST', body, headers });
   if (!res.ok) {
     const data = await res.json().catch(() => ({}));
-    throw new Error((data as { error?: string }).error || 'Upload failed');
+    const err = new Error((data as { error?: string }).error || 'Upload failed');
+    (err as Error & { status?: number }).status = res.status;
+    throw err;
   }
   return res.json();
 }
@@ -159,14 +161,14 @@ export function initEnquiryUpload(form: HTMLFormElement) {
           if (label) label.textContent = 'Sending…';
           form.submit();
         })
-        .catch(() => {
+        .catch((err: Error & { status?: number }) => {
           uploading = false;
           if (submitBtn) {
             submitBtn.disabled = false;
             submitBtn.removeAttribute('aria-busy');
           }
           if (label) label.textContent = originalLabel;
-          setState(fileInput, fileError, UPLOAD_FAILED);
+          setState(fileInput, fileError, err?.status === 429 ? err.message : UPLOAD_FAILED);
           if (status) status.textContent = '';
           fileInput.focus();
         });
