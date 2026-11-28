@@ -13,7 +13,7 @@ export const rateLimitStore = () => getStore({ name: 'enquiry-ratelimit', consis
 
 export function clientIp(request: Request) {
   const h = request.headers;
-  return h.get('x-rl-test') || h.get('x-nf-client-connection-ip') || h.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
+  return h.get('x-nf-client-connection-ip') || h.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
 }
 
 async function sha256Hex(text: string) {
@@ -33,7 +33,7 @@ export async function checkInitRateLimit(request: Request, store: Store = rateLi
     return { allowed: false, retryAfterSeconds: Math.max(1, Math.ceil(((window + 1) * HOUR_MS - now) / 1000)) };
   }
   await store.setJSON(key, { count: count + 1 });
-  return { allowed: true, retryAfterSeconds: 0, dbg: `${key.slice(0, 18)} was=${JSON.stringify(entry)} ip=${clientIp(request)} hdrs=${[...request.headers.keys()].join(',')}` };
+  return { allowed: true, retryAfterSeconds: 0 };
 }
 
 // Deletes uploads that were started but never completed and are older than 24 hours
